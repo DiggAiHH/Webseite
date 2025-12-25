@@ -99,6 +99,50 @@ export const validateNumericInput = (value, min = 0, max = Number.MAX_SAFE_INTEG
 };
 
 /**
+ * Validates URL format and protocol
+ * Only allows https URLs from trusted domains
+ * @param {string} url - URL to validate
+ * @param {string[]} allowedDomains - List of allowed domains (default: GitHub)
+ * @returns {object} - {isValid: boolean, url: string, error: string}
+ */
+export const validateURL = (url, allowedDomains = ['github.com']) => {
+  if (!url || typeof url !== 'string') {
+    return { isValid: false, url: '', error: 'URL is required' };
+  }
+
+  const trimmedUrl = url.trim();
+
+  // Validate URL format using URL constructor
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(trimmedUrl);
+  } catch {
+    return { isValid: false, url: trimmedUrl, error: 'Invalid URL format' };
+  }
+
+  // Only allow HTTPS protocol for security
+  if (parsedUrl.protocol !== 'https:') {
+    return { isValid: false, url: trimmedUrl, error: 'Only HTTPS URLs are allowed' };
+  }
+
+  // Check if domain is in allowed list
+  const hostname = parsedUrl.hostname.toLowerCase();
+  const isAllowedDomain = allowedDomains.some(domain => 
+    hostname === domain || hostname.endsWith(`.${domain}`)
+  );
+
+  if (!isAllowedDomain) {
+    return { 
+      isValid: false, 
+      url: trimmedUrl, 
+      error: `Domain not allowed. Allowed: ${allowedDomains.join(', ')}` 
+    };
+  }
+
+  return { isValid: true, url: parsedUrl.href, error: null };
+};
+
+/**
  * Rate limiting helper for API calls
  * @param {Function} fn - Function to rate limit
  * @param {number} delay - Delay in milliseconds
