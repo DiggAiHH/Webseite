@@ -6,32 +6,32 @@ const ProductsPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch('/data/products.json')
-        
-        if (!response.ok) {
-          throw new Error(`Failed to load products: ${response.status}`)
-        }
-        
-        const data = await response.json()
-        
-        if (!data.products || !Array.isArray(data.products)) {
-          throw new Error('Invalid product data structure')
-        }
-        
-        setProducts(data.products)
-        setError(null)
-      } catch (err) {
-        console.error('Error loading products:', err)
-        setError('Produkte konnten nicht geladen werden. Bitte versuchen Sie es später erneut.')
-      } finally {
-        setLoading(false)
+  const loadProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/data/products.json')
+      
+      if (!response.ok) {
+        throw new Error(`Failed to load products: ${response.status}`)
       }
+      
+      const data = await response.json()
+      
+      if (!data.products || !Array.isArray(data.products)) {
+        throw new Error('Invalid product data structure')
+      }
+      
+      setProducts(data.products)
+      setError(null)
+    } catch (err) {
+      console.error('Error loading products:', err)
+      setError('Produkte konnten nicht geladen werden. Bitte versuchen Sie es später erneut.')
+    } finally {
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadProducts()
   }, [])
 
