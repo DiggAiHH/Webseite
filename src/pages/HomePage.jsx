@@ -10,20 +10,92 @@ const HomePage = () => {
           Ihre MedTech SaaS-Lösung für intelligente Prozessoptimierung
         </p>
         <div className="flex flex-wrap gap-4">
-          <a href="/lageropt" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
-            Lageroptimierung starten
+          <a href="/praxis-manager" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
+            Praxis Manager starten
           </a>
-          <a href="/praxis-twin" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
-            Praxis-Twin entdecken
+          <a href="/anamnese" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
+            Online-Anamnese
           </a>
-          <a href="/ai-god-mode" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
+          <a href="/ai-god-mode" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
             AI God Mode
           </a>
         </div>
       </section>
 
+      {/* New Services - Leistungen */}
+      <section>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">🚀 Unsere Leistungen</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-medical-blue-600">
+            <div className="w-12 h-12 bg-medical-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl">🏥</span>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Praxis Verwaltung Manager
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Zentrale Steuerung Ihrer Praxis: Terminplanung, Patientenverwaltung 
+              und Ressourcenoptimierung in einem System.
+            </p>
+            <a href="/praxis-manager" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+              Mehr erfahren →
+            </a>
+          </div>
+
+          <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-medical-accent-600">
+            <div className="w-12 h-12 bg-medical-accent-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl">🛡️</span>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              AI Daten-Check & Anonymisator
+            </h3>
+            <p className="text-gray-600 mb-4">
+              KI-gestützte Analyse und Anonymisierung personenbezogener Daten. 
+              DSGVO-konforme Verarbeitung.
+            </p>
+            <a href="/ai-daten-check" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+              Mehr erfahren →
+            </a>
+          </div>
+
+          <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-purple-600">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl">📱</span>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Kiosk-Systeme für Praxen
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Self-Service-Terminals für Patientenanmeldung, Warteschlangen-Management 
+              und digitale Formulare.
+            </p>
+            <a href="/kiosk" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+              Mehr erfahren →
+            </a>
+          </div>
+
+          <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-orange-600">
+            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl">📋</span>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Online-Anamnese mit KI
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Intelligente Vorab-Befragung mit KI-Analyse und automatischer 
+              Terminempfehlung für optimale Ressourcenplanung.
+            </p>
+            <a href="/anamnese" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+              Mehr erfahren →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Features Grid */}
-      <section className="grid md:grid-cols-3 gap-6">
+      <section>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">🔧 Weitere Tools</h2>
+        <div className="grid md:grid-cols-3 gap-6">
         <div className="card hover:shadow-lg transition-shadow">
           <div className="w-12 h-12 bg-medical-blue-100 rounded-lg flex items-center justify-center mb-4">
             <svg className="w-6 h-6 text-medical-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,6 +184,7 @@ const HomePage = () => {
           <a href="/avatar" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
           </a>
+        </div>
         </div>
       </section>
 
