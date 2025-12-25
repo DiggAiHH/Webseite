@@ -8,7 +8,7 @@ build/
 # Development and IDE files
 .DS_Store
 .git/
-.gitignore
+
 .vscode/
 .idea/
 *.log
@@ -24,9 +24,8 @@ docs/
 
 # Test files
 coverage/
-*.test.js
-*.spec.js
+
 
 # Docker files (not needed in build context)
 docker-compose.yml
-Dockerfile
+
