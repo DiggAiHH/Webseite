@@ -36,12 +36,33 @@ const ProductsPage = () => {
   }, [])
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '')
-    if (hash && products.length > 0) {
-      const product = products.find(p => p.id === hash)
-      if (product) {
-        setSelectedProduct(product)
+    const applyHashToSelection = () => {
+      const hash = window.location.hash.replace('#', '')
+
+      if (hash && products.length > 0) {
+        const product = products.find(p => p.id === hash)
+        if (product) {
+          setSelectedProduct(product)
+          return
+        }
       }
+
+      // If no valid hash or product not found, clear the selection
+      setSelectedProduct(null)
+    }
+
+    // Apply current hash when products are loaded/updated
+    applyHashToSelection()
+
+    // Keep selection in sync with URL hash on browser navigation
+    const handleHashChange = () => {
+      applyHashToSelection()
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
     }
   }, [products])
 
