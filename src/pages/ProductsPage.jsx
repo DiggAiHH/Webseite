@@ -76,6 +76,22 @@ const ProductsPage = () => {
     window.location.hash = ''
   }
 
+  useEffect(() => {
+    if (!selectedProduct) {
+      return
+    }
+
+    if (typeof document === 'undefined' || !document.body) {
+      return
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [selectedProduct])
   const formatPrice = (price, label = 'ab', locale = 'de-DE') => {
     if (price === null || price === undefined) {
       return label ? `${label} -` : '-'
