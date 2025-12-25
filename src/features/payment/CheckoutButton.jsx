@@ -125,7 +125,7 @@ const CheckoutButton = ({ product, className = '' }) => {
 
               <div className="space-y-3">
                 <a
-                  href="mailto:kontakt@diggaihh.de?subject=Anfrage:%20${encodeURIComponent(product.title)}"
+                  href={`mailto:kontakt@diggaihh.de?subject=Anfrage:%20${encodeURIComponent(product.title)}`}
                   className="block w-full px-4 py-3 bg-medical-blue-600 text-white rounded-lg hover:bg-medical-blue-700 transition-colors font-medium"
                 >
                   Per E-Mail anfragen
