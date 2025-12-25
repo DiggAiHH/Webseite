@@ -76,8 +76,17 @@ const ProductsPage = () => {
     window.location.hash = ''
   }
 
-  const formatPrice = (price, label = 'ab') => {
-    return `${label} ${price.toLocaleString('de-DE')} €`
+  const formatPrice = (price, label = 'ab', locale = 'de-DE') => {
+    if (price === null || price === undefined) {
+      return label ? `${label} -` : '-'
+    }
+
+    const numericPrice = typeof price === 'number' ? price : Number(price)
+    if (Number.isNaN(numericPrice)) {
+      return label ? `${label} -` : '-'
+    }
+
+    return `${label} ${numericPrice.toLocaleString(locale)} €`
   }
 
   const getComplexityBadgeColor = (complexity) => {
