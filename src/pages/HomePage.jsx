@@ -25,7 +25,7 @@ const HomePage = () => {
       {/* New Services - Leistungen */}
       <section>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">🚀 Unsere Leistungen</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
           <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-medical-blue-600">
             <div className="w-12 h-12 bg-medical-blue-100 rounded-lg flex items-center justify-center mb-4">
               <span className="text-2xl">🏥</span>
@@ -86,6 +86,22 @@ const HomePage = () => {
               Terminempfehlung für optimale Ressourcenplanung.
             </p>
             <a href="/anamnese" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+              Mehr erfahren →
+            </a>
+          </div>
+
+          <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-red-600">
+            <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl">💻</span>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Praxis Manager IT
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Komplettes IT-Management: Räume, Geräte, Netzwerk, PVS-Schulungen, 
+              FAQ, Chatbot, MDR/DSGVO/BSI-Compliance.
+            </p>
+            <a href="/praxis-it" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
             </a>
           </div>

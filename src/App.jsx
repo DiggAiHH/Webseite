@@ -11,6 +11,7 @@ import PraxisManagerFeature from './features/praxismanager/PraxisManagerFeature'
 import AIDataCheckFeature from './features/aidatacheck/AIDataCheckFeature'
 import KioskFeature from './features/kiosk/KioskFeature'
 import AnamneseFeature from './features/anamnese/AnamneseFeature'
+import PraxisITFeature from './features/praxisit/PraxisITFeature'
 import HomePage from './pages/HomePage'
 import PrivacyPage from './pages/PrivacyPage'
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/ai-daten-check" element={<AIDataCheckFeature />} />
         <Route path="/kiosk" element={<KioskFeature />} />
         <Route path="/anamnese" element={<AnamneseFeature />} />
+        <Route path="/praxis-it" element={<PraxisITFeature />} />
         <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
     </MainLayout>
