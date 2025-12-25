@@ -18,6 +18,11 @@ const PaymentPage = ({ product, onSuccess, onCancel }) => {
   const [stripeReady, setStripeReady] = useState(false)
   const [stripeError, setStripeError] = useState(null)
 
+  // Extract product fields with defaults for safety
+  const title = product?.title || ''
+  const shortDescription = product?.shortDescription || ''
+  const priceEUR = product?.priceEUR
+
   useEffect(() => {
     if (isStripeConfigured()) {
       getStripe()
@@ -28,8 +33,7 @@ const PaymentPage = ({ product, onSuccess, onCancel }) => {
             setStripeError('Stripe konnte nicht geladen werden.')
           }
         })
-        .catch((error) => {
-          console.error('Stripe load error:', error)
+        .catch(() => {
           setStripeError('Fehler beim Laden der Zahlungsschnittstelle.')
         })
     }
@@ -41,6 +45,20 @@ const PaymentPage = ({ product, onSuccess, onCancel }) => {
       style: 'currency',
       currency: 'EUR',
     }).format(price)
+  }
+
+  // Validate product prop after hooks
+  if (!product || typeof product !== 'object') {
+    return (
+      <div className="max-w-md mx-auto p-6 text-center">
+        <p className="text-red-600">Produktdaten nicht verfügbar.</p>
+        {onCancel && (
+          <button onClick={onCancel} className="mt-4 px-4 py-2 text-gray-600 hover:text-gray-900">
+            Zurück
+          </button>
+        )}
+      </div>
+    )
   }
 
   // Demo mode when Stripe is not configured
@@ -58,12 +76,12 @@ const PaymentPage = ({ product, onSuccess, onCancel }) => {
           <div className="p-6">
             {/* Product Summary */}
             <div className="bg-gray-50 rounded-xl p-4 mb-6">
-              <h2 className="font-semibold text-gray-900 mb-2">{product.title}</h2>
-              <p className="text-sm text-gray-600 mb-3">{product.shortDescription}</p>
+              <h2 className="font-semibold text-gray-900 mb-2">{title}</h2>
+              <p className="text-sm text-gray-600 mb-3">{shortDescription}</p>
               <div className="flex justify-between items-center pt-3 border-t border-gray-200">
                 <span className="text-gray-600">Gesamtbetrag:</span>
                 <span className="text-2xl font-bold text-medical-blue-600">
-                  {formatPrice(product.priceEUR)}
+                  {formatPrice(priceEUR)}
                 </span>
               </div>
             </div>
@@ -86,7 +104,7 @@ const PaymentPage = ({ product, onSuccess, onCancel }) => {
             {/* Contact Options */}
             <div className="space-y-4">
               <a
-                href={`mailto:kontakt@diggaihh.de?subject=Bestellung: ${encodeURIComponent(product.title)}&body=Ich interessiere mich für das Produkt "${product.title}" zum Preis von ${formatPrice(product.priceEUR)}.`}
+                href={`mailto:kontakt@diggaihh.de?subject=${encodeURIComponent(`Bestellung: ${title}`)}&body=${encodeURIComponent(`Ich interessiere mich für das Produkt "${title}" zum Preis von ${formatPrice(priceEUR)}.`)}`}
                 className="flex items-center justify-center w-full px-6 py-3 bg-medical-blue-600 text-white rounded-lg hover:bg-medical-blue-700 transition-colors font-medium"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -21,8 +21,13 @@ let stripePromise = null
  * @returns {Promise<import('@stripe/stripe-js').Stripe | null>}
  */
 export const getStripe = () => {
-  if (!stripePromise && STRIPE_PUBLISHABLE_KEY !== 'pk_test_placeholder') {
-    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
+  if (!stripePromise) {
+    if (STRIPE_PUBLISHABLE_KEY !== 'pk_test_placeholder') {
+      stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
+    } else {
+      // Always return a Promise to avoid runtime errors when Stripe is not configured
+      stripePromise = Promise.resolve(null)
+    }
   }
   return stripePromise
 }

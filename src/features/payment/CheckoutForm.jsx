@@ -18,12 +18,31 @@ const CheckoutForm = ({ product, onSuccess, onCancel }) => {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState(null)
 
+  // Extract product fields with defaults for safety
+  const title = product?.title || ''
+  const shortDescription = product?.shortDescription || ''
+  const priceEUR = product?.priceEUR
+
   const formatPrice = (price) => {
     if (price === null || price === undefined) return '-'
     return new Intl.NumberFormat('de-DE', {
       style: 'currency',
       currency: 'EUR',
     }).format(price)
+  }
+
+  // Validate product prop after hooks
+  if (!product || typeof product !== 'object') {
+    return (
+      <div className="max-w-md mx-auto p-6 text-center">
+        <p className="text-red-600">Produktdaten nicht verfügbar.</p>
+        {onCancel && (
+          <button onClick={onCancel} className="mt-4 px-4 py-2 text-gray-600 hover:text-gray-900">
+            Zurück
+          </button>
+        )}
+      </div>
+    )
   }
 
   const handleSubmit = async (event) => {
@@ -46,10 +65,7 @@ const CheckoutForm = ({ product, onSuccess, onCancel }) => {
       //   },
       // })
 
-      // For demo, simulate success
-      console.log('Processing payment for:', product.title)
-      
-      // Simulate API delay
+      // Simulate API delay for demo
       await new Promise(resolve => setTimeout(resolve, 1500))
       
       if (onSuccess) {
@@ -59,7 +75,6 @@ const CheckoutForm = ({ product, onSuccess, onCancel }) => {
         })
       }
     } catch (err) {
-      console.error('Payment error:', err)
       setError(err.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.')
     } finally {
       setIsProcessing(false)
@@ -80,11 +95,11 @@ const CheckoutForm = ({ product, onSuccess, onCancel }) => {
           <div className="bg-gray-50 rounded-xl p-4 mb-6">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="font-semibold text-gray-900">{product.title}</h2>
-                <p className="text-sm text-gray-600 mt-1">{product.shortDescription}</p>
+                <h2 className="font-semibold text-gray-900">{title}</h2>
+                <p className="text-sm text-gray-600 mt-1">{shortDescription}</p>
               </div>
               <span className="text-xl font-bold text-medical-blue-600">
-                {formatPrice(product.priceEUR)}
+                {formatPrice(priceEUR)}
               </span>
             </div>
           </div>
@@ -135,7 +150,7 @@ const CheckoutForm = ({ product, onSuccess, onCancel }) => {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  Jetzt bezahlen - {formatPrice(product.priceEUR)}
+                  Jetzt bezahlen - {formatPrice(priceEUR)}
                 </>
               )}
             </button>

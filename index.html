@@ -9,7 +9,8 @@
     <meta name="keywords" content="MedTech, SaaS, Praxissoftware, Klinik, Gesundheitswesen, DSGVO, Digitalisierung, Arztpraxis, Patientenverwaltung, Deutschland" />
     
     <!-- Security Headers (CSP, X-Frame-Options, etc.) -->
-    <!-- Note: CSP allows Stripe for payment processing -->
+    <!-- Note: 'unsafe-inline' in script-src is required by Vite during development. 
+         For production, consider using nonces or hashes for inline scripts. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; frame-ancestors 'none'; form-action 'self'; base-uri 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
@@ -78,11 +79,6 @@
         "price": "0",
         "priceCurrency": "EUR",
         "priceValidUntil": "2025-12-31"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "50"
       }
     }
     </script>
