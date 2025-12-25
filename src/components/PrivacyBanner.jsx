@@ -3,7 +3,7 @@ import { usePrivacyConsent } from '../utils/privacy';
 
 /**
  * PrivacyBanner Component
- * DSGVO-compliant cookie consent banner
+ * DSGVO-compliant cookie consent banner with ARIA accessibility
  */
 const PrivacyBanner = () => {
   const { updateConsent, hasConsented } = usePrivacyConsent();
@@ -39,40 +39,48 @@ const PrivacyBanner = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-medical-blue-600 shadow-2xl z-50">
+    <div 
+      className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-medical-blue-600 shadow-2xl z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="privacy-banner-title"
+      aria-describedby="privacy-banner-description"
+    >
       <div className="max-w-7xl mx-auto p-6">
         {!showDetails ? (
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 id="privacy-banner-title" className="text-lg font-semibold text-gray-900 mb-2">
                 Datenschutz & Cookies
               </h3>
-              <p className="text-sm text-gray-600">
+              <p id="privacy-banner-description" className="text-sm text-gray-600">
                 Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche 
                 Nutzererfahrung zu bieten und unsere Dienste zu verbessern. Weitere Informationen 
                 finden Sie in unserer{' '}
-                <a href="/privacy" className="text-medical-blue-600 hover:underline">
+                <a href="/privacy" className="text-medical-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded">
                   Datenschutzerklärung
                 </a>
                 .
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3" role="group" aria-label="Cookie-Einstellungen">
               <button
                 onClick={() => setShowDetails(true)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium"
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
+                aria-expanded={showDetails}
+                aria-controls="privacy-details"
               >
                 Einstellungen
               </button>
               <button
                 onClick={handleAcceptEssential}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium"
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
               >
                 Nur notwendige
               </button>
               <button
                 onClick={handleAcceptAll}
-                className="px-6 py-2 bg-medical-blue-600 text-white rounded-md hover:bg-medical-blue-700 transition-colors text-sm font-medium"
+                className="px-6 py-2 bg-medical-blue-600 text-white rounded-md hover:bg-medical-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
               >
                 Alle akzeptieren
               </button>
@@ -91,18 +99,19 @@ const PrivacyBanner = () => {
 
 /**
  * PrivacyDetails Component
- * Detailed cookie settings
+ * Detailed cookie settings with ARIA labels
  */
 const PrivacyDetails = ({ onSave, onBack }) => {
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
 
   return (
-    <div>
+    <div id="privacy-details" role="region" aria-label="Detaillierte Cookie-Einstellungen">
       <div className="mb-4">
         <button
           onClick={onBack}
-          className="text-medical-blue-600 hover:text-medical-blue-700 text-sm font-medium"
+          className="text-medical-blue-600 hover:text-medical-blue-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded"
+          aria-label="Zurück zur Übersicht"
         >
           ← Zurück
         </button>
@@ -110,17 +119,20 @@ const PrivacyDetails = ({ onSave, onBack }) => {
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
         Cookie-Einstellungen
       </h3>
-      <div className="space-y-4 mb-6">
+      <fieldset className="space-y-4 mb-6">
+        <legend className="sr-only">Wählen Sie Ihre Cookie-Präferenzen</legend>
         <div className="flex items-start">
           <input
             type="checkbox"
+            id="essential-cookies"
             checked={true}
             disabled
-            className="mt-1 h-4 w-4 text-medical-blue-600 rounded"
+            className="mt-1 h-4 w-4 text-medical-blue-600 rounded border-gray-300"
+            aria-describedby="essential-cookies-description"
           />
           <div className="ml-3">
-            <label className="font-medium text-gray-900">Notwendige Cookies</label>
-            <p className="text-sm text-gray-600">
+            <label htmlFor="essential-cookies" className="font-medium text-gray-900">Notwendige Cookies</label>
+            <p id="essential-cookies-description" className="text-sm text-gray-600">
               Diese Cookies sind für die Grundfunktionen der Website erforderlich und können 
               nicht deaktiviert werden.
             </p>
@@ -129,13 +141,15 @@ const PrivacyDetails = ({ onSave, onBack }) => {
         <div className="flex items-start">
           <input
             type="checkbox"
+            id="analytics-cookies"
             checked={analytics}
             onChange={(e) => setAnalytics(e.target.checked)}
-            className="mt-1 h-4 w-4 text-medical-blue-600 rounded"
+            className="mt-1 h-4 w-4 text-medical-blue-600 rounded border-gray-300 focus:ring-medical-blue-500"
+            aria-describedby="analytics-cookies-description"
           />
           <div className="ml-3">
-            <label className="font-medium text-gray-900">Analyse-Cookies</label>
-            <p className="text-sm text-gray-600">
+            <label htmlFor="analytics-cookies" className="font-medium text-gray-900">Analyse-Cookies</label>
+            <p id="analytics-cookies-description" className="text-sm text-gray-600">
               Helfen uns zu verstehen, wie Besucher mit der Website interagieren, 
               um die Nutzererfahrung zu verbessern.
             </p>
@@ -144,23 +158,25 @@ const PrivacyDetails = ({ onSave, onBack }) => {
         <div className="flex items-start">
           <input
             type="checkbox"
+            id="marketing-cookies"
             checked={marketing}
             onChange={(e) => setMarketing(e.target.checked)}
-            className="mt-1 h-4 w-4 text-medical-blue-600 rounded"
+            className="mt-1 h-4 w-4 text-medical-blue-600 rounded border-gray-300 focus:ring-medical-blue-500"
+            aria-describedby="marketing-cookies-description"
           />
           <div className="ml-3">
-            <label className="font-medium text-gray-900">Marketing-Cookies</label>
-            <p className="text-sm text-gray-600">
+            <label htmlFor="marketing-cookies" className="font-medium text-gray-900">Marketing-Cookies</label>
+            <p id="marketing-cookies-description" className="text-sm text-gray-600">
               Werden verwendet, um Besuchern relevante Werbung und Marketing-Kampagnen 
               anzubieten.
             </p>
           </div>
         </div>
-      </div>
+      </fieldset>
       <div className="flex gap-3 justify-end">
         <button
           onClick={() => onSave(analytics, marketing)}
-          className="px-6 py-2 bg-medical-blue-600 text-white rounded-md hover:bg-medical-blue-700 transition-colors text-sm font-medium"
+          className="px-6 py-2 bg-medical-blue-600 text-white rounded-md hover:bg-medical-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
         >
           Einstellungen speichern
         </button>
@@ -171,7 +187,7 @@ const PrivacyDetails = ({ onSave, onBack }) => {
 
 /**
  * PrivacyStatusIndicator Component
- * Shows current privacy status in header
+ * Shows current privacy status in header with ARIA
  */
 export const PrivacyStatusIndicator = () => {
   const { consent, hasConsented } = usePrivacyConsent();
@@ -184,12 +200,17 @@ export const PrivacyStatusIndicator = () => {
     .filter(Boolean).length;
 
   return (
-    <div className="flex items-center gap-2 text-xs text-gray-600">
+    <div 
+      className="flex items-center gap-2 text-xs text-gray-600"
+      role="status"
+      aria-label={`DSGVO-Einstellungen: ${activeCount} von 3 Cookie-Kategorien aktiviert`}
+    >
       <svg
         className="w-4 h-4 text-medical-accent-600"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path
           strokeLinecap="round"
