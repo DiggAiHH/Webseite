@@ -131,18 +131,18 @@ const MainLayout = ({ children }) => {
               >
                 Datenschutz
               </Link>
-              <a 
-                href="#impressum" 
+              <Link 
+                to="/impressum" 
                 className="text-gray-600 hover:text-medical-blue-600 focus:outline-none focus:ring-2 focus:ring-medical-blue-500 focus:ring-offset-2 rounded"
               >
                 Impressum
-              </a>
-              <a 
-                href="#kontakt" 
+              </Link>
+              <Link 
+                to="/kontakt" 
                 className="text-gray-600 hover:text-medical-blue-600 focus:outline-none focus:ring-2 focus:ring-medical-blue-500 focus:ring-offset-2 rounded"
               >
                 Kontakt
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
