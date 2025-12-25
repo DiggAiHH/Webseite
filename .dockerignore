@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 
-# Build output (wird im Multi-Stage Build erstellt)
+# Build output (created in multi-stage build)
 dist/
 build/
 
@@ -13,7 +13,7 @@ build/
 .idea/
 *.log
 
-# Environment files (Sicherheit: nie ins Image)
+# Environment files (security: never include in image)
 .env
 .env.*
 *.env
@@ -27,6 +27,6 @@ coverage/
 *.test.js
 *.spec.js
 
-# Docker files (nicht im Build-Kontext nötig)
+# Docker files (not needed in build context)
 docker-compose.yml
 Dockerfile
