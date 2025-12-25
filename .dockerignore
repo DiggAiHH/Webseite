@@ -1,1 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output (wird im Multi-Stage Build erstellt)
+dist/
+build/
+
+# Development and IDE files
 .DS_Store
+.git/
+.gitignore
+.vscode/
+.idea/
+*.log
+
+# Environment files (Sicherheit: nie ins Image)
+.env
+.env.*
+*.env
+
+# Documentation
+README.md
+docs/
+
+# Test files
+coverage/
+*.test.js
+*.spec.js
+
+# Docker files (nicht im Build-Kontext nötig)
+docker-compose.yml
+Dockerfile
