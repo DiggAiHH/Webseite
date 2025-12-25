@@ -1,7 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "DiggAiHH Products Portfolio",
-  "description": "Portfolio of DiggAiHH medical technology products and solutions",
   "products": [
     {
       "id": "anamnese-a",
