@@ -385,8 +385,20 @@ const LageroptEnhancedFeature = () => {
                       <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                         <div><span className="font-medium">Charge:</span> {item.batchNumber}</div>
                         <div><span className="font-medium">Lagerort:</span> {item.location}</div>
-                        <div><span className="font-medium">MHD:</span> {new Date(item.expiryDate).toLocaleDateString('de-DE')} 
-                          ({item.expiryStatus.days} Tage)
+                        <div>
+                          <span className="font-medium">MHD:</span> {
+                            (() => {
+                              try {
+                                const date = new Date(item.expiryDate);
+                                if (isNaN(date.getTime())) {
+                                  return 'Ungültiges Datum';
+                                }
+                                return `${date.toLocaleDateString('de-DE')} (${item.expiryStatus.days} Tage)`;
+                              } catch (e) {
+                                return 'Ungültiges Datum';
+                              }
+                            })()
+                          }
                         </div>
                         <div><span className="font-medium">Verantwortlich:</span> {item.responsiblePerson}</div>
                         <div><span className="font-medium">Bestand:</span> {item.currentStock} / {item.minStock}-{item.maxStock}</div>

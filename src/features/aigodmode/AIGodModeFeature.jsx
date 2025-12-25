@@ -182,12 +182,18 @@ const AIGodModeFeature = () => {
   const handleDownloadJSON = () => {
     if (!generatedSpec) return;
 
+    // Sanitize filename more thoroughly
+    const sanitizedName = formData.projectName
+      .replace(/[^a-zA-Z0-9\s\-_äöüÄÖÜß]/g, '') // Remove special chars except spaces, hyphens, underscores, and German umlauts
+      .replace(/\s+/g, '_') // Replace spaces with underscores
+      .substring(0, 50); // Limit length
+
     const dataStr = JSON.stringify(generatedSpec, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${formData.projectName.replace(/\s+/g, '_')}_specification.json`;
+    link.download = `${sanitizedName}_specification.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

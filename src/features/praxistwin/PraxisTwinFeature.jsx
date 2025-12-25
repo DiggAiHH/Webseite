@@ -103,9 +103,10 @@ const PraxisTwinFeature = () => {
     const module = installedModules.find(m => m.id === moduleId);
     if (module) {
       setInstalledModules(installedModules.filter(m => m.id !== moduleId));
-      const newPoints = availablePoints - module.points;
-      setAvailablePoints(Math.max(0, newPoints));
-      setPraxisLevel(Math.floor(newPoints / 50) + 1);
+      const newPoints = Math.max(0, availablePoints - module.points);
+      setAvailablePoints(newPoints);
+      // Ensure minimum level is 1
+      setPraxisLevel(Math.max(1, Math.floor(newPoints / 50) + 1));
     }
   };
 

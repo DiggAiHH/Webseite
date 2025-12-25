@@ -35,7 +35,8 @@ export const validateEmail = (email) => {
  */
 export const validatePhone = (phone) => {
   if (!phone || typeof phone !== 'string') return false;
-  const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/;
+  // Hyphen at end of character class to avoid escape
+  const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[\s.-]?[(]?[0-9]{1,4}[)]?[\s.-]?[0-9]{1,9}$/;
   return phoneRegex.test(phone.trim());
 };
 

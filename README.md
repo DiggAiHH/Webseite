@@ -2,10 +2,12 @@
 
 ## 🏥 Übersicht
 
-DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimierung im Gesundheitswesen. Die Anwendung bietet drei Hauptfeatures:
+DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimierung im Gesundheitswesen. Die Anwendung bietet fünf Hauptfeatures:
 
-- **Lageroptimierung**: KI-gestützte Bestandsverwaltung für medizinische Lagerbestände
-- **ROI-Rechner**: Präzise Kosten-Nutzen-Analysen für digitale Gesundheitslösungen
+- **Lageroptimierung mit MHD-Tracking**: Intelligente Bestandsverwaltung mit automatischer Ablaufdatum-Überwachung, Chargenverfolgung und MDR-konformer Dokumentation
+- **ROI-Rechner mit Arbeitszeit-Analyse**: Präzise Kosten-Nutzen-Analysen mit Fokus auf Produktivitätssteigerung durch Automatisierung redundanter Arbeitszeiten
+- **Praxis-Twin (Gamification)**: Spielerisches Aufbau-System für die digitale Praxis mit Drag-and-Drop-Modulen und Level-Progression
+- **AI God Mode**: Intelligenter Requirements Wizard zur Erstellung strukturierter Lastenhefte mit automatischer JSON-Generierung
 - **Avatar-System**: Spezialisierte virtuelle Assistenten für medizinische Prozesse
 
 ## 🚀 Tech Stack
@@ -23,14 +25,25 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 /
 ├── src/
 │   ├── features/           # Feature-First Architektur
-│   │   ├── lageropt/      # Lageroptimierung
+│   │   ├── lageropt/      # Lageroptimierung mit MHD-Tracking
+│   │   │   ├── LageroptFeature.jsx          # Basis-Version
+│   │   │   └── LageroptEnhancedFeature.jsx  # Erweiterte Version mit MHD
 │   │   ├── roi/           # ROI-Rechner
-│   │   └── avatar/        # Avatar-System
+│   │   │   ├── RoiFeature.jsx               # Basis-Version
+│   │   │   └── RoiEnhancedFeature.jsx       # Erweiterte Version mit Arbeitszeit-Analyse
+│   │   ├── avatar/        # Avatar-System
+│   │   │   └── AvatarFeature.jsx
+│   │   ├── praxistwin/    # Praxis-Twin Gamification
+│   │   │   └── PraxisTwinFeature.jsx
+│   │   └── aigodmode/     # AI God Mode Requirements Wizard
+│   │       └── AIGodModeFeature.jsx
 │   ├── layouts/           # Layout-Komponenten
 │   │   └── MainLayout.jsx # Hauptlayout mit Privacy-UI
 │   ├── components/        # Wiederverwendbare Komponenten
 │   │   └── PrivacyBanner.jsx
 │   ├── pages/            # Seiten-Komponenten
+│   │   ├── HomePage.jsx
+│   │   └── PrivacyPage.jsx
 │   ├── utils/            # Hilfsfunktionen
 │   │   ├── security.js   # Input-Validation & Sanitization
 │   │   └── privacy.js    # DSGVO-Compliance Hooks
@@ -130,23 +143,48 @@ Die Anwendung verwendet ein professionelles Medical Blue Theme:
 
 ## 📝 Features im Detail
 
-### 1. Lageroptimierung
+### 1. Lageroptimierung mit MHD-Tracking
 
-Berechnet optimale Lagerbestände basierend auf:
-- Aktueller Bestand
-- Mindest-/Maximalbestand
-- Täglicher Verbrauch
-- Liefert Optimierungsscore und Nachbestellempfehlungen
+Intelligente Bestandsverwaltung mit vollständiger Chargen- und Ablaufdatum-Überwachung:
+- **MHD-Tracking**: Automatische Warnungen 4 Wochen vor Ablaufdatum
+- **Farbkodierung**: Rot (Abgelaufen), Gelb (Bald ablaufend ≤28 Tage), Grün (OK)
+- **Chargenverfolgung**: Vollständige Dokumentation jeder Charge/Lot
+- **Lagerort-Management**: Präzise Lokalisierung (Raum, Regal, Fach)
+- **Verantwortlichkeiten**: Zuordnung zu verantwortlichen Personen
+- **MDR-Konformität**: Erfüllt Anforderungen der Medizinprodukte-Verordnung (EU) 2017/745
+- **Optimierungsscore**: KI-gestützte Bestandsoptimierung mit Nachbestellempfehlungen
 
-### 2. ROI-Rechner
+### 2. ROI-Rechner mit Arbeitszeit-Analyse
 
-Analysiert die Wirtschaftlichkeit von Investitionen:
-- Initiale Investition & laufende Kosten
-- Monatlicher Umsatz & Einsparungen
-- Berechnet ROI, Break-Even und Nettogewinn
-- Visuelle Bewertung der Investition
+Umfassende Rentabilitätsanalyse mit Fokus auf Produktivitätssteigerung:
+- **Arbeitszeit-Einsparung**: Berechnung basierend auf redundanten Stunden × Stundenlohn × Mitarbeiter × 52 Wochen
+- **12-Monats-Visualisierung**: Interaktive Balkendiagramme mit Break-Even-Markierung
+- **Umfassende Metriken**: ROI, Break-Even-Point, Nettogewinn, Gesamtkosten
+- **Flexibler Zeitrahmen**: Analysen für 12, 24, 36 oder 60 Monate
+- **Prioritäts-Optionen**: Geschwindigkeit, Qualität, Kosten oder ausgewogen
 
-### 3. Avatar-System
+### 3. Praxis-Twin (Gamification)
+
+Spielerisches Digitalisierungs-System zur Motivation und Visualisierung des Fortschritts:
+- **SVG-Avatar**: Visuelle Repräsentation der Praxis als Gebäude mit animiertem Medizin-Symbol
+- **Drag-and-Drop**: Intuitive Installation von Modulen per Drag & Drop
+- **6 Module**: IT-Sicherheit, Netzwerk, Hygiene, Patientenverwaltung, Telemedizin, Analytics
+- **Level-System**: Automatisches Level-Up alle 50 Punkte
+- **Performance-Optimiert**: Nutzt CSS-Animationen und SVG statt 3D-Engines
+- **Fortschritts-Tracking**: Echtzeit-Anzeige von Punkten, Level und Digitalisierungsgrad
+
+### 4. AI God Mode (Requirements Wizard)
+
+Intelligenter 4-Schritte-Wizard zur Erstellung strukturierter Projektspezifikationen:
+- **Schritt 1 - Grundinformationen**: Projektname, Praxistyp, Mitarbeiterzahl
+- **Schritt 2 - Anforderungen**: Ziele, Schmerzpunkte, Must-Have und Nice-to-Have Features
+- **Schritt 3 - Technisches**: Bestehende Systeme, Integration, Sicherheitsanforderungen
+- **Schritt 4 - Budget & Zeitplan**: Verfügbares Budget, Zeitrahmen, Prioritäten
+- **JSON-Export**: Strukturierte Spezifikation zum Download
+- **Compliance-Check**: Automatische Erkennung von GDPR-, MDR- und MPDG-Relevanz
+- **KI-Integration (Coming Soon)**: Vorbereitet für Google Gemini Pro API
+
+### 5. Avatar-System
 
 Spezialisierte virtuelle Assistenten:
 - **Dr. Med. Assistent**: Medizinische Beratung
