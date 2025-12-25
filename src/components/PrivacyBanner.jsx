@@ -6,7 +6,7 @@ import { usePrivacyConsent } from '../utils/privacy';
  * DSGVO-compliant cookie consent banner
  */
 const PrivacyBanner = () => {
-  const { consent, updateConsent, hasConsented } = usePrivacyConsent();
+  const { updateConsent, hasConsented } = usePrivacyConsent();
   const [showDetails, setShowDetails] = useState(false);
 
   if (hasConsented) {
