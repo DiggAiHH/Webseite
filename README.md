@@ -16,7 +16,8 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 - **Frontend**: React 18 mit Vite
 - **Styling**: Tailwind CSS mit Medical Blue Theme
 - **Routing**: React Router v6
-- **Security**: DOMPurify für Input-Sanitization
+- **Payment**: Stripe Integration (Stripe Elements, Stripe Checkout)
+- **Security**: Input-Validation, URL-Validation, DOMPurify für HTML-Sanitization
 - **Container**: Docker mit Multi-Stage Build
 - **Web Server**: Nginx (Alpine)
 
@@ -39,8 +40,13 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 │   │   │   └── AvatarFeature.jsx
 │   │   ├── praxistwin/    # Praxis-Twin Gamification
 │   │   │   └── PraxisTwinFeature.jsx
-│   │   └── aigodmode/     # AI God Mode Requirements Wizard
-│   │       └── AIGodModeFeature.jsx
+│   │   ├── aigodmode/     # AI God Mode Requirements Wizard
+│   │   │   └── AIGodModeFeature.jsx
+│   │   └── payment/       # Stripe Payment Integration
+│   │       ├── stripeConfig.js    # Stripe-Konfiguration
+│   │       ├── CheckoutButton.jsx # Checkout-Button-Komponente
+│   │       ├── CheckoutForm.jsx   # Stripe Elements Form
+│   │       └── PaymentPage.jsx    # Vollständige Checkout-Seite
 │   ├── layouts/           # Layout-Komponenten
 │   │   └── MainLayout.jsx # Hauptlayout mit Privacy-UI
 │   ├── components/        # Wiederverwendbare Komponenten
@@ -50,7 +56,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 │   │   ├── ProductsPage.jsx  # Portfolio-Übersicht
 │   │   └── PrivacyPage.jsx
 │   ├── utils/            # Hilfsfunktionen
-│   │   ├── security.js   # Input-Validation & Sanitization
+│   │   ├── security.js   # Input-Validation, URL-Validation & Sanitization
 │   │   └── privacy.js    # DSGVO-Compliance Hooks
 │   └── index.css         # Tailwind-Konfiguration
 ├── Dockerfile            # Multi-Stage Docker Build
@@ -104,9 +110,10 @@ Die Anwendung ist dann unter `http://localhost` erreichbar.
 
 Alle Benutzereingaben werden validiert und sanitized:
 
-- **Text-Inputs**: XSS-Protection durch DOMPurify
+- **Text-Inputs**: XSS-Protection durch React's automatische Text-Escaping und DOMPurify (verfügbar für HTML-Inhalte)
 - **Numerische Inputs**: Range-Validation
 - **Email/Phone**: Format-Validation mit Regex
+- **URL-Validation**: Strenge Validierung von externen URLs (nur HTTPS, nur erlaubte Domains)
 - **Rate Limiting**: Schutz vor Spam und Abuse
 
 ### DSGVO-Compliance
@@ -196,6 +203,29 @@ Spezialisierte virtuelle Assistenten:
 - **Lager-Experte**: Bestandsmanagement
 - **Daten-Analyst**: Analytics & Reporting
 
+### 6. Stripe Payment Integration
+
+Sichere Zahlungsabwicklung mit Stripe:
+- **Stripe Elements**: Eingebettete Zahlungsformulare mit Stripe's UI-Komponenten
+- **Checkout Button**: Einfache Integration in Produktseiten
+- **Demo-Modus**: Zeigt Anfrage-Optionen wenn Stripe nicht konfiguriert ist
+- **DSGVO-konform**: Zahlungsdaten werden direkt von Stripe verarbeitet
+- **Unterstützte Zahlungsmethoden**: Kreditkarte, SEPA-Lastschrift
+
+#### Stripe Konfiguration
+
+Für die Aktivierung der Stripe-Zahlung setzen Sie die Umgebungsvariable:
+
+```env
+VITE_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx
+```
+
+In Entwicklungsumgebungen können Sie den Test-Key verwenden:
+
+```env
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
+```
+
 ## 🚢 Deployment
 
 ### Production Build
@@ -211,6 +241,7 @@ Für Production können folgende Umgebungsvariablen gesetzt werden:
 
 ```env
 NODE_ENV=production
+VITE_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx  # Stripe Publishable Key
 ```
 
 ### Health Check
@@ -258,10 +289,11 @@ Jedes Produkt folgt diesem Schema:
 
 ### Sicherheitshinweise
 
-- ⚠️ Produkttexte werden mit DOMPurify sanitized - kein unsicheres HTML
+- ✅ React's automatische Text-Escaping schützt vor XSS bei allen dargestellten Texten
+- ✅ DOMPurify verfügbar für HTML-Sanitization bei Bedarf
 - ✅ Alle Beschreibungen als Plain Text speichern
 - ✅ Keine sensiblen Informationen in Produktdaten
-- ✅ Repository-URLs werden validiert vor Anzeige
+- ✅ Repository-URLs werden vor Anzeige validiert (nur HTTPS, nur github.com erlaubt)
 
 ## 📄 Lizenz
 
