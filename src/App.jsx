@@ -14,12 +14,14 @@ import AnamneseFeature from './features/anamnese/AnamneseFeature'
 import PraxisITFeature from './features/praxisit/PraxisITFeature'
 import HomePage from './pages/HomePage'
 import PrivacyPage from './pages/PrivacyPage'
+import ProductsPage from './pages/ProductsPage'
 
 function App() {
   return (
     <MainLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="/lageropt" element={<LageroptEnhancedFeature />} />
         <Route path="/lageropt-basic" element={<LageroptFeature />} />
         <Route path="/roi" element={<RoiEnhancedFeature />} />
