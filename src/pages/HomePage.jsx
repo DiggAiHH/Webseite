@@ -10,10 +10,13 @@ const HomePage = () => {
           Ihre MedTech SaaS-Lösung für intelligente Prozessoptimierung
         </p>
         <div className="flex flex-wrap gap-4">
-          <a href="/praxis-manager" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
+          <a href="/products" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
+            Unsere Produkte ansehen
+          </a>
+          <a href="/praxis-manager" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
             Praxis Manager starten
           </a>
-          <a href="/anamnese" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
+          <a href="/anamnese" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
             Online-Anamnese
           </a>
           <a href="/ai-god-mode" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">

@@ -1,0 +1,162 @@
+{
+  "products": [
+    {
+      "id": "anamnese-a",
+      "title": "Anamnese-A",
+      "repoUrl": "https://github.com/DiggAiHH/Anamnese-A",
+      "shortDescription": "Erweiterte Online-Anamnese-Lösung mit intelligenter Fragebogenführung für Praxen",
+      "longDescription": "Anamnese-A ist eine fortgeschrittene webbasierte Anamnese-Lösung, die Ärzten und medizinischen Einrichtungen ermöglicht, Patienteninformationen strukturiert und effizient vor dem Termin zu erfassen. Das System bietet adaptive Fragebogenführung, automatische Plausibilitätsprüfungen und DSGVO-konforme Datenspeicherung. Entwickelt mit modernem HTML/CSS/JavaScript für optimale Performance und Barrierefreiheit.",
+      "priceEUR": 2500,
+      "priceLabel": "ab",
+      "priceJustification": "Basierend auf HTML-Frontend mit strukturierter Fragebogenlogik, DSGVO-Compliance-Anforderungen, Integration in bestehende Praxis-IT-Systeme und ca. 80-100 Entwicklungsstunden. Preis enthält grundlegendes Setup, anpassbare Fragebogenvorlagen und Dokumentation.",
+      "tags": ["Anamnese", "Praxis-Software", "DSGVO", "Patientendaten"],
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "features": [
+        "Adaptive Fragebogenführung",
+        "DSGVO-konforme Datenhaltung",
+        "Responsive Design für Tablets",
+        "Automatische Validierung",
+        "Export zu PVS-Systemen",
+        "Barrierefreie Oberfläche"
+      ],
+      "complexity": "medium",
+      "category": "Frontend Application"
+    },
+    {
+      "id": "sylt",
+      "title": "Sylt",
+      "repoUrl": "https://github.com/DiggAiHH/Sylt",
+      "shortDescription": "TypeScript-basierte MedTech-Anwendung für intelligente Datenverarbeitung",
+      "longDescription": "Sylt ist eine moderne, in TypeScript entwickelte Anwendung zur Verarbeitung und Analyse medizinischer Daten. Mit starker Typsicherheit und modularer Architektur bietet Sylt robuste Datenverarbeitungspipelines, Validierung und Export-Funktionen. Die Anwendung ist speziell für den Einsatz in Kliniken und größeren Praxen konzipiert, wo komplexe Datenflüsse und Integrationen erforderlich sind.",
+      "priceEUR": 8500,
+      "priceLabel": "ab",
+      "priceJustification": "TypeScript-Stack mit hoher Code-Qualität und Typsicherheit, komplexe Datenverarbeitungs-Pipeline, umfangreiche Testing-Suite, MDR-konforme Dokumentation, Backend-Integration und Datenbankanbindung. Geschätzter Aufwand: 250-300 Entwicklungsstunden plus Architektur und Code-Review.",
+      "tags": ["TypeScript", "Datenverarbeitung", "Enterprise", "MDR"],
+      "tech": ["TypeScript", "Node.js", "SQL"],
+      "features": [
+        "Typsichere Datenverarbeitung",
+        "Modulare Pipeline-Architektur",
+        "Automatisierte Tests",
+        "MDR-konforme Dokumentation",
+        "REST API Integration",
+        "Real-time Datenvalidierung"
+      ],
+      "complexity": "high",
+      "category": "Backend/Data Processing"
+    },
+    {
+      "id": "jordan-health-app",
+      "title": "Jordan Health App",
+      "repoUrl": "https://github.com/DiggAiHH/Jordan-Health-App",
+      "shortDescription": "Mobile-First Gesundheits-App für Patientenbetreuung und Monitoring",
+      "longDescription": "Die Jordan Health App ist eine umfassende mobile Lösung für kontinuierliche Patientenbetreuung und Gesundheitsmonitoring. Sie ermöglicht es Ärzten, Patienten remote zu betreuen, Vitalparameter zu verfolgen und zeitnah zu intervenieren. Die App bietet Push-Notifications, sichere Messaging-Funktionen und Integration mit Wearables. Entwickelt mit modernen Web-Technologien für iOS und Android.",
+      "priceEUR": 12000,
+      "priceLabel": "ab",
+      "priceJustification": "Full-Stack Mobile-App mit Backend-Infrastruktur, Push-Notification-System, sichere End-to-End-Verschlüsselung, Wearable-Integration, umfangreiche UI/UX-Arbeit für Mobile-First-Design, Testing auf multiplen Devices und Plattformen. Aufwand: 350-400 Stunden inkl. Backend-API, Deployment und App Store Submission.",
+      "tags": ["Mobile App", "Telemedizin", "Monitoring", "iOS", "Android"],
+      "tech": ["React Native", "Node.js", "MongoDB", "REST API"],
+      "features": [
+        "Echtzeit Gesundheitsmonitoring",
+        "Push-Benachrichtigungen",
+        "Sichere Arzt-Patienten-Kommunikation",
+        "Wearable-Integration",
+        "Vitalparameter-Dashboard",
+        "Offline-Modus",
+        "E2E-Verschlüsselung"
+      ],
+      "complexity": "high",
+      "category": "Mobile Application"
+    },
+    {
+      "id": "anonymisator",
+      "title": "Anonymisator",
+      "repoUrl": "https://github.com/DiggAiHH/Anonymisator",
+      "shortDescription": "DSGVO-konforme Anonymisierung und Pseudonymisierung medizinischer Daten",
+      "longDescription": "Der Anonymisator ist ein spezialisiertes Tool zur DSGVO-konformen Anonymisierung und Pseudonymisierung medizinischer Daten. Es erkennt automatisch personenbezogene Daten in Dokumenten und Datenbanken und ersetzt diese regelbasiert oder durch KI-gestützte Verfahren. Essentiell für Forschungsprojekte, Datenanalysen und Compliance. Erfüllt die Anforderungen von Art. 32 DSGVO.",
+      "priceEUR": 6500,
+      "priceLabel": "ab",
+      "priceJustification": "Komplexe Regellogik für Daten-Anonymisierung, Pattern-Recognition für PII (Personally Identifiable Information), Integration mehrerer Datenquellen (PDF, CSV, Datenbanken), umfassende DSGVO-Dokumentation, Audit-Trail-Implementierung und rechtliche Validierung. Entwicklungsaufwand: 200-240 Stunden inkl. Security-Audit.",
+      "tags": ["DSGVO", "Datenschutz", "Anonymisierung", "Compliance", "Security"],
+      "tech": ["HTML", "JavaScript", "RegEx Engine", "PDF.js"],
+      "features": [
+        "Automatische PII-Erkennung",
+        "Regelbasierte Anonymisierung",
+        "Pseudonymisierungs-Verfahren",
+        "Batch-Processing",
+        "Audit-Trail",
+        "DSGVO Art. 32 konform",
+        "Multi-Format-Support (PDF, CSV, TXT)"
+      ],
+      "complexity": "high",
+      "category": "Data Privacy Tool"
+    },
+    {
+      "id": "jobetes",
+      "title": "JoBetes",
+      "repoUrl": "https://github.com/DiggAiHH/JoBetes",
+      "shortDescription": "Dr. Alshdaifat Jordan Patients Follow-Up - Diabetes-Management-System",
+      "longDescription": "JoBetes ist ein spezialisiertes Diabetes-Management- und Follow-Up-System, entwickelt für Dr. Alshdaifat in Jordanien. Die Anwendung ermöglicht strukturiertes Tracking von Diabetes-Patienten, Blutzucker-Verläufen, Medikation und Lifestyle-Faktoren. Mit automatischen Erinnerungen, Verlaufsanalysen und Arzt-Dashboard bietet JoBetes eine ganzheitliche Lösung für chronisches Krankheitsmanagement.",
+      "priceEUR": 9500,
+      "priceLabel": "ab",
+      "priceJustification": "Spezial-Applikation für chronisches Krankheitsmanagement mit komplexer Datenbankstruktur, Zeitreihen-Analyse für Blutzucker-Verläufe, Medication-Tracking mit Drug-Interaction-Checks, Multi-User-Architektur (Ärzte, Patienten), Reminder-System, Dashboard mit Charts und Trends. Geschätzter Aufwand: 280-320 Stunden inkl. medizinischer Beratung und Workflows.",
+      "tags": ["Diabetes", "Chronische Erkrankungen", "Follow-Up", "Patient Tracking"],
+      "tech": ["Full-Stack", "Database", "Charts.js", "Notification API"],
+      "features": [
+        "Blutzucker-Tracking mit Visualisierung",
+        "Medikationsplan und Erinnerungen",
+        "HbA1c-Verlauf und Trend-Analyse",
+        "Arzt-Dashboard",
+        "Patient-App mit Self-Monitoring",
+        "Automatische Warnungen bei kritischen Werten",
+        "Export für Arztberichte"
+      ],
+      "complexity": "high",
+      "category": "Specialized Medical Application"
+    },
+    {
+      "id": "anamnese",
+      "title": "Anamnese",
+      "repoUrl": "https://github.com/DiggAiHH/Anamnese",
+      "shortDescription": "Basis Online-Anamnese-System für schnelle Patientenerfassung",
+      "longDescription": "Anamnese ist eine schlanke, effiziente Lösung zur digitalen Patientenerfassung vor dem Arzttermin. Mit vorkonfigurierten Fragebögen für häufige Fachrichtungen (Allgemeinmedizin, Orthopädie, Innere Medizin) ermöglicht das System eine schnelle Integration in bestehende Praxisabläufe. Fokus liegt auf Einfachheit, Geschwindigkeit und DSGVO-Compliance ohne unnötigen Feature-Overhead.",
+      "priceEUR": 1800,
+      "priceLabel": "ab",
+      "priceJustification": "Schlankes MVP-Produkt mit Fokus auf Kernfunktionalität, vorkonfigurierte Standard-Fragebögen, simple HTML/CSS/JS-Implementierung ohne Backend-Anforderungen (kann auch offline/lokal genutzt werden), DSGVO-Basis-Compliance. Entwicklungsaufwand: 50-60 Stunden inkl. Fragebogen-Templates und Basic-UI.",
+      "tags": ["Anamnese", "MVP", "Praxis", "Fragebogen"],
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "features": [
+        "Vorkonfigurierte Fragebögen",
+        "Lokale Speicherung möglich",
+        "PDF-Export",
+        "Responsive Design",
+        "Einfache Integration",
+        "DSGVO-Grundlagen"
+      ],
+      "complexity": "low",
+      "category": "Frontend Application"
+    },
+    {
+      "id": "projekt-1",
+      "title": "Projekt-1",
+      "repoUrl": "https://github.com/DiggAiHH/Projekt-1",
+      "shortDescription": "Experimentelles MedTech-Prototyping-Projekt für innovative Lösungsansätze",
+      "longDescription": "Projekt-1 ist ein flexibles Prototyping-Framework für neue MedTech-Ideen und Proof-of-Concepts. Es dient als Experimentierumgebung für innovative Features wie KI-Integration, Blockchain-basierte Patientenakten oder IoT-Device-Integration. Ideal für Pilotprojekte, User-Research und Validierung neuer Konzepte vor der Full-Scale-Entwicklung. Enthält Setup für schnelle Iteration und Testing.",
+      "priceEUR": 4500,
+      "priceLabel": "ab",
+      "priceJustification": "Prototyping-Framework mit modularer Architektur, Setup für schnelle Experimente, Integration von ML-Libraries, API-Mocking-Tools, flexible Config-System für verschiedene Use-Cases. Ermöglicht Entwicklung mehrerer MVPs ohne Code-Duplikation. Aufwand: 120-150 Stunden inkl. Dokumentation und Beispiel-Implementierungen.",
+      "tags": ["Prototyping", "Innovation", "POC", "Experimental"],
+      "tech": ["JavaScript", "Node.js", "API", "Modular Architecture"],
+      "features": [
+        "Modulares Framework",
+        "Schnelle Prototypen-Entwicklung",
+        "API-Mocking",
+        "Konfigurierbares Setup",
+        "Integration-Ready",
+        "Dokumentations-Templates",
+        "Testing-Utilities"
+      ],
+      "complexity": "medium",
+      "category": "Development Framework"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 - **Praxis-Twin (Gamification)**: Spielerisches Aufbau-System für die digitale Praxis mit Drag-and-Drop-Modulen und Level-Progression
 - **AI God Mode**: Intelligenter Requirements Wizard zur Erstellung strukturierter Lastenhefte mit automatischer JSON-Generierung
 - **Avatar-System**: Spezialisierte virtuelle Assistenten für medizinische Prozesse
+- **Portfolio-Seite**: Übersicht aller DiggAiHH-Produkte mit detaillierten Beschreibungen und Preisinformationen
 
 ## 🚀 Tech Stack
 
@@ -23,6 +24,9 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 
 ```
 /
+├── public/
+│   └── data/
+│       └── products.json   # Produktdaten für Portfolio-Seite
 ├── src/
 │   ├── features/           # Feature-First Architektur
 │   │   ├── lageropt/      # Lageroptimierung mit MHD-Tracking
@@ -43,6 +47,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 │   │   └── PrivacyBanner.jsx
 │   ├── pages/            # Seiten-Komponenten
 │   │   ├── HomePage.jsx
+│   │   ├── ProductsPage.jsx  # Portfolio-Übersicht
 │   │   └── PrivacyPage.jsx
 │   ├── utils/            # Hilfsfunktionen
 │   │   ├── security.js   # Input-Validation & Sanitization
@@ -211,6 +216,52 @@ NODE_ENV=production
 ### Health Check
 
 Ein Health-Check-Endpoint ist unter `/health` verfügbar und wird automatisch von Docker überwacht.
+
+## 📦 Produktdaten-Verwaltung
+
+Die Portfolio-Seite zeigt alle DiggAiHH-Produkte mit Beschreibungen und Preisen. Die Produktdaten werden zentral verwaltet in:
+
+```
+public/data/products.json
+```
+
+### Produktdaten-Schema
+
+Jedes Produkt folgt diesem Schema:
+
+```json
+{
+  "id": "eindeutige-id",
+  "title": "Produktname",
+  "repoUrl": "https://github.com/DiggAiHH/RepoName",
+  "shortDescription": "Kurze Beschreibung für Kartenansicht",
+  "longDescription": "Detaillierte Beschreibung für Modal-Ansicht",
+  "priceEUR": 1234,
+  "priceLabel": "ab",
+  "priceJustification": "Begründung der Preisgestaltung",
+  "tags": ["Tag1", "Tag2"],
+  "tech": ["Technologie1", "Technologie2"],
+  "features": ["Feature 1", "Feature 2"],
+  "complexity": "low|medium|high",
+  "category": "Produktkategorie"
+}
+```
+
+### Produkt hinzufügen oder bearbeiten
+
+1. Öffnen Sie `public/data/products.json`
+2. Fügen Sie ein neues Produkt-Objekt zum `products`-Array hinzu oder bearbeiten Sie ein bestehendes
+3. Stellen Sie sicher, dass alle Pflichtfelder ausgefüllt sind
+4. Die `id` muss eindeutig und URL-freundlich sein (z.B. `mein-produkt`)
+5. Preise sollten nachvollziehbar begründet werden in `priceJustification`
+6. Speichern und testen Sie die Änderungen lokal mit `npm run dev`
+
+### Sicherheitshinweise
+
+- ⚠️ Produkttexte werden mit DOMPurify sanitized - kein unsicheres HTML
+- ✅ Alle Beschreibungen als Plain Text speichern
+- ✅ Keine sensiblen Informationen in Produktdaten
+- ✅ Repository-URLs werden validiert vor Anzeige
 
 ## 📄 Lizenz
 

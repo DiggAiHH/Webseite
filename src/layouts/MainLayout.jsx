@@ -11,6 +11,7 @@ const MainLayout = ({ children }) => {
 
   const navigation = [
     { name: 'Home', path: '/' },
+    { name: 'Produkte', path: '/products' },
     { name: 'Lageroptimierung', path: '/lageropt' },
     { name: 'ROI-Rechner', path: '/roi' },
     { name: 'Avatar-System', path: '/avatar' },
