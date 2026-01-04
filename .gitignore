@@ -6,6 +6,15 @@ node_modules/
 # Testing
 /coverage
 
+# Test artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/screenshots/
+
+# Local workspace artifacts
+/.1Prompt/
+
 # Production
 /build
 /dist
