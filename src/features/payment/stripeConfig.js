@@ -1,5 +1,3 @@
-import { loadStripe } from '@stripe/stripe-js'
-
 /**
  * Stripe Configuration for DiggAiHH MedTech Platform
  * 
@@ -23,7 +21,7 @@ let stripePromise = null
 export const getStripe = () => {
   if (!stripePromise) {
     if (STRIPE_PUBLISHABLE_KEY !== 'pk_test_placeholder') {
-      stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
+      stripePromise = import('@stripe/stripe-js').then(({ loadStripe }) => loadStripe(STRIPE_PUBLISHABLE_KEY))
     } else {
       // Always return a Promise to avoid runtime errors when Stripe is not configured
       stripePromise = Promise.resolve(null)

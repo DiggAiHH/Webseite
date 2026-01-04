@@ -1,21 +1,7 @@
-import DOMPurify from 'dompurify';
-
 /**
  * Security utilities for input validation and sanitization
  * DSGVO-compliant data handling
  */
-
-/**
- * Sanitizes HTML content to prevent XSS attacks
- * @param {string} dirty - The unsanitized HTML string
- * @returns {string} - Sanitized HTML string
- */
-export const sanitizeHTML = (dirty) => {
-  return DOMPurify.sanitize(dirty, {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br', 'span'],
-    ALLOWED_ATTR: []
-  });
-};
 
 /**
  * Validates email format

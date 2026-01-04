@@ -7,7 +7,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 - **Lageroptimierung mit MHD-Tracking**: Intelligente Bestandsverwaltung mit automatischer Ablaufdatum-Überwachung, Chargenverfolgung und MDR-konformer Dokumentation
 - **ROI-Rechner mit Arbeitszeit-Analyse**: Präzise Kosten-Nutzen-Analysen mit Fokus auf Produktivitätssteigerung durch Automatisierung redundanter Arbeitszeiten
 - **Praxis-Twin (Gamification)**: Spielerisches Aufbau-System für die digitale Praxis mit Drag-and-Drop-Modulen und Level-Progression
-- **AI God Mode**: Intelligenter Requirements Wizard zur Erstellung strukturierter Lastenhefte mit automatischer JSON-Generierung
+- **Assistenzmodus**: Intelligenter Requirements Wizard zur Erstellung strukturierter Lastenhefte mit automatischer JSON-Generierung
 - **Avatar-System**: Spezialisierte virtuelle Assistenten für medizinische Prozesse
 - **Portfolio-Seite**: Übersicht aller DiggAiHH-Produkte mit detaillierten Beschreibungen und Preisinformationen
 
@@ -17,7 +17,8 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 - **Styling**: Tailwind CSS mit Medical Blue Theme
 - **Routing**: React Router v6
 - **Payment**: Stripe Integration (Stripe Elements, Stripe Checkout)
-- **Security**: Input-Validation, URL-Validation, DOMPurify für HTML-Sanitization
+- **Security**: Input-Validation, URL-Validation
+- **Lead API**: Node.js (Express) für Kontakt-/Lead-Anfragen (same-origin via Nginx `/api/*`)
 - **Container**: Docker mit Multi-Stage Build
 - **Web Server**: Nginx (Alpine)
 
@@ -40,7 +41,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 │   │   │   └── AvatarFeature.jsx
 │   │   ├── praxistwin/    # Praxis-Twin Gamification
 │   │   │   └── PraxisTwinFeature.jsx
-│   │   ├── aigodmode/     # AI God Mode Requirements Wizard
+│   │   ├── aigodmode/     # Assistenzmodus Requirements Wizard
 │   │   │   └── AIGodModeFeature.jsx
 │   │   └── payment/       # Stripe Payment Integration
 │   │       ├── stripeConfig.js    # Stripe-Konfiguration
@@ -50,9 +51,13 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 │   ├── layouts/           # Layout-Komponenten
 │   │   └── MainLayout.jsx # Hauptlayout mit Privacy-UI
 │   ├── components/        # Wiederverwendbare Komponenten
+│   │   ├── LeadForm.jsx
 │   │   └── PrivacyBanner.jsx
 │   ├── pages/            # Seiten-Komponenten
 │   │   ├── HomePage.jsx
+│   │   ├── ContactPage.jsx
+│   │   ├── ImpressumPage.jsx
+│   │   ├── SecurityOverviewPage.jsx
 │   │   ├── ProductsPage.jsx  # Portfolio-Übersicht
 │   │   └── PrivacyPage.jsx
 │   ├── utils/            # Hilfsfunktionen
@@ -62,6 +67,10 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 ├── Dockerfile            # Multi-Stage Docker Build
 ├── nginx.conf           # Nginx-Konfiguration mit Security Headers
 ├── docker-compose.yml   # Container-Orchestrierung
+├── server/               # Lead API Service (Express)
+│   ├── Dockerfile
+│   ├── package.json
+│   └── src/
 └── tailwind.config.js   # Tailwind mit Medical Blue Theme
 ```
 
@@ -89,6 +98,68 @@ npm run build
 npm run preview
 ```
 
+### Kontaktformular / Lead API
+
+Das Kontaktformular (z.B. auf `/kontakt` oder in den Produkt-Modals) sendet Anfragen an die same-origin Lead API unter `/api/lead`.
+
+Wichtig: Bitte keine Gesundheitsdaten/Patientendaten über das Formular senden.
+
+#### SMTP konfigurieren (optional)
+
+Wenn SMTP nicht konfiguriert ist, antwortet die API bewusst mit `503 Service Unavailable` (fail-safe). Das Frontend zeigt dann eine hilfreiche Meldung an.
+
+- Beispielwerte: `server/.env.example`
+- Docker Compose: Variablen über `.env` im Projekt-Root setzen
+
+Erforderliche Variablen (Minimal-Setup):
+
+```env
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=...
+SMTP_PASS=...
+
+MAIL_FROM=no-reply@diggaihh.de
+MAIL_TO=kontakt@diggaihh.de
+```
+
+### E2E-Tests (Playwright)
+
+```bash
+npx playwright install --with-deps
+npm run test:e2e
+```
+
+### Infra Smoke (Docker + Nginx)
+
+Prüft automatisiert:
+- `/health` und `/api/health`
+- Security-Header (CSP, XFO, etc.)
+- Caching-Policy (`no-store` für HTML + `/api/*`, `immutable` für hashed Assets)
+- `/api/lead` fail-safe Verhalten (503 wenn SMTP nicht konfiguriert)
+
+```bash
+npm run test:infra
+```
+
+Konfiguration:
+- `E2E_BASE_URL` (Default: `http://localhost:4173`)
+- `E2E_SKIP_WEB_SERVER=1` (wenn du den Server selbst startest)
+
+### Defensiver Pen-Test Baseline (OWASP ZAP)
+
+Voraussetzungen: Docker.
+
+```bash
+docker-compose up --build -d
+npm run security:zap
+```
+
+Konfiguration:
+- `ZAP_TARGET_URL` (Default: `http://localhost`)
+- `ZAP_OUT_DIR` (Default: `zap-report`)
+
 ### Mit Docker
 
 ```bash
@@ -104,6 +175,35 @@ docker-compose down
 
 Die Anwendung ist dann unter `http://localhost` erreichbar.
 
+## ✅ Tests
+
+Die Repo nutzt mehrere Test-Runner (bewusst getrennt):
+
+```bash
+# Kleine Unit-Checks im Frontend (Node Test Runner)
+npm run test:unit
+
+# Frontend Component-Tests (Vitest)
+npm run test:frontend:run
+
+# Lead API Unit-Tests (Node Test Runner)
+npm --prefix server test
+
+# E2E (Playwright)
+npm run test:e2e
+
+# Docker/Nginx Smoke
+npm run test:infra
+
+# Alles (Unit + Frontend + Server + E2E + Infra)
+npm run test:all
+
+# Dependency Security Audit
+npm run security:audit
+```
+
+Hinweis: Falls `npm audit` ein `esbuild`-Finding über Vite meldet, wird im Root-Projekt eine `overrides`-Pin genutzt, um `esbuild` auf eine nicht-vulnerable Version zu setzen, ohne ein Vite-Major-Upgrade zu erzwingen.
+
 ## 🔒 Security Features
 
 ### Input Validation
@@ -111,6 +211,7 @@ Die Anwendung ist dann unter `http://localhost` erreichbar.
 Alle Benutzereingaben werden validiert und sanitized:
 
 - **Text-Inputs**: XSS-Protection durch React's automatische Text-Escaping und DOMPurify (verfügbar für HTML-Inhalte)
+- **Text-Inputs**: XSS-Protection durch React's automatische Text-Escaping
 - **Numerische Inputs**: Range-Validation
 - **Email/Phone**: Format-Validation mit Regex
 - **URL-Validation**: Strenge Validierung von externen URLs (nur HTTPS, nur erlaubte Domains)
@@ -185,7 +286,7 @@ Spielerisches Digitalisierungs-System zur Motivation und Visualisierung des Fort
 - **Performance-Optimiert**: Nutzt CSS-Animationen und SVG statt 3D-Engines
 - **Fortschritts-Tracking**: Echtzeit-Anzeige von Punkten, Level und Digitalisierungsgrad
 
-### 4. AI God Mode (Requirements Wizard)
+### 4. Assistenzmodus (Requirements Wizard)
 
 Intelligenter 4-Schritte-Wizard zur Erstellung strukturierter Projektspezifikationen:
 - **Schritt 1 - Grundinformationen**: Projektname, Praxistyp, Mitarbeiterzahl
@@ -242,11 +343,12 @@ Für Production können folgende Umgebungsvariablen gesetzt werden:
 ```env
 NODE_ENV=production
 VITE_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx  # Stripe Publishable Key
+VITE_SITE_URL=https://diggaihh.de          # Canonical/OG Base URL
 ```
 
 ### Health Check
 
-Ein Health-Check-Endpoint ist unter `/health` verfügbar und wird automatisch von Docker überwacht.
+Ein Health-Check-Endpoint ist unter `/health` verfügbar (Nginx/Container). Die Lead API bietet zusätzlich `/api/health`.
 
 ## 📦 Produktdaten-Verwaltung
 

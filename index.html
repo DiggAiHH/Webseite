@@ -3,17 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="canonical" href="https://diggaihh.de/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="DiggAiHH - Führende Medical Technology SaaS Platform für Praxen und Kliniken in Deutschland. DSGVO-konform, sichere Patientendatenverarbeitung und intelligente Prozessoptimierung." />
     <meta name="keywords" content="MedTech, SaaS, Praxissoftware, Klinik, Gesundheitswesen, DSGVO, Digitalisierung, Arztpraxis, Patientenverwaltung, Deutschland" />
     
-    <!-- Security Headers (CSP, X-Frame-Options, etc.) -->
-    <!-- Note: 'unsafe-inline' in script-src is required by Vite during development. 
-         For production, consider using nonces or hashes for inline scripts. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; frame-ancestors 'none'; form-action 'self'; base-uri 'self';">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+        <!-- Security headers are delivered via the reverse proxy (nginx) in production. -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
     
     <!-- SEO and Accessibility Meta Tags -->
@@ -22,25 +15,6 @@
     <meta name="theme-color" content="#0284c7">
     <meta name="color-scheme" content="light">
     <meta name="format-detection" content="telephone=no">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="DiggAiHH">
-    <meta property="og:url" content="https://diggaihh.de/">
-    <meta property="og:title" content="DiggAiHH - MedTech SaaS Platform für das Gesundheitswesen">
-    <meta property="og:description" content="Führende MedTech SaaS-Lösung für intelligente Prozessoptimierung in Praxen und Kliniken. DSGVO-konform, sicher und effizient.">
-    <meta property="og:locale" content="de_DE">
-    <meta property="og:image" content="https://diggaihh.de/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="DiggAiHH MedTech Platform">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@DiggAiHH">
-    <meta name="twitter:title" content="DiggAiHH - MedTech SaaS Platform">
-    <meta name="twitter:description" content="Führende MedTech SaaS-Lösung für intelligente Prozessoptimierung in Praxen und Kliniken.">
-    <meta name="twitter:image" content="https://diggaihh.de/og-image.png">
     
     <!-- Structured Data - Organization -->
     <script type="application/ld+json">
@@ -78,7 +52,7 @@
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "EUR",
-        "priceValidUntil": "2025-12-31"
+        "priceValidUntil": "2026-12-31"
       }
     }
     </script>

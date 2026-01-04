@@ -227,7 +227,7 @@ const AIGodModeFeature = () => {
     <div className="max-w-5xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          AI God Mode: Requirements Wizard
+          Assistenzmodus: Requirements Wizard
         </h1>
         <p className="text-gray-600">
           Erstellen Sie ein strukturiertes Lastenheft durch Beantwortung gezielter Fragen. 

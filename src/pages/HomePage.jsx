@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const HomePage = () => {
   return (
     <div className="space-y-8">
@@ -7,21 +9,51 @@ const HomePage = () => {
           Willkommen bei DiggAiHH
         </h1>
         <p className="text-xl md:text-2xl text-medical-blue-100 mb-8">
-          Ihre MedTech SaaS-Lösung für intelligente Prozessoptimierung
+          MedTech SaaS für messbar bessere Abläufe in Praxen & Kliniken
         </p>
-        <div className="flex flex-wrap gap-4">
-          <a href="/products" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
-            Unsere Produkte ansehen
-          </a>
-          <a href="/praxis-manager" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
+        <div className="flex flex-wrap gap-4" role="group" aria-label="Schnellzugriff">
+          <Link to="/kontakt" className="btn-primary bg-white text-medical-blue-700 hover:bg-gray-100">
+            Kontakt aufnehmen
+          </Link>
+          <Link to="/products" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
+            Produkte ansehen
+          </Link>
+          <Link to="/praxis-manager" className="btn-secondary bg-medical-accent-600 text-white hover:bg-medical-accent-700 border-2 border-white">
             Praxis Manager starten
-          </a>
-          <a href="/anamnese" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
-            Online-Anamnese
-          </a>
-          <a href="/ai-god-mode" className="btn-secondary bg-medical-blue-700 text-white hover:bg-medical-blue-800 border-2 border-white">
-            AI God Mode
-          </a>
+          </Link>
+        </div>
+      </section>
+
+      {/* Wow / Clarity Section */}
+      <section className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="card border-l-4 border-l-medical-blue-600">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Schneller Einstieg</h2>
+            <p className="text-gray-600">
+              In wenigen Schritten zur passenden Lösung – ohne Overhead, ohne unnötige Daten.
+            </p>
+          </div>
+          <div className="card border-l-4 border-l-medical-accent-600">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">DSGVO by Design</h2>
+            <p className="text-gray-600">
+              Datenminimierung, klare Zuständigkeiten und sichere Defaults – so, wie es in der Praxis funktioniert.
+            </p>
+          </div>
+          <div className="card border-l-4 border-l-purple-600">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Messbarer Nutzen</h2>
+            <p className="text-gray-600">
+              Fokus auf Prozesszeit, Qualität und Transparenz – ideal für Entscheidungen und Budgetfreigaben.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link to="/roi" className="btn-secondary bg-medical-blue-50 text-medical-blue-700 hover:bg-medical-blue-100">
+            ROI in 60 Sekunden prüfen
+          </Link>
+          <Link to="/security" className="btn-secondary bg-gray-50 text-gray-800 hover:bg-gray-100">
+            Security & Compliance ansehen
+          </Link>
         </div>
       </section>
 
@@ -40,9 +72,9 @@ const HomePage = () => {
               Zentrale Steuerung Ihrer Praxis: Terminplanung, Patientenverwaltung 
               und Ressourcenoptimierung in einem System.
             </p>
-            <a href="/praxis-manager" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+            <Link to="/praxis-manager" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
-            </a>
+            </Link>
           </div>
 
           <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-medical-accent-600">
@@ -56,9 +88,9 @@ const HomePage = () => {
               KI-gestützte Analyse und Anonymisierung personenbezogener Daten. 
               DSGVO-konforme Verarbeitung.
             </p>
-            <a href="/ai-daten-check" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+            <Link to="/ai-daten-check" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
-            </a>
+            </Link>
           </div>
 
           <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-purple-600">
@@ -72,9 +104,9 @@ const HomePage = () => {
               Self-Service-Terminals für Patientenanmeldung, Warteschlangen-Management 
               und digitale Formulare.
             </p>
-            <a href="/kiosk" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+            <Link to="/kiosk" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
-            </a>
+            </Link>
           </div>
 
           <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-orange-600">
@@ -88,9 +120,9 @@ const HomePage = () => {
               Intelligente Vorab-Befragung mit KI-Analyse und automatischer 
               Terminempfehlung für optimale Ressourcenplanung.
             </p>
-            <a href="/anamnese" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+            <Link to="/anamnese" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
-            </a>
+            </Link>
           </div>
 
           <div className="card hover:shadow-lg transition-shadow border-l-4 border-l-red-600">
@@ -104,9 +136,9 @@ const HomePage = () => {
               Komplettes IT-Management: Räume, Geräte, Netzwerk, PVS-Schulungen, 
               FAQ, Chatbot, MDR/DSGVO/BSI-Compliance.
             </p>
-            <a href="/praxis-it" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+            <Link to="/praxis-it" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
               Mehr erfahren →
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -128,9 +160,9 @@ const HomePage = () => {
             Intelligente Bestandsverwaltung mit automatischer Ablaufdatum-Überwachung,
             Chargenverfolgung und MDR-konformer Dokumentation.
           </p>
-          <a href="/lageropt" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+          <Link to="/lageropt" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
-          </a>
+          </Link>
         </div>
 
         <div className="card hover:shadow-lg transition-shadow">
@@ -146,9 +178,9 @@ const HomePage = () => {
             Berechnen Sie den Return on Investment mit Fokus auf Arbeitszeit-Einsparungen.
             Inklusive 12-Monats-Visualisierung.
           </p>
-          <a href="/roi" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+          <Link to="/roi" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
-          </a>
+          </Link>
         </div>
 
         <div className="card hover:shadow-lg transition-shadow">
@@ -164,9 +196,9 @@ const HomePage = () => {
             Gamification-System: Bauen Sie Ihre digitale Praxis spielerisch auf.
             Drag & Drop Module für Level-Fortschritt.
           </p>
-          <a href="/praxis-twin" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+          <Link to="/praxis-twin" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
-          </a>
+          </Link>
         </div>
 
         <div className="card hover:shadow-lg transition-shadow">
@@ -176,15 +208,15 @@ const HomePage = () => {
             </svg>
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
-            AI God Mode
+            Assistenzmodus
           </h3>
           <p className="text-gray-600 mb-4">
             Intelligenter Requirements Wizard: Erstellen Sie strukturierte Lastenhefte
             mit automatischer JSON-Generierung.
           </p>
-          <a href="/ai-god-mode" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+          <Link to="/ai-god-mode" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
-          </a>
+          </Link>
         </div>
 
         <div className="card hover:shadow-lg transition-shadow">
@@ -200,9 +232,9 @@ const HomePage = () => {
             Personalisierte Assistenten und virtuelle Berater für Ihre medizinischen
             Prozesse und Patienteninteraktion.
           </p>
-          <a href="/avatar" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
+          <Link to="/avatar" className="text-medical-blue-600 hover:text-medical-blue-700 font-medium">
             Mehr erfahren →
-          </a>
+          </Link>
         </div>
         </div>
       </section>

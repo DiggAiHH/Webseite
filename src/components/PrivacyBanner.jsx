@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { usePrivacyConsent } from '../utils/privacy';
 
 /**
@@ -57,9 +58,9 @@ const PrivacyBanner = () => {
                 Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche 
                 Nutzererfahrung zu bieten und unsere Dienste zu verbessern. Weitere Informationen 
                 finden Sie in unserer{' '}
-                <a href="/privacy" className="text-medical-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded">
+                <Link to="/privacy" className="text-medical-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded">
                   Datenschutzerklärung
-                </a>
+                </Link>
                 .
               </p>
             </div>

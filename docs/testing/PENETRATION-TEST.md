@@ -2,7 +2,7 @@
 ## DiggAiHH MedTech SaaS Platform
 
 **Version:** 1.0  
-**Stand:** 2024  
+**Stand:** 2026  
 **Klassifizierung:** Vertraulich
 
 ---
@@ -22,7 +22,7 @@ Umfassende Sicherheitsprüfung der DiggAiHH MedTech SaaS-Plattform gemäß:
 |-----------|--------|--------|
 | Kritische Schwachstellen | 0 | - |
 | Hohe Schwachstellen | 0 | - |
-| Mittlere Schwachstellen | 1 | CSP 'unsafe-inline' |
+| Mittlere Schwachstellen | 1 | CSP 'unsafe-inline' (Inline-Skripte/Build-Tooling) |
 | Niedrige Schwachstellen | 0 | - |
 | Informativ | 2 | Optimierungspotenziale |
 
@@ -61,11 +61,11 @@ Umfassende Sicherheitsprüfung der DiggAiHH MedTech SaaS-Plattform gemäß:
 
 | Test | Ergebnis | Details |
 |------|----------|---------|
-| Horizontale Privilegieneskalation | ✅ BESTANDEN | Keine Benutzerkonten, kein Backend |
+| Horizontale Privilegieneskalation | ✅ BESTANDEN | Kein Login/keine Rollen im Produktumfang |
 | Vertikale Privilegieneskalation | ✅ BESTANDEN | Keine Admin-Funktionen |
 | Directory Traversal | ✅ BESTANDEN | Nginx blockiert /.. Pfade |
 | Forced Browsing | ✅ BESTANDEN | Hidden files blockiert |
-| CORS-Konfiguration | ✅ BESTANDEN | Keine CORS-Header (SPA) |
+| CORS-Konfiguration | ✅ BESTANDEN | Same-Origin SPA, /api reverse-proxied |
 
 **Implementierte Schutzmaßnahmen:**
 ```nginx
@@ -144,12 +144,12 @@ export const validateTextInput = (input, maxLength = 1000) => {
 
 **Security Header Analyse:**
 ```
-X-Frame-Options: SAMEORIGIN ✅
+X-Frame-Options: DENY ✅
 X-Content-Type-Options: nosniff ✅
 X-XSS-Protection: 1; mode=block ✅
 Referrer-Policy: strict-origin-when-cross-origin ✅
 Permissions-Policy: geolocation=(), microphone=(), camera=() ✅
-Content-Security-Policy: ⚠️ 'unsafe-inline' erforderlich für React
+Content-Security-Policy: ⚠️ 'unsafe-inline' (in Produktion idealerweise Nonce/Hashes)
 ```
 
 ### A06:2021 - Vulnerable Components
@@ -180,7 +180,7 @@ Empfehlung: npm audit fix bei nächstem Release
 
 | Test | Ergebnis | Details |
 |------|----------|---------|
-| CI/CD Pipeline | ✅ BESTANDEN | GitHub Actions mit Checks |
+| CI/CD Pipeline | ℹ️ INFO | Im Repository sind keine GitHub Actions Workflows hinterlegt |
 | Unsigned Updates | N/A | Keine Auto-Updates |
 | Insecure Deserialization | ✅ BESTANDEN | JSON.parse nur für eigene Daten |
 
@@ -253,6 +253,25 @@ Für erhöhte Sicherheit 'nonce'-basierte CSP implementieren:
 
 ## 5. Automatisierte Scans
 
+### 5.0 Reproduzierbarer Baseline-Scan (OWASP ZAP)
+
+**Ziel:** Defensiver Baseline-Scan (keine Exploitation), wiederholbar in Dev/CI.
+
+**Voraussetzungen:** Docker, laufendes Ziel unter `http://localhost` (z.B. via `docker-compose up --build`).
+
+**Ausführung:**
+```bash
+npm run security:zap
+```
+
+**Konfiguration:**
+- `ZAP_TARGET_URL` (default: `http://localhost`)
+- `ZAP_OUT_DIR` (default: `zap-report`)
+
+**Artefakte:**
+- `zap-report/report.html`
+- `zap-report/report.json`
+
 ### 5.1 Statische Code-Analyse (SAST)
 
 **ESLint Security Results:**
@@ -301,9 +320,9 @@ Run `npm audit fix` to fix them
 - **Empfehlung:** Bei Erweiterung um sensible Daten Verschlüsselung hinzufügen
 
 #### INFO-002: Keine Rate Limiting
-- **Beschreibung:** Keine Begrenzung von Anfragen
-- **Auswirkung:** Potenzielle DoS-Anfälligkeit
-- **Empfehlung:** Bei Backend-Einführung implementieren
+- **Beschreibung:** Frontend/Nginx limitiert Requests nicht aktiv; die Lead-API nutzt Rate Limiting
+- **Auswirkung:** Für rein statische Assets gering; für API-Endpunkte relevant (bereits mitigiert)
+- **Empfehlung:** Optional: Rate Limiting auch auf Proxy/Ingress-Ebene ergänzen
 
 ---
 
@@ -313,10 +332,10 @@ Run `npm audit fix` to fix them
 
 | Datum | Tester | Test | Ergebnis |
 |-------|--------|------|----------|
-| 2024 | Security Team | XSS Fuzzing | BESTANDEN |
-| 2024 | Security Team | Header Analysis | BESTANDEN |
-| 2024 | Security Team | Input Validation | BESTANDEN |
-| 2024 | Security Team | Clickjacking | BESTANDEN |
+| 2026 | Security Team | XSS Fuzzing | BESTANDEN |
+| 2026 | Security Team | Header Analysis | BESTANDEN |
+| 2026 | Security Team | Input Validation | BESTANDEN |
+| 2026 | Security Team | Clickjacking | BESTANDEN |
 
 ### 7.2 Verwendete Tools
 

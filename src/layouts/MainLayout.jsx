@@ -15,6 +15,8 @@ const MainLayout = ({ children }) => {
     { name: 'Lageroptimierung', path: '/lageropt' },
     { name: 'ROI-Rechner', path: '/roi' },
     { name: 'Avatar-System', path: '/avatar' },
+    { name: 'Sicherheit', path: '/security' },
+    { name: 'Kontakt', path: '/kontakt' },
   ];
 
   const isActive = (path) => location.pathname === path;

@@ -11,6 +11,8 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+    depends_on:
+      - diggaihh-api
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
@@ -22,6 +24,26 @@ services:
     labels:
       - "com.diggaihh.description=DiggAiHH MedTech SaaS Platform"
       - "com.diggaihh.version=1.0.0"
+
+  diggaihh-api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: diggaihh-lead-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - MAIL_TO=${MAIL_TO:-kontakt@diggaihh.de}
+      - MAIL_FROM=${MAIL_FROM:-no-reply@diggaihh.de}
+      - MAIL_SUBJECT_PREFIX=${MAIL_SUBJECT_PREFIX:-[DiggAiHH Anfrage]}
+    networks:
+      - diggaihh-network
 
 networks:
   diggaihh-network:

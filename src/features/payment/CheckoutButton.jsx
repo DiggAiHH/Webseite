@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { isStripeConfigured } from './stripeConfig'
+
+const LeadForm = lazy(() => import('../../components/LeadForm'))
 
 /**
  * CheckoutButton Component
@@ -57,7 +59,7 @@ const CheckoutButton = ({ product, className = '' }) => {
     setError(null)
     
     if (!isStripeConfigured()) {
-      // Show demo modal when Stripe is not configured
+      // Lead flow when Stripe is not configured
       setShowDemoModal(true)
       return
     }
@@ -79,7 +81,7 @@ const CheckoutButton = ({ product, className = '' }) => {
       // const { sessionUrl } = await response.json()
       // window.location.href = sessionUrl
 
-      // Demo mode - show modal
+      // Demo mode - show modal (lead request)
       setShowDemoModal(true)
     } catch (err) {
       setError('Fehler beim Initialisieren der Zahlung. Bitte versuchen Sie es erneut.')
@@ -109,7 +111,7 @@ const CheckoutButton = ({ product, className = '' }) => {
         onClick={handleCheckout}
         disabled={isLoading}
         className={`inline-flex items-center justify-center px-6 py-3 bg-medical-accent-600 text-white rounded-lg hover:bg-medical-accent-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
-        aria-label={`${title} kaufen für ${formatPrice(priceEUR)}`}
+        aria-label={`Anfrage zu ${title} senden`}
       >
         {isLoading ? (
           <>
@@ -150,12 +152,11 @@ const CheckoutButton = ({ product, className = '' }) => {
               </div>
               
               <h3 id="demo-modal-title" className="text-xl font-bold text-gray-900 mb-2">
-                Demo-Modus
+                Anfrage senden
               </h3>
               
               <p className="text-gray-600 mb-4">
-                Die Zahlungsintegration befindet sich im Demo-Modus. 
-                In der Produktionsversion werden Sie zur sicheren Stripe-Zahlung weitergeleitet.
+                Senden Sie uns Ihre Anfrage – wir melden uns mit einem konkreten Angebot und nächsten Schritten.
               </p>
 
               <div className="bg-medical-blue-50 rounded-lg p-4 mb-6">
@@ -167,17 +168,17 @@ const CheckoutButton = ({ product, className = '' }) => {
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <a
-                  href={`mailto:kontakt@diggaihh.de?subject=${encodeURIComponent(`Anfrage: ${title}`)}&body=${encodeURIComponent(`Ich interessiere mich für das Produkt "${title}" zum Preis von ${formatPrice(priceEUR)}.`)}`}
-                  className="block w-full px-4 py-3 bg-medical-blue-600 text-white rounded-lg hover:bg-medical-blue-700 transition-colors font-medium"
-                >
-                  Per E-Mail anfragen
-                </a>
+              <div className="text-left">
+                <Suspense fallback={<div className="py-2 text-sm text-gray-600">Lade Formular…</div>}>
+                  <LeadForm
+                    productId={product?.id ?? ''}
+                    onSuccess={() => setShowDemoModal(false)}
+                  />
+                </Suspense>
                 <button
                   ref={closeButtonRef}
                   onClick={() => setShowDemoModal(false)}
-                  className="block w-full px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  className="mt-4 block w-full px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Schließen
                 </button>

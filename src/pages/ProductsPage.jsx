@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { validateURL } from '../utils/security'
-import { CheckoutButton } from '../features/payment'
+import CheckoutButton from '../features/payment/CheckoutButton'
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([])

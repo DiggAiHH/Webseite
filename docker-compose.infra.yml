@@ -1,0 +1,43 @@
+services:
+  diggaihh-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: "no"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - diggaihh-api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks:
+      - diggaihh-network
+
+  diggaihh-api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: "no"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SMTP_HOST=
+      - SMTP_PORT=587
+      - SMTP_SECURE=false
+      - SMTP_USER=
+      - SMTP_PASS=
+      - MAIL_TO=kontakt@diggaihh.de
+      - MAIL_FROM=no-reply@diggaihh.de
+      - MAIL_SUBJECT_PREFIX=[DiggAiHH Anfrage]
+    networks:
+      - diggaihh-network
+
+networks:
+  diggaihh-network:
+    driver: bridge
