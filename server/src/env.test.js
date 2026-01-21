@@ -44,3 +44,39 @@ test('getEnv parses SMTP_SECURE boolean', () => {
     process.env = previous
   }
 })
+
+test('getEnv parses rate limit config with defaults', () => {
+  const previous = { ...process.env }
+
+  try {
+    process.env = {
+      ...previous,
+      PORT: '3000'
+    }
+
+    const env = getEnv()
+    assert.equal(env.RATE_LIMIT_WINDOW_MS, 15 * 60 * 1000)
+    assert.equal(env.RATE_LIMIT_MAX, 10)
+  } finally {
+    process.env = previous
+  }
+})
+
+test('getEnv parses custom rate limit values', () => {
+  const previous = { ...process.env }
+
+  try {
+    process.env = {
+      ...previous,
+      PORT: '3000',
+      RATE_LIMIT_WINDOW_MS: '60000',
+      RATE_LIMIT_MAX: '5'
+    }
+
+    const env = getEnv()
+    assert.equal(env.RATE_LIMIT_WINDOW_MS, 60000)
+    assert.equal(env.RATE_LIMIT_MAX, 5)
+  } finally {
+    process.env = previous
+  }
+})

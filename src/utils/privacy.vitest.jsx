@@ -1,13 +1,13 @@
-import React from 'react'
-import { describe, expect, it, vi } from 'vitest'
-import { act, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { usePrivacyConsent, useSessionTimeout } from './privacy'
 
 function ConsentHarness() {
-  const { consent, updateConsent, hasConsented } = usePrivacyConsent()
+  const { consent, updateConsent, hasConsented, isHydrated } = usePrivacyConsent()
 
   return (
     <div>
+      <div data-testid="isHydrated">{String(isHydrated)}</div>
       <div data-testid="hasConsented">{String(hasConsented)}</div>
       <div data-testid="analytics">{String(consent.analytics)}</div>
       <button onClick={() => updateConsent({ analytics: true })}>enable analytics</button>
@@ -21,10 +21,17 @@ function SessionHarness({ timeoutMinutes }) {
 }
 
 describe('privacy hooks', () => {
-  it('usePrivacyConsent persists to localStorage and sets timestamp', () => {
+  beforeEach(() => {
     localStorage.clear()
+  })
 
+  it('usePrivacyConsent hydrates and persists to localStorage', async () => {
     render(<ConsentHarness />)
+
+    // Wait for hydration
+    await waitFor(() => {
+      expect(screen.getByTestId('isHydrated')).toHaveTextContent('true')
+    })
 
     expect(screen.getByTestId('hasConsented')).toHaveTextContent('false')
     expect(screen.getByTestId('analytics')).toHaveTextContent('false')

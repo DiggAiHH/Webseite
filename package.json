@@ -2,7 +2,13 @@
   "name": "diggaihh-medtech-saas",
   "version": "1.0.0",
   "description": "DiggAiHH - Medical Technology SaaS Platform",
+  "author": "Laith Alshdaifat <laith.alshdaifat@hotmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -24,7 +24,16 @@ function resolveOgImageUrl(siteUrl) {
     return configured
   }
 
-  return `${siteUrl}/og-image.png`
+  return `${siteUrl}/og-image.svg`
+}
+
+function resolveCspNonce() {
+  if (typeof document === 'undefined') return undefined
+  const meta = document.querySelector('meta[name="csp-nonce"]')
+  const value = meta?.getAttribute('content')
+  if (typeof value !== 'string') return undefined
+  const trimmed = value.trim()
+  return trimmed.length > 0 ? trimmed : undefined
 }
 
 export default function Seo({
@@ -33,14 +42,24 @@ export default function Seo({
   canonicalPath,
   robots = 'index,follow',
   ogType = 'website',
-  ogImageUrl
+  ogImageUrl,
+  jsonLd
 }) {
   const siteUrl = resolveSiteUrl()
   const canonicalUrl = `${siteUrl}${normalizePath(canonicalPath ?? '/')}`
   const imageUrl = ogImageUrl ?? resolveOgImageUrl(siteUrl)
 
+  const cspNonce = resolveCspNonce()
+
+  const jsonLdList = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
+  const helmetScripts = jsonLdList.map((entry) => ({
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify(entry),
+    nonce: cspNonce
+  }))
+
   return (
-    <Helmet>
+    <Helmet script={helmetScripts}>
       {title ? <title>{title}</title> : null}
       {description ? <meta name="description" content={description} /> : null}
       <link rel="canonical" href={canonicalUrl} />

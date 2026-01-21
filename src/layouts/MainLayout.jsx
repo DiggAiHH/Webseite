@@ -125,7 +125,7 @@ const MainLayout = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-600">
-              © {new Date().getFullYear()} DiggAiHH. Alle Rechte vorbehalten.
+              © {new Date().getFullYear()} DiggAiHH | Inhaber: Laith Alshdaifat. Alle Rechte vorbehalten.
             </div>
             <nav className="flex gap-6 text-sm" aria-label="Footer-Navigation">
               <Link 

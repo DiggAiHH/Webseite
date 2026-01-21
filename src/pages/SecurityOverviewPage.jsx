@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const SecurityOverviewPage = () => {
   return (
     <div className="max-w-5xl mx-auto">
@@ -44,6 +46,8 @@ const SecurityOverviewPage = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Transparenz</h2>
             <p className="text-gray-700">
               Detaildokumente sind im Projekt vorhanden (z.B. DSGVO/ISO/BSI). Diese Seite ist eine Übersicht – konkrete Vertrags-/AVV-Unterlagen stellen wir auf Anfrage bereit.
+              Für Details zur Datenverarbeitung siehe die{' '}
+              <Link to="/privacy" className="text-medical-blue-600 hover:underline">Datenschutzerklärung</Link>.
             </p>
           </section>
         </div>
@@ -51,7 +55,8 @@ const SecurityOverviewPage = () => {
         <div className="mt-8 bg-medical-blue-50 border border-medical-blue-200 rounded-lg p-5">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Wichtiger Hinweis</h2>
           <p className="text-gray-700">
-            Bitte übermitteln Sie über Website/Formulare keine Gesundheitsdaten. Für sicherheitsrelevante Meldungen nutzen Sie den Kontaktweg im Impressum.
+            Bitte übermitteln Sie über Website/Formulare keine Gesundheitsdaten. Für sicherheitsrelevante Meldungen nutzen Sie den Kontaktweg im Impressum oder schreiben Sie uns über{' '}
+            <Link to="/kontakt" className="text-medical-blue-600 hover:underline">Kontakt</Link>.
           </p>
         </div>
       </div>

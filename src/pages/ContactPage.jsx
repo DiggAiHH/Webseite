@@ -1,4 +1,5 @@
 import LeadForm from '../components/LeadForm'
+import { Link } from 'react-router-dom'
 
 const ContactPage = () => {
   return (
@@ -9,10 +10,37 @@ const ContactPage = () => {
           Für Praxen, MVZ und medizinische Einrichtungen: Senden Sie uns kurz Ihre Anfrage – wir melden uns mit einem konkreten Vorschlag.
         </p>
 
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8 text-sm text-gray-700">
+          <p>
+            Ihre Angaben nutzen wir ausschließlich zur Bearbeitung Ihrer Anfrage. Details finden Sie in der{' '}
+            <Link to="/privacy" className="text-medical-blue-600 hover:underline">Datenschutzerklärung</Link>.
+            Verantwortliche Kontaktdaten stehen im{' '}
+            <Link to="/impressum" className="text-medical-blue-600 hover:underline">Impressum</Link>.
+          </p>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Anfrageformular</h2>
             <LeadForm />
+
+            <div className="mt-6 bg-white border border-gray-200 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Mini‑FAQ</h3>
+              <div className="space-y-3 text-sm text-gray-700">
+                <div>
+                  <p className="font-medium text-gray-900">Wie schnell bekomme ich eine Antwort?</p>
+                  <p>Wir melden uns zeitnah mit Rückfragen oder einem konkreten Vorschlag. Wenn es besonders dringend ist, schreiben Sie das bitte in die Nachricht.</p>
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">Wie geht’s nach dem Absenden weiter?</p>
+                  <p>Wir prüfen Ihre Angaben, klären kurz den Bedarf (Ziele, Prozesse, Integration) und schlagen dann die passende Lösung inkl. nächsten Schritten vor.</p>
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">Welche Daten sollte ich nicht senden?</p>
+                  <p>Bitte keine Gesundheitsdaten oder besonders schützenswerte Inhalte über Website/Formulare übermitteln.</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div>

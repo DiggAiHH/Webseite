@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { validateURL } from '../utils/security'
 import CheckoutButton from '../features/payment/CheckoutButton'
+import { Link } from 'react-router-dom'
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([])
@@ -209,6 +210,74 @@ const ProductsPage = () => {
         </p>
       </section>
 
+      {/* Context Section */}
+      <section className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h2 className="text-2xl font-bold text-gray-900 mb-3">So kommen Sie schnell zur passenden Lösung</h2>
+        <p className="text-gray-600 max-w-4xl">
+          Jede Lösung hat eine eigene, indexierbare Detailseite (z.B. mit Leistungsumfang, Tech-Stack und Richtpreis). Für die Auswahl in der
+          Praxis haben sich drei Fragen bewährt: Was ist der Engpass im Alltag, welche Schnittstellen sind relevant (PVS/TI/Workflows) und welche
+          Datenschutzanforderungen gelten im konkreten Setup?
+        </p>
+        <div className="mt-4 grid md:grid-cols-3 gap-4">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Einsatzbereiche</h3>
+            <p className="text-sm text-gray-700">Anamnese, Lager/MHD, Praxisorganisation, Kiosk-Prozesse, ROI-Entscheidungen.</p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Einführung</h3>
+            <p className="text-sm text-gray-700">Start mit Pilot, klare Anforderungen, dann Rollout – ohne unnötige Datenerfassung.</p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Datenschutz</h3>
+            <p className="text-sm text-gray-700">Datenminimierung und sichere Defaults. Bitte keine Gesundheitsdaten über Webformulare.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <h2 className="text-2xl font-bold text-gray-900 mb-3">FAQ</h2>
+        <p className="text-gray-600 mb-6 max-w-4xl">
+          Häufige Fragen zur Auswahl, Preisen und Einführung – kurz und praxisnah.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Gibt es zu jedem Produkt eine eigene Seite?</h3>
+            <p className="text-sm text-gray-700">
+              Ja. Jedes Produkt hat eine indexierbare Detailseite mit Leistungsumfang, Tech-Stack und Richtpreis.
+            </p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Sind die Preise verbindlich?</h3>
+            <p className="text-sm text-gray-700">
+              Nein. Preise sind Richtwerte; der finale Preis hängt von Anforderungen, Integration und Anpassungen ab.
+            </p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Welche Informationen helfen für ein Angebot?</h3>
+            <p className="text-sm text-gray-700">
+              Einrichtungstyp, Fachrichtung/Teamgröße, gewünschte Lösung(en), Zeitplan und Integrationsbedarf (PVS/TI/Schnittstellen).
+            </p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Kann ich nur ein Modul nutzen?</h3>
+            <p className="text-sm text-gray-700">
+              Ja. Die Module sind einzeln nutzbar oder kombinierbar, je nach Ziel (Kosten, Qualität, Compliance, Entlastung).
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link to="/kontakt" className="btn-secondary bg-medical-blue-50 text-medical-blue-700 hover:bg-medical-blue-100">
+            Angebot anfragen
+          </Link>
+          <Link to="/security" className="btn-secondary bg-gray-50 text-gray-800 hover:bg-gray-100">
+            Security & Compliance
+          </Link>
+        </div>
+      </section>
+
       {/* Products Grid */}
       <section>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
@@ -269,12 +338,24 @@ const ProductsPage = () => {
                   <span className="text-2xl font-bold text-medical-blue-600">
                     {formatPrice(product.priceEUR, product.priceLabel)}
                   </span>
-                  <span className="text-medical-blue-600 font-medium flex items-center">
-                    Details
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-medical-blue-600 font-medium flex items-center">
+                      Details
+                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                    <Link
+                      to={`/products/${product.id}`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                      }}
+                      className="text-sm text-medical-blue-600 hover:text-medical-blue-700 font-medium"
+                      aria-label={`Produktseite zu ${product.title} öffnen`}
+                    >
+                      Details als Seite →
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -358,6 +439,19 @@ const ProductsPage = () => {
                       {tech}
                     </span>
                   ))}
+                </div>
+
+                <div className="mt-2">
+                  <Link
+                    to={`/products/${selectedProduct.id}`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
+                    className="text-medical-blue-600 hover:text-medical-blue-700 font-medium"
+                    aria-label={`Produktseite zu ${selectedProduct.title} öffnen`}
+                  >
+                    Details als Seite →
+                  </Link>
                 </div>
               </section>
 

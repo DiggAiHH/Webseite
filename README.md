@@ -78,7 +78,7 @@ DiggAiHH ist eine moderne MedTech SaaS-Plattform für intelligente Prozessoptimi
 
 ### Voraussetzungen
 
-- Node.js 18+ 
+- Node.js 20+ 
 - npm oder yarn
 - Docker (optional für Produktion)
 

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-clinical-bg text-gray-900;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   
@@ -15,16 +15,86 @@
 }
 
 @layer components {
+  /* === BUTTONS === */
   .btn-primary {
-    @apply bg-medical-blue-600 text-white px-4 py-2 rounded-md hover:bg-medical-blue-700 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500;
+    @apply bg-medical-blue-600 text-white px-4 py-2 rounded-md hover:bg-medical-blue-700 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500 shadow-clinical hover:shadow-clinical-md;
   }
   
   .btn-secondary {
-    @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500;
+    @apply bg-gray-100 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-200 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border border-clinical-border;
+  }
+
+  .btn-trust {
+    @apply bg-gradient-trust text-white px-4 py-2 rounded-md hover:opacity-90 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-accent-500 shadow-clinical-md;
   }
   
+  /* === CARDS === */
   .card {
-    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+    @apply bg-white rounded-lg shadow-clinical p-6 border border-clinical-border transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-clinical-lg hover:border-medical-blue-200;
+  }
+
+  .card-clinical {
+    @apply bg-white rounded-xl shadow-clinical-md p-6 border border-clinical-border backdrop-blur-sm;
+  }
+
+  .card-glass {
+    @apply bg-white/80 backdrop-blur-md rounded-xl shadow-clinical-lg p-6 border border-white/20;
+  }
+
+  /* === EU TRUST BADGES === */
+  .badge-eu {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-eu-trust-100 text-eu-trust-700 border border-eu-trust-200;
+  }
+
+  .badge-dsgvo {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-medical-accent-100 text-medical-accent-700 border border-medical-accent-200;
+  }
+
+  .badge-bsi {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-medical-blue-100 text-medical-blue-700 border border-medical-blue-200;
+  }
+
+  .badge-iso {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200;
+  }
+
+  /* === CLINICAL SECTIONS === */
+  .section-clinical {
+    @apply bg-gradient-clinical rounded-2xl p-8 border border-clinical-border;
+  }
+
+  .section-hero {
+    @apply bg-gradient-hero rounded-2xl p-8 md:p-12 text-white shadow-glow-blue;
+  }
+
+  /* === WIZARD STEPPER === */
+  .wizard-step {
+    @apply flex items-center gap-3;
+  }
+
+  .wizard-step-number {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-200;
+  }
+
+  .wizard-step-number.active {
+    @apply bg-medical-blue-600 text-white shadow-glow-blue;
+  }
+
+  .wizard-step-number.completed {
+    @apply bg-medical-accent-500 text-white;
+  }
+
+  .wizard-step-number.pending {
+    @apply bg-gray-200 text-gray-500;
+  }
+
+  /* === TRUST INDICATOR === */
+  .trust-indicator {
+    @apply flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg border border-clinical-border shadow-clinical;
   }
   
   /* Screen reader only (WCAG accessibility) */
@@ -36,5 +106,25 @@
   .sr-only.focus\:not-sr-only:focus {
     @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal;
     clip: auto;
+  }
+}
+
+@layer utilities {
+  /* === ANIMATIONS === */
+  .animate-in {
+    @apply animate-fade-in;
+  }
+
+  .animate-slide {
+    @apply animate-slide-up;
+  }
+
+  /* === CLINICAL GLOW === */
+  .glow-blue {
+    @apply shadow-glow-blue;
+  }
+
+  .glow-accent {
+    @apply shadow-glow-accent;
   }
 }

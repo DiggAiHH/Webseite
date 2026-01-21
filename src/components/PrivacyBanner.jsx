@@ -1,16 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivacyConsent } from '../utils/privacy';
 
 /**
  * PrivacyBanner Component
- * DSGVO-compliant cookie consent banner with ARIA accessibility
+ * DSGVO-compliant cookie consent banner with ARIA accessibility and focus trap
  */
 const PrivacyBanner = () => {
-  const { updateConsent, hasConsented } = usePrivacyConsent();
+  const { updateConsent, hasConsented, isHydrated } = usePrivacyConsent();
   const [showDetails, setShowDetails] = useState(false);
+  const bannerRef = useRef(null);
+  const firstFocusableRef = useRef(null);
 
-  if (hasConsented) {
+  // Focus trap: Focus first button when banner appears
+  useEffect(() => {
+    if (isHydrated && !hasConsented && firstFocusableRef.current) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        firstFocusableRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isHydrated, hasConsented]);
+
+  // Handle Escape key to accept essential only
+  useEffect(() => {
+    if (hasConsented) return;
+    
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        handleAcceptEssential();
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [hasConsented]);
+
+  // Don't render during SSR or before hydration
+  if (!isHydrated || hasConsented) {
     return null;
   }
 
@@ -41,6 +69,7 @@ const PrivacyBanner = () => {
 
   return (
     <div 
+      ref={bannerRef}
       className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-medical-blue-600 shadow-2xl z-50"
       role="dialog"
       aria-modal="true"
@@ -61,11 +90,12 @@ const PrivacyBanner = () => {
                 <Link to="/privacy" className="text-medical-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded">
                   Datenschutzerklärung
                 </Link>
-                .
+                . <span className="text-xs text-gray-500">(Escape = nur notwendige)</span>
               </p>
             </div>
             <div className="flex flex-wrap gap-3" role="group" aria-label="Cookie-Einstellungen">
               <button
+                ref={firstFocusableRef}
                 onClick={() => setShowDetails(true)}
                 className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
                 aria-expanded={showDetails}

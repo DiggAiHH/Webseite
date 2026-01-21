@@ -38,6 +38,52 @@ function requireHeader(headers, name, predicate, context) {
   return value
 }
 
+function requireHeaderIncludes(headers, name, requiredParts, context) {
+  const value = requireHeader(headers, name, (v) => v.length > 0, context)
+  const lower = value.toLowerCase()
+
+  for (const part of requiredParts) {
+    if (!lower.includes(part.toLowerCase())) {
+      throw new Error(`${context}: header ${name} missing required part: ${part}. Got: ${value}`)
+    }
+  }
+
+  return value
+}
+
+function requireCspGuards(headers, context) {
+  requireHeaderIncludes(
+    headers,
+    'content-security-policy',
+    [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'"
+    ],
+    context
+  )
+
+  const reportOnly = requireHeaderIncludes(
+    headers,
+    'content-security-policy-report-only',
+    [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'"
+    ],
+    context
+  )
+
+  const lower = reportOnly.toLowerCase()
+  if (lower.includes("'unsafe-inline'")) {
+    throw new Error(`${context}: content-security-policy-report-only must not include 'unsafe-inline'. Got: ${reportOnly}`)
+  }
+}
+
 function requireJson(contentType, context) {
   if (!contentType || !contentType.toLowerCase().includes('application/json')) {
     throw new Error(`${context}: expected application/json content-type, got: ${contentType ?? '<missing>'}`)
@@ -88,16 +134,20 @@ async function main() {
 
     // 2) Security headers should be present (server-level add_header ... always)
     {
-      const res = await fetchWithTimeout(`${BASE_URL}/`)
-      if (!res.ok) throw new Error(`/ expected 200, got ${res.status}`)
+      const paths = ['/', '/index.html', '/api/health', '/robots.txt']
+      for (const path of paths) {
+        const res = await fetchWithTimeout(`${BASE_URL}${path}`)
+        if (!res.ok) throw new Error(`${path} expected 200, got ${res.status}`)
 
-      requireHeader(res.headers, 'x-frame-options', (v) => /deny/i.test(v), '/')
-      requireHeader(res.headers, 'x-content-type-options', (v) => /nosniff/i.test(v), '/')
-      requireHeader(res.headers, 'referrer-policy', (v) => v.length > 0, '/')
-      requireHeader(res.headers, 'permissions-policy', (v) => v.length > 0, '/')
-      requireHeader(res.headers, 'content-security-policy', (v) => v.length > 0, '/')
-      requireHeader(res.headers, 'cross-origin-opener-policy', (v) => /same-origin/i.test(v), '/')
-      requireHeader(res.headers, 'cross-origin-resource-policy', (v) => /same-origin/i.test(v), '/')
+        requireHeader(res.headers, 'x-frame-options', (v) => /deny/i.test(v), path)
+        requireHeader(res.headers, 'x-content-type-options', (v) => /nosniff/i.test(v), path)
+        requireHeader(res.headers, 'referrer-policy', (v) => v.length > 0, path)
+        requireHeader(res.headers, 'permissions-policy', (v) => v.length > 0, path)
+        requireHeader(res.headers, 'cross-origin-opener-policy', (v) => /same-origin/i.test(v), path)
+        requireHeader(res.headers, 'cross-origin-resource-policy', (v) => /same-origin/i.test(v), path)
+
+        requireCspGuards(res.headers, path)
+      }
     }
 
     // 3) Caching behavior

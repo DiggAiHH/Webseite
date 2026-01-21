@@ -10,52 +10,16 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     
     <!-- SEO and Accessibility Meta Tags -->
-    <meta name="author" content="DiggAiHH GmbH">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Laith Alshdaifat">
+    <!-- robots meta wird pro Route via react-helmet gesetzt (z.B. noindex auf Legal-Seiten). -->
     <meta name="theme-color" content="#0284c7">
     <meta name="color-scheme" content="light">
     <meta name="format-detection" content="telephone=no">
+
+    <!-- CSP nonce placeholder (in production, nginx replaces __CSP_NONCE__ per response). -->
+    <meta name="csp-nonce" content="__CSP_NONCE__" />
     
-    <!-- Structured Data - Organization -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DiggAiHH",
-      "url": "https://diggaihh.de",
-      "logo": "https://diggaihh.de/logo.png",
-      "description": "Medical Technology SaaS Platform für Praxen und Kliniken",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "DE"
-      },
-      "sameAs": [
-        "https://github.com/DiggAiHH"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer service",
-        "availableLanguage": ["German", "English"]
-      }
-    }
-    </script>
-    
-    <!-- Structured Data - Software Application -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "DiggAiHH MedTech Platform",
-      "applicationCategory": "HealthcareApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR",
-        "priceValidUntil": "2026-12-31"
-      }
-    }
-    </script>
+    <!-- Structured Data wird zentral pro Route via react-helmet gesetzt (siehe src/utils/seo.js). -->
     
     <title>DiggAiHH - MedTech SaaS Platform | Digitale Lösungen für Praxen & Kliniken</title>
   </head>

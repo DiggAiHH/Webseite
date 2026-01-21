@@ -21,7 +21,7 @@ export default defineConfig({
   webServer: process.env.E2E_SKIP_WEB_SERVER
     ? undefined
     : {
-        command: 'npm run preview -- --host 0.0.0.0 --port 4173',
+        command: 'npm run build && npm run preview -- --host 0.0.0.0 --port 4173',
         url: baseURL,
         reuseExistingServer: !process.env.CI
       }

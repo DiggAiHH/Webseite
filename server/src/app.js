@@ -28,12 +28,14 @@ export function createApp({ env, sendLeadEmail = defaultSendLeadEmail }) {
 
   app.use(express.json({ limit: '20kb' }))
 
+  // Rate limiting with externalized config
   app.use(
     rateLimit({
-      windowMs: 15 * 60 * 1000,
-      limit: 10,
+      windowMs: env.RATE_LIMIT_WINDOW_MS,
+      limit: env.RATE_LIMIT_MAX,
       standardHeaders: true,
-      legacyHeaders: false
+      legacyHeaders: false,
+      message: { ok: false, error: 'RATE_LIMITED' }
     })
   )
 

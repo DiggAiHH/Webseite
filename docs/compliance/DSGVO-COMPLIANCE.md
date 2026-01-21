@@ -10,10 +10,10 @@
 ## 1. Allgemeine Angaben
 
 ### 1.1 Verantwortlicher (Art. 4 Nr. 7 DSGVO)
-**DiggAiHH**  
-[Adresse eintragen]  
-[E-Mail eintragen]  
-[Telefon eintragen]
+**DiggAiHH UG**  
+Jasminstraße 24, 44289 Dortmund, Deutschland  
+laith.alshdaifat@hotmail.com  
++49 1521 3814065
 
 ### 1.2 Datenschutzbeauftragter (Art. 37-39 DSGVO)
 [Name und Kontaktdaten eintragen, sofern benannt]

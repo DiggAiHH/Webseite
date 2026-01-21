@@ -18,4 +18,19 @@ module.exports = {
     ],
     'react/prop-types': 'off',
   },
+  overrides: [
+    {
+      // Node.js config files
+      files: ['vite.config.js', 'vitest.config.js', 'playwright.config.js', 'postcss.config.js', 'tailwind.config.js'],
+      env: { node: true },
+    },
+    {
+      // Server code
+      files: ['server/**/*.js'],
+      env: { node: true },
+      rules: {
+        'react-refresh/only-export-components': 'off',
+      },
+    },
+  ],
 }
