@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const DEFAULT_ENDPOINT = '/api/lead'
 
@@ -17,6 +18,7 @@ const initialState = {
  * DSGVO-minimiertes Anfrageformular. Sendet Daten same-origin an /api/lead.
  */
 export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, onSuccess }) {
+  const { t } = useTranslation()
   const [form, setForm] = useState(initialState)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState({ type: 'idle', message: '' })
@@ -92,11 +94,11 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="Anfrageformular">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label={t('contact.form.ariaLabel', 'Anfrageformular')}>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-email">
-            E-Mail *
+            {t('contact.form.email')} *
           </label>
           <input
             id="lead-email"
@@ -113,7 +115,7 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-org">
-            Praxis / Einrichtung *
+            {t('contact.form.organisation')} *
           </label>
           <input
             id="lead-org"
@@ -132,7 +134,7 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-phone">
-            Telefon (optional)
+            {t('contact.form.phone')}
           </label>
           <input
             id="lead-phone"
@@ -166,7 +168,7 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
 
       <div>
         <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-message">
-          Nachricht (optional)
+          {t('contact.form.message')}
         </label>
         <textarea
           id="lead-message"
@@ -175,7 +177,7 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
           value={form.message}
           onChange={update('message')}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-medical-blue-500"
-          placeholder="Worum geht es konkret (z.B. Anzahl Standorte, Fachrichtung, gewünschter Starttermin)?"
+          placeholder={t('contact.form.messagePlaceholder', 'Worum geht es konkret?')}
           maxLength={2000}
         />
       </div>
@@ -190,8 +192,8 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
           required
         />
         <label htmlFor="lead-consent" className="text-sm text-gray-700">
-          Ich willige ein, dass meine Angaben zur Bearbeitung meiner Anfrage verwendet werden. Details in der{' '}
-          <Link to="/privacy" className="text-medical-blue-600 hover:underline">Datenschutzerklärung</Link>.
+          {t('contact.form.consent')}{' '}
+          <Link to="/privacy" className="text-medical-blue-600 hover:underline">{t('footer.privacy')}</Link>.
         </label>
       </div>
 
@@ -225,7 +227,7 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
         disabled={!canSubmit}
         className="inline-flex items-center justify-center px-6 py-3 bg-medical-accent-600 text-white rounded-lg hover:bg-medical-accent-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting ? 'Sende…' : 'Anfrage senden'}
+        {isSubmitting ? t('contact.form.sending') : t('contact.form.submit')}
       </button>
     </form>
   )

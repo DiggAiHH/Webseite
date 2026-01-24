@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PrivacyBanner, { PrivacyStatusIndicator } from '../components/PrivacyBanner';
 
 /**
@@ -8,15 +9,22 @@ import PrivacyBanner, { PrivacyStatusIndicator } from '../components/PrivacyBann
  */
 const MainLayout = ({ children }) => {
   const location = useLocation();
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lng;
+  };
 
   const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Produkte', path: '/products' },
-    { name: 'Lageroptimierung', path: '/lageropt' },
-    { name: 'ROI-Rechner', path: '/roi' },
-    { name: 'Avatar-System', path: '/avatar' },
-    { name: 'Sicherheit', path: '/security' },
-    { name: 'Kontakt', path: '/kontakt' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.products'), path: '/products' },
+    { name: t('nav.inventory'), path: '/lageropt' },
+    { name: t('nav.roi'), path: '/roi' },
+    { name: t('nav.avatar'), path: '/avatar' },
+    { name: t('nav.security'), path: '/security' },
+    { name: t('nav.contact'), path: '/contact' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -28,7 +36,7 @@ const MainLayout = ({ children }) => {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-medical-blue-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
       >
-        Zum Hauptinhalt springen
+        {t('skipLink')}
       </a>
 
       {/* Header */}
@@ -67,6 +75,31 @@ const MainLayout = ({ children }) => {
 
             {/* Privacy Status & User Menu */}
             <div className="flex items-center gap-4">
+              {/* Language Switcher */}
+              <div className="flex items-center gap-2 mr-2">
+                <button 
+                  onClick={() => changeLanguage('de')} 
+                  className={`px-2 py-1 text-xs font-bold rounded ${i18n.language === 'de' ? 'bg-medical-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  aria-label="Deutsch"
+                >
+                  DE
+                </button>
+                <button 
+                  onClick={() => changeLanguage('en')} 
+                  className={`px-2 py-1 text-xs font-bold rounded ${i18n.language === 'en' ? 'bg-medical-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  aria-label="English"
+                >
+                  EN
+                </button>
+                <button 
+                  onClick={() => changeLanguage('ar')} 
+                  className={`px-2 py-1 text-xs font-bold rounded ${i18n.language === 'ar' ? 'bg-medical-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                  aria-label="Arabic"
+                >
+                  AR
+                </button>
+              </div>
+
               <PrivacyStatusIndicator />
               <Link
                 to="/privacy"
@@ -125,26 +158,26 @@ const MainLayout = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-600">
-              © {new Date().getFullYear()} DiggAiHH | Inhaber: Laith Alshdaifat. Alle Rechte vorbehalten.
+              {t('footer.copyright', { year: new Date().getFullYear() })}
             </div>
             <nav className="flex gap-6 text-sm" aria-label="Footer-Navigation">
               <Link 
                 to="/privacy" 
                 className="text-gray-600 hover:text-medical-blue-600 focus:outline-none focus:ring-2 focus:ring-medical-blue-500 focus:ring-offset-2 rounded"
               >
-                Datenschutz
+                {t('footer.privacy')}
               </Link>
               <Link 
                 to="/impressum" 
                 className="text-gray-600 hover:text-medical-blue-600 focus:outline-none focus:ring-2 focus:ring-medical-blue-500 focus:ring-offset-2 rounded"
               >
-                Impressum
+                {t('footer.imprint')}
               </Link>
               <Link 
-                to="/kontakt" 
+                to="/contact" 
                 className="text-gray-600 hover:text-medical-blue-600 focus:outline-none focus:ring-2 focus:ring-medical-blue-500 focus:ring-offset-2 rounded"
               >
-                Kontakt
+                {t('footer.contact')}
               </Link>
             </nav>
           </div>

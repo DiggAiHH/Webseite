@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next'
+
 const ImpressumPage = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Impressum</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">{t('impressum.title')}</h1>
 
         <div className="prose prose-blue max-w-none">
           <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Angaben zum Anbieter</h2>

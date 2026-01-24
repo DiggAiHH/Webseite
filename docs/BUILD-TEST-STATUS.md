@@ -156,3 +156,25 @@ Optional / Infra:
 
 - Docker verfügbar
 - ✅ `npm run test:infra` (infra-smoke: OK) — inkl. CSP + CSP-Report-Only Header-Guards
+
+### 2026-01-24 — Testlauf #11 (i18n + ESLint Cleanup)
+
+- Kontext: ESLint-Fehler behoben (7 Errors → 0), i18n-Translations erweitert (DE/EN/AR), SMTP Env-Vars standardisiert (MAIL_TO=laith.alshdaifat@hotmail.com)
+- Agent: Cleanup-Agent Session
+
+Geänderte Dateien:
+- `src/components/ErrorBoundary.jsx` — process.env → import.meta.env.DEV
+- `src/components/PrivacyBanner.jsx` — unused imports entfernt, Hooks-Reihenfolge korrigiert, i18n integriert
+- `src/features/avatar/AvatarFeature.jsx` — while(true) → while(!done)
+- `src/layouts/MainLayout.jsx` — i18n für Footer-Texte
+- `src/pages/ContactPage.jsx` — i18n integriert
+- `src/pages/ImpressumPage.jsx` — i18n integriert
+- `public/locales/de/translation.json` — vollständig erweitert
+- `public/locales/en/translation.json` — vollständig erweitert
+- `public/locales/ar/translation.json` — vollständig erweitert
+- `README.md`, `.env.example`, `docker-compose.infra.yml` — MAIL_TO aktualisiert
+
+Ergebnis (pending - Terminal-Provider nicht verfügbar):
+- ⏳ `npm run lint` — 0 Errors erwartet (via get_errors verifiziert)
+- ⏳ `npm run test:frontend:run` — ausstehend
+- ⏳ `npm run test:e2e` — ausstehend

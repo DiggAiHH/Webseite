@@ -7,10 +7,12 @@ const emptyStringToUndefined = (value) => {
 }
 
 const envSchema = z.object({
-  PORT: z.coerce.number().int().positive().default(3000),
+  PORT: z.coerce.number().int().positive().default(3001),
   // Rate limiting
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(15 * 60 * 1000), // 15 min
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(10),
+  // AI
+  GEMINI_API_KEY: z.preprocess(emptyStringToUndefined, z.string().min(1).optional()),
   // SMTP
   SMTP_HOST: z.preprocess(emptyStringToUndefined, z.string().min(1).optional()),
   SMTP_PORT: z.preprocess(emptyStringToUndefined, z.coerce.number().int().positive().optional()),

@@ -366,6 +366,41 @@ Wenn wiederholte Abbrüche/Instabilität auftreten, zuerst das Minimum-Diagnose-
 - Keine PII in Logs.
 
 
+10. LAUFBAHN-VERBINDLICHKEIT & TASK-DISZIPLIN (Zwingend)
+
+- Session-Start Pflicht: `LAUFBAHN.md` lesen, offenen Status prüfen, offene Tasks übernehmen.
+- Wenn vorheriger Agent stoppte: Grund + konkrete Mitigation dokumentieren.
+- Immer mit Aufgabenliste starten. Ohne Aufgabenliste: keine Implementierung.
+- Jede Implementierung: sofort Unit-Test schreiben + direkt ausführen.
+- Testausführung ist eigener TODO-Punkt am Ende.
+- Evidence-Logging: Jede relevante Ausgabe nach `buildLogs/` schreiben.
+- Fehler darf nur einmal passieren. Nach Fix: Prävention dokumentieren (Guard/Regression-Test/Robusteres Script).
+
+
+11. PLAN-FIRST vs EXECUTION (Klar trennen)
+
+- Planning Mode: nur Schritte, Dateien, Tests, Risiken, Evidence. Kein Code, keine Commands.
+- Execution Mode: Plan abarbeiten, Task-für-Task, danach Tests + Evidence + LAUFBAHN-Update.
+
+
+12. LAUFBAHN-INHALTSSCHEMA (Pflichtfelder)
+
+Die folgenden 5 Punkte müssen immer in `LAUFBAHN.md` beantwortet sein:
+1) Klares Ziel
+2) Geräte & Methodik
+3) Sprachen & Technologien
+4) Struktur
+5) Qualität & Muster
+
+
+13. USER ACTION REQUIRED FORMAT
+
+Wenn Nutzerbefehle nötig sind, muss exakt folgendes Format verwendet werden:
+
+USER ACTION REQUIRED
+<exact command only>
+
+
 mach bitte eine sehr sehr detallierter Plan damit der Agent sich nicht vertläuft oder haluziniert:
 
 1-er hat eine klares Ziel, 

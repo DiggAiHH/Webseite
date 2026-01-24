@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { validateURL } from '../utils/security'
 import CheckoutButton from '../features/payment/CheckoutButton'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const ProductsPage = () => {
+  const { t } = useTranslation()
   const [products, setProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -160,7 +162,7 @@ const ProductsPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-medical-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Produkte werden geladen...</p>
+          <p className="text-gray-600">{t('common.loading')}</p>
         </div>
       </div>
     )
@@ -175,7 +177,7 @@ const ProductsPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <h3 className="text-lg font-semibold text-red-900 mb-1">Fehler beim Laden</h3>
+              <h3 className="text-lg font-semibold text-red-900 mb-1">{t('common.error')}</h3>
               <p className="text-red-700 mb-4">{error}</p>
               <button
                 onClick={loadProducts}
@@ -184,7 +186,7 @@ const ProductsPage = () => {
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
-                Erneut versuchen
+                {t('common.retry')}
               </button>
             </div>
           </div>
@@ -198,10 +200,10 @@ const ProductsPage = () => {
       {/* Header Section */}
       <section className="bg-gradient-to-r from-medical-blue-600 to-medical-blue-800 rounded-2xl p-8 md:p-12 text-white">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Unsere Produkte & Lösungen
+          {t('products.title')}
         </h1>
         <p className="text-xl md:text-2xl text-medical-blue-100 mb-4">
-          Portfolio innovativer MedTech-Lösungen für Praxen und Kliniken
+          {t('products.subtitle')}
         </p>
         <p className="text-medical-blue-100 max-w-3xl">
           Alle Preise sind Beispielpreise und verstehen sich als Orientierungswerte.

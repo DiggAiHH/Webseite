@@ -1,13 +1,16 @@
 import LeadForm from '../components/LeadForm'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const ContactPage = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">Kontakt</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">{t('contact.title')}</h1>
         <p className="text-gray-600 mb-8">
-          Für Praxen, MVZ und medizinische Einrichtungen: Senden Sie uns kurz Ihre Anfrage – wir melden uns mit einem konkreten Vorschlag.
+          {t('contact.subtitle')}
         </p>
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8 text-sm text-gray-700">

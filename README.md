@@ -121,7 +121,7 @@ SMTP_USER=...
 SMTP_PASS=...
 
 MAIL_FROM=no-reply@diggaihh.de
-MAIL_TO=kontakt@diggaihh.de
+MAIL_TO=laith.alshdaifat@hotmail.com
 ```
 
 ### E2E-Tests (Playwright)

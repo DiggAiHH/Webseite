@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "inventory": "Inventory Optimization",
+    "roi": "ROI Calculator",
+    "avatar": "Avatar System",
+    "security": "Security",
+    "contact": "Contact"
+  },
+  "privacy": {
+    "status": "Privacy Status",
+    "protected": "Protected",
+    "banner": {
+      "title": "Privacy & Cookies",
+      "description": "We use cookies and similar technologies to provide you with the best possible user experience and to improve our services.",
+      "moreInfo": "For more information, please see our",
+      "privacyLink": "Privacy Policy",
+      "escapeHint": "(Escape = essential only)",
+      "settings": "Settings",
+      "essentialOnly": "Essential only",
+      "acceptAll": "Accept all",
+      "back": "Back",
+      "cookieSettings": "Cookie Settings",
+      "essential": {
+        "title": "Essential Cookies",
+        "description": "These cookies are required for basic website functions and cannot be disabled."
+      },
+      "analytics": {
+        "title": "Analytics Cookies",
+        "description": "Help us understand how visitors interact with the website to improve the user experience."
+      },
+      "marketing": {
+        "title": "Marketing Cookies",
+        "description": "Used to provide visitors with relevant advertising and marketing campaigns."
+      },
+      "saveSettings": "Save settings"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} DiggAiHH | Owner: Laith Alshdaifat. All rights reserved.",
+    "privacy": "Privacy",
+    "imprint": "Imprint",
+    "contact": "Contact"
+  },
+  "skipLink": "Skip to main content",
+  "welcome": "Welcome to DiggAiHH",
+  "praxisIt": "Practice IT Manager",
+  "aiAvatar": "Avatar System",
+  "home": {
+    "hero": {
+      "title": "AI Solutions for Healthcare",
+      "subtitle": "EU-compliant Medical Technology from Hamburg",
+      "cta": "Get Started"
+    },
+    "services": {
+      "title": "Our Solutions",
+      "subtitle": "Custom AI products for medical facilities"
+    },
+    "compliance": {
+      "title": "EU Compliance Hub",
+      "subtitle": "100% EU-Standard Compliant",
+      "dsgvo": "GDPR Compliant",
+      "bsi": "BSI IT Security",
+      "iso": "ISO 27001",
+      "aiAct": "EU AI Act Ready"
+    },
+    "faq": {
+      "title": "FAQ"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "We look forward to hearing from you",
+    "form": {
+      "email": "Email",
+      "organisation": "Organization / Practice",
+      "phone": "Phone (optional)",
+      "message": "Your Message",
+      "consent": "I agree to the processing of my data according to the Privacy Policy.",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Thank you! Your message has been sent successfully.",
+      "error": "An error occurred. Please try again later."
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "AI-powered solutions for healthcare",
+    "learnMore": "Learn more",
+    "requestDemo": "Request Demo"
+  },
+  "impressum": {
+    "title": "Legal Notice",
+    "angaben": "Information according to § 5 TMG",
+    "contact": "Contact",
+    "responsible": "Responsible for content"
+  },
+  "privacyPage": {
+    "title": "Privacy Policy",
+    "intro": "Protecting your personal data is important to us."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "close": "Close"
+  }
+}

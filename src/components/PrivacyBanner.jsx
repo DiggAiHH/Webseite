@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { usePrivacyConsent } from '../utils/privacy';
 
 /**
@@ -7,6 +8,7 @@ import { usePrivacyConsent } from '../utils/privacy';
  * DSGVO-compliant cookie consent banner with ARIA accessibility and focus trap
  */
 const PrivacyBanner = () => {
+  const { t } = useTranslation();
   const { updateConsent, hasConsented, isHydrated } = usePrivacyConsent();
   const [showDetails, setShowDetails] = useState(false);
   const bannerRef = useRef(null);
@@ -29,13 +31,18 @@ const PrivacyBanner = () => {
     
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        handleAcceptEssential();
+        // Accept essential only on Escape
+        updateConsent({
+          essential: true,
+          analytics: false,
+          marketing: false
+        });
       }
     };
     
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [hasConsented]);
+  }, [hasConsented, updateConsent]);
 
   // Don't render during SSR or before hydration
   if (!isHydrated || hasConsented) {
@@ -81,16 +88,15 @@ const PrivacyBanner = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex-1">
               <h3 id="privacy-banner-title" className="text-lg font-semibold text-gray-900 mb-2">
-                Datenschutz & Cookies
+                {t('privacy.banner.title')}
               </h3>
               <p id="privacy-banner-description" className="text-sm text-gray-600">
-                Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche 
-                Nutzererfahrung zu bieten und unsere Dienste zu verbessern. Weitere Informationen 
-                finden Sie in unserer{' '}
+                {t('privacy.banner.description')}{' '}
+                {t('privacy.banner.moreInfo')}{' '}
                 <Link to="/privacy" className="text-medical-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-medical-blue-500 rounded">
-                  Datenschutzerklärung
+                  {t('privacy.banner.privacyLink')}
                 </Link>
-                . <span className="text-xs text-gray-500">(Escape = nur notwendige)</span>
+                . <span className="text-xs text-gray-500">{t('privacy.banner.escapeHint')}</span>
               </p>
             </div>
             <div className="flex flex-wrap gap-3" role="group" aria-label="Cookie-Einstellungen">
@@ -101,19 +107,19 @@ const PrivacyBanner = () => {
                 aria-expanded={showDetails}
                 aria-controls="privacy-details"
               >
-                Einstellungen
+                {t('privacy.banner.settings')}
               </button>
               <button
                 onClick={handleAcceptEssential}
                 className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
               >
-                Nur notwendige
+                {t('privacy.banner.essentialOnly')}
               </button>
               <button
                 onClick={handleAcceptAll}
                 className="px-6 py-2 bg-medical-blue-600 text-white rounded-md hover:bg-medical-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-medical-blue-500"
               >
-                Alle akzeptieren
+                {t('privacy.banner.acceptAll')}
               </button>
             </div>
           </div>
@@ -222,6 +228,7 @@ const PrivacyDetails = ({ onSave, onBack }) => {
  */
 export const PrivacyStatusIndicator = () => {
   const { consent, hasConsented } = usePrivacyConsent();
+  const { t } = useTranslation();
 
   if (!hasConsented) {
     return null;
@@ -250,7 +257,7 @@ export const PrivacyStatusIndicator = () => {
           d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
         />
       </svg>
-      <span>DSGVO ({activeCount}/3)</span>
+      <span>{t('privacy.protected')} ({activeCount}/3)</span>
     </div>
   );
 };

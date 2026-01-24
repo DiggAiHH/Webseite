@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { getEnv } from './env.js'
 import { sendLeadEmail } from './sendLeadEmail.js'
 

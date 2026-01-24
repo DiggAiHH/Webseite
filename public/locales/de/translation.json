@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Produkte",
+    "inventory": "Lageroptimierung",
+    "roi": "ROI-Rechner",
+    "avatar": "Avatar-System",
+    "security": "Sicherheit",
+    "contact": "Kontakt"
+  },
+  "privacy": {
+    "status": "Privatsphäre-Status",
+    "protected": "Geschützt",
+    "banner": {
+      "title": "Datenschutz & Cookies",
+      "description": "Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche Nutzererfahrung zu bieten und unsere Dienste zu verbessern.",
+      "moreInfo": "Weitere Informationen finden Sie in unserer",
+      "privacyLink": "Datenschutzerklärung",
+      "escapeHint": "(Escape = nur notwendige)",
+      "settings": "Einstellungen",
+      "essentialOnly": "Nur notwendige",
+      "acceptAll": "Alle akzeptieren",
+      "back": "Zurück",
+      "cookieSettings": "Cookie-Einstellungen",
+      "essential": {
+        "title": "Notwendige Cookies",
+        "description": "Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden."
+      },
+      "analytics": {
+        "title": "Analyse-Cookies",
+        "description": "Helfen uns zu verstehen, wie Besucher mit der Website interagieren, um die Nutzererfahrung zu verbessern."
+      },
+      "marketing": {
+        "title": "Marketing-Cookies",
+        "description": "Werden verwendet, um Besuchern relevante Werbung und Marketing-Kampagnen anzubieten."
+      },
+      "saveSettings": "Einstellungen speichern"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} DiggAiHH | Inhaber: Laith Alshdaifat. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "imprint": "Impressum",
+    "contact": "Kontakt"
+  },
+  "skipLink": "Zum Hauptinhalt springen",
+  "welcome": "Willkommen bei DiggAiHH",
+  "praxisIt": "Praxis-IT Manager",
+  "aiAvatar": "Avatar System",
+  "home": {
+    "hero": {
+      "title": "KI-Lösungen für das Gesundheitswesen",
+      "subtitle": "EU-konforme Medical Technology aus Hamburg",
+      "cta": "Jetzt starten"
+    },
+    "services": {
+      "title": "Unsere Lösungen",
+      "subtitle": "Maßgeschneiderte KI-Produkte für medizinische Einrichtungen"
+    },
+    "compliance": {
+      "title": "EU Compliance Hub",
+      "subtitle": "100% EU-Standard konform",
+      "dsgvo": "DSGVO-konform",
+      "bsi": "BSI IT-Grundschutz",
+      "iso": "ISO 27001",
+      "aiAct": "EU AI Act Ready"
+    },
+    "faq": {
+      "title": "Häufige Fragen"
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Wir freuen uns auf Ihre Nachricht",
+    "form": {
+      "email": "E-Mail",
+      "organisation": "Organisation / Praxis",
+      "phone": "Telefon (optional)",
+      "message": "Ihre Nachricht",
+      "consent": "Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu.",
+      "submit": "Nachricht senden",
+      "sending": "Wird gesendet...",
+      "success": "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.",
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+    }
+  },
+  "products": {
+    "title": "Unsere Produkte",
+    "subtitle": "KI-gestützte Lösungen für das Gesundheitswesen",
+    "learnMore": "Mehr erfahren",
+    "requestDemo": "Demo anfragen"
+  },
+  "impressum": {
+    "title": "Impressum",
+    "angaben": "Angaben gemäß § 5 TMG",
+    "contact": "Kontakt",
+    "responsible": "Verantwortlich für den Inhalt"
+  },
+  "privacyPage": {
+    "title": "Datenschutzerklärung",
+    "intro": "Der Schutz Ihrer persönlichen Daten ist uns wichtig."
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "close": "Schließen"
+  }
+}

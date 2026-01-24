@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { validateTextInput } from '../../utils/security';
 
 /**
@@ -10,6 +12,7 @@ const AvatarFeature = () => {
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [inputError, setInputError] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   const avatars = [
     {
@@ -38,21 +41,42 @@ const AvatarFeature = () => {
     }
   ];
 
+  const getGreeting = (avatar) => (
+    `Hallo! Ich bin ${avatar.name}, Ihr ${avatar.role}. Wie kann ich Ihnen heute helfen?`
+  );
+
+  const quickActionsMap = {
+    'medical-assistant': [
+      { label: 'Symptom-Checkliste', message: 'Erstelle eine symptomorientierte Checkliste für einen ersten Überblick (ohne Diagnose).' },
+      { label: 'Patientenaufklärung', message: 'Erstelle eine kurze Patientenaufklärung zu einem häufigen Praxis-Thema.' },
+      { label: 'Praxis-Workflow', message: 'Gib mir einen strukturierten Vorschlag für einen effizienten Praxis-Workflow.' }
+    ],
+    'inventory-expert': [
+      { label: 'Bestandsanalyse', message: 'Analysiere typische Lagerfehler und gib Optimierungsvorschläge.' },
+      { label: 'Nachbestell-Strategie', message: 'Empfiehl eine Nachbestell-Strategie für Verbrauchsmaterialien.' },
+      { label: 'Prozess-KPI', message: 'Nenne 5 KPIs für Lager- und Logistik-Performance in Praxen.' }
+    ],
+    'data-analyst': [
+      { label: 'ROI-Quickcheck', message: 'Gib mir einen ROI-Quickcheck-Rahmen mit Beispielannahmen.' },
+      { label: 'Dashboards', message: 'Schlage ein Dashboard-Layout für Praxiskennzahlen vor.' },
+      { label: 'Datenqualität', message: 'Wie sichere ich Datenqualität für valide Reports?' }
+    ]
+  };
+
   const handleAvatarSelect = (avatar) => {
     setSelectedAvatar(avatar);
     setChatHistory([
       {
         sender: 'avatar',
-        message: `Hallo! Ich bin ${avatar.name}, Ihr ${avatar.role}. Wie kann ich Ihnen heute helfen?`
+        message: getGreeting(avatar)
       }
     ]);
   };
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
+  const sendMessage = async (text) => {
     setInputError('');
 
-    const validation = validateTextInput(chatInput, 500);
+    const validation = validateTextInput(text, 500);
     if (!validation.isValid) {
       setInputError(validation.error);
       return;
@@ -64,29 +88,85 @@ const AvatarFeature = () => {
     }
 
     // Add user message
-    const newHistory = [
-      ...chatHistory,
-      { sender: 'user', message: validation.sanitized }
-    ];
-
-    // Simulate avatar response
-    const responses = {
-      'medical-assistant': 'Als medizinischer Berater empfehle ich, dass Sie sich bei spezifischen medizinischen Fragen immer an einen Facharzt wenden. Ich kann Ihnen aber gerne allgemeine Informationen bereitstellen.',
-      'inventory-expert': 'Für eine optimale Lagerverwaltung empfehle ich regelmäßige Bestandskontrollen und die Verwendung unseres Lageroptimierungs-Tools. Welchen Bereich möchten Sie optimieren?',
-      'data-analyst': 'Ich kann Ihnen bei der Analyse Ihrer Daten helfen. Nutzen Sie unseren ROI-Rechner für detaillierte Kosten-Nutzen-Analysen Ihrer Projekte.'
-    };
-
-    setTimeout(() => {
-      setChatHistory([
-        ...newHistory,
-        { 
-          sender: 'avatar', 
-          message: responses[selectedAvatar.id] || 'Vielen Dank für Ihre Nachricht. Wie kann ich Ihnen weiterhelfen?' 
-        }
-      ]);
-    }, 500);
-
+    const userMsg = { sender: 'user', message: validation.sanitized };
+    setChatHistory((prev) => [...prev, userMsg]);
     setChatInput('');
+    setIsTyping(true);
+
+    try {
+      const context = {
+        url: window.location.href,
+        title: document.title,
+        timestamp: new Date().toISOString()
+      };
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: validation.sanitized,
+          avatarId: selectedAvatar.id,
+          context
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Server unavailable');
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let botText = '';
+      
+      // Init bot message
+      setChatHistory((prev) => [...prev, { sender: 'avatar', message: '' }]);
+
+      let done = false;
+      while (!done) {
+        const result = await reader.read();
+        done = result.done;
+        if (done) break;
+        const value = result.value;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        botText += chunk;
+
+        setChatHistory((prev) => {
+          const newHist = [...prev];
+          // Update last message
+          newHist[newHist.length - 1] = {
+            sender: 'avatar',
+            message: botText
+          };
+          return newHist;
+        });
+      }
+
+    } catch (error) {
+      setChatHistory((prev) => [
+        ...prev,
+        { sender: 'system', message: 'Verbindung zum AI-Agent unterbrochen. Bitte versuchen Sie es später erneut.' }
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    await sendMessage(chatInput);
+  };
+
+  const handleQuickAction = async (message) => {
+    await sendMessage(message);
+  };
+
+  const handleClearChat = () => {
+    if (selectedAvatar) {
+      setChatHistory([{ sender: 'avatar', message: getGreeting(selectedAvatar) }]);
+    } else {
+      setChatHistory([]);
+    }
   };
 
   return (
@@ -141,6 +221,27 @@ const AvatarFeature = () => {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Chat
           </h2>
+          {selectedAvatar && (
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              {quickActionsMap[selectedAvatar.id]?.map((action) => (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => handleQuickAction(action.message)}
+                  className="px-3 py-1.5 text-xs font-medium rounded-full bg-medical-blue-50 text-medical-blue-700 border border-medical-blue-100 hover:bg-medical-blue-100 transition"
+                >
+                  {action.label}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={handleClearChat}
+                className="ml-auto px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200 transition"
+              >
+                Chat leeren
+              </button>
+            </div>
+          )}
           
           {!selectedAvatar ? (
             <div className="text-center py-16 text-gray-500">
@@ -165,10 +266,32 @@ const AvatarFeature = () => {
                           : 'bg-white border border-gray-200 text-gray-900'
                       }`}
                     >
-                      <p className="text-sm">{msg.message}</p>
+                       {msg.sender === 'avatar' ? (
+                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {msg.message}
+                          </ReactMarkdown>
+                        </div>
+                      ) : (
+                        <p className="text-sm">{msg.message}</p>
+                      )}
                     </div>
                   </div>
                 ))}
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-200 text-gray-900">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500">Tippt</span>
+                        <span className="flex gap-1">
+                          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Chat Input */}
