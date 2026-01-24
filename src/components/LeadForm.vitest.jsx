@@ -1,10 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { I18nextProvider } from 'react-i18next'
+import { i18n } from '../test/setup'
 import LeadForm from './LeadForm'
 
 function renderWithRouter(ui) {
-  return render(<MemoryRouter>{ui}</MemoryRouter>)
+  return render(
+    <I18nextProvider i18n={i18n}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </I18nextProvider>
+  )
 }
 
 describe('LeadForm', () => {

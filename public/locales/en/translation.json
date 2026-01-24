@@ -88,7 +88,9 @@
     "title": "Our Products",
     "subtitle": "AI-powered solutions for healthcare",
     "learnMore": "Learn more",
-    "requestDemo": "Request Demo"
+    "requestDemo": "Request Demo",
+    "loading": "Loading products...",
+    "errorLoading": "Error loading products"
   },
   "impressum": {
     "title": "Legal Notice",
@@ -105,5 +107,36 @@
     "error": "An error occurred",
     "retry": "Try again",
     "close": "Close"
+  },
+  "wizard": {
+    "title": "AI-Readiness-Check",
+    "question1": "How large is your facility?",
+    "option1a": "Solo Practice (1-5 employees)",
+    "option1b": "Group Practice (6-20 employees)",
+    "option1c": "Clinic/Hospital (>20 employees)",
+    "question2": "How digital is your current workflow?",
+    "option2a": "Mostly analog",
+    "option2b": "Partially digitized",
+    "option2c": "Fully digital",
+    "question3": "What is your biggest challenge?",
+    "option3a": "Time management & scheduling",
+    "option3b": "Documentation & billing",
+    "option3c": "Patient communication",
+    "result": "Your Recommendation",
+    "resultText": "Based on your answers, we recommend:",
+    "back": "Back",
+    "next": "Next",
+    "restart": "Start over"
+  },
+  "security": {
+    "title": "Security Overview",
+    "subtitle": "Our security measures and certifications",
+    "overview": "Overview",
+    "measures": "Security Measures",
+    "certifications": "Certifications"
+  },
+  "seo": {
+    "defaultTitle": "DiggAiHH - AI Solutions for Healthcare",
+    "defaultDescription": "EU-compliant MedTech AI solutions from Hamburg. GDPR, BSI IT Security, ISO 27001 certified."
   }
 }

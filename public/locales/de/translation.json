@@ -88,7 +88,9 @@
     "title": "Unsere Produkte",
     "subtitle": "KI-gestützte Lösungen für das Gesundheitswesen",
     "learnMore": "Mehr erfahren",
-    "requestDemo": "Demo anfragen"
+    "requestDemo": "Demo anfragen",
+    "loading": "Produkte werden geladen...",
+    "errorLoading": "Fehler beim Laden der Produkte"
   },
   "impressum": {
     "title": "Impressum",
@@ -105,5 +107,36 @@
     "error": "Ein Fehler ist aufgetreten",
     "retry": "Erneut versuchen",
     "close": "Schließen"
+  },
+  "wizard": {
+    "title": "AI-Readiness-Check",
+    "question1": "Wie groß ist Ihre Einrichtung?",
+    "option1a": "Einzelpraxis (1-5 MA)",
+    "option1b": "Gemeinschaftspraxis (6-20 MA)",
+    "option1c": "MVZ/Klinik (>20 MA)",
+    "question2": "Wie digital arbeiten Sie aktuell?",
+    "option2a": "Überwiegend analog",
+    "option2b": "Teilweise digitalisiert",
+    "option2c": "Vollständig digital",
+    "question3": "Was ist Ihre größte Herausforderung?",
+    "option3a": "Zeitmanagement & Terminierung",
+    "option3b": "Dokumentation & Abrechnung",
+    "option3c": "Patientenkommunikation",
+    "result": "Ihre Empfehlung",
+    "resultText": "Basierend auf Ihren Angaben empfehlen wir:",
+    "back": "Zurück",
+    "next": "Weiter",
+    "restart": "Neu starten"
+  },
+  "security": {
+    "title": "Sicherheitsübersicht",
+    "subtitle": "Unsere Sicherheitsmaßnahmen und Zertifizierungen",
+    "overview": "Übersicht",
+    "measures": "Sicherheitsmaßnahmen",
+    "certifications": "Zertifizierungen"
+  },
+  "seo": {
+    "defaultTitle": "DiggAiHH - KI-Lösungen für das Gesundheitswesen",
+    "defaultDescription": "EU-konforme MedTech KI-Lösungen aus Hamburg. DSGVO, BSI IT-Grundschutz, ISO 27001 zertifiziert."
   }
 }
