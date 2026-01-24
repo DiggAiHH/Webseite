@@ -154,6 +154,12 @@ Analysiere den Stack Trace.
 Reflektiere kurz (<thinking>).
 
 Wende den Fix an.
+
+6.1 DEPLOYMENT/TESTING PFLICHT (NEU)
+
+- Standard: Nach Implementierung **immer** Netlify-Deploy ausführen.
+- Wenn Netlify nicht möglich: Lokalen Dev-Server starten und **den Link** zur Vorschau ausgeben.
+- Ziel: Der User testet **immer** via Netlify oder Localhost-Link.
 SYSTEM ARCHITECTURE & BEHAVIORAL CONSTITUTION (v2025.1)
 
 1. META-INSTRUKTIONEN & PERSONA (Restriction=0)
