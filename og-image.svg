@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="DiggAiHH">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0284c7"/>
+      <stop offset="1" stop-color="#075985"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="90" width="1040" height="450" rx="28" fill="rgba(255,255,255,0.12)"/>
+  <text x="120" y="260" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial" font-size="72" fill="#ffffff" font-weight="700">DiggAiHH</text>
+  <text x="120" y="330" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial" font-size="34" fill="#e0f2fe" font-weight="500">MedTech SaaS für Praxen &amp; Kliniken</text>
+  <text x="120" y="400" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial" font-size="28" fill="#e0f2fe">DSGVO-konform · Security by Default · Messbarer Nutzen</text>
+</svg>

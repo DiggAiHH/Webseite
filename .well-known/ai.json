@@ -1,0 +1,43 @@
+{
+  "name": "DiggAiHH MedTech SaaS",
+  "site": "https://diggaihh.de",
+  "defaultLanguage": "de",
+  "languages": ["de", "en", "ar"],
+  "description": "MedTech SaaS fuer Praxisdigitalisierung mit Fokus auf Datenschutz, Security und messbaren Prozessnutzen.",
+  "documentation": {
+    "integrationGuide": "/agent-integration.md",
+    "llms": "/llms.txt"
+  },
+  "repository": {
+    "packCommand": "npm run aeo:pack",
+    "validateCommand": "npm run validate:aeo",
+    "packOutput": "dist/agent-pack/manifest.json"
+  },
+  "crawl": {
+    "sitemap": "https://diggaihh.de/sitemap.xml",
+    "robots": "https://diggaihh.de/robots.txt"
+  },
+  "machineReadable": {
+    "products": "/data/products.json",
+    "faq": "/data/faq.json",
+    "compliance": "/data/compliance-summary.json",
+    "integrations": "/data/agent-integrations.json",
+    "entityMap": "/data/product-entity-map.json",
+    "comparison": "/data/product-comparison.json"
+  },
+  "integration": {
+    "auth": "none",
+    "transport": "https",
+    "format": "json",
+    "recommendedRefresh": "daily",
+    "supportContact": "kontakt@diggaihh.de"
+  },
+  "entities": [
+    "DiggAiHH UG",
+    "Anamnese-A",
+    "Anonymisator",
+    "Sylt",
+    "JoBetes"
+  ],
+  "updatedAt": "2026-04-10"
+}

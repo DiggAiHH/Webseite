@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /data/products.json
+Allow: /data/faq.json
+Allow: /data/agent-integrations.json
+Allow: /data/product-entity-map.json
+Allow: /data/product-comparison.json
+Allow: /.well-known/ai.json
+Allow: /.well-known/agent-integration.json
+Allow: /llms.txt
+Allow: /agent-integration.md
+
+Disallow: /privacy
+Disallow: /impressum
+Disallow: /lageropt-basic
+Disallow: /roi-basic
+
+Sitemap: https://diggaihh.de/sitemap.xml

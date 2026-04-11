@@ -1,0 +1,61 @@
+{
+  "version": "2026-04-10",
+  "entities": [
+    {
+      "id": "anamnese-a",
+      "name": "Anamnese-A",
+      "route": "/products/anamnese-a",
+      "aliases": ["anamnese a", "online anamnese", "digitale anamnese"],
+      "primaryIntents": ["intake", "patient-intake", "workflow-standardization"],
+      "tags": ["anamnese", "praxis-software", "dsgvo"]
+    },
+    {
+      "id": "anonymisator",
+      "name": "Anonymisator",
+      "route": "/products/anonymisator",
+      "aliases": ["pii anonymization", "data anonymization", "pseudonymisierung"],
+      "primaryIntents": ["privacy", "compliance", "de-identification"],
+      "tags": ["dsgvo", "datenschutz", "anonymisierung", "security"]
+    },
+    {
+      "id": "sylt",
+      "name": "Sylt",
+      "route": "/products/sylt",
+      "aliases": ["enterprise data pipeline", "typescript medtech"],
+      "primaryIntents": ["enterprise", "integration", "data-processing"],
+      "tags": ["typescript", "datenverarbeitung", "enterprise"]
+    },
+    {
+      "id": "jordan-health-app",
+      "name": "Jordan Health App",
+      "route": "/products/jordan-health-app",
+      "aliases": ["remote monitoring", "health app", "patient app"],
+      "primaryIntents": ["telemedicine", "monitoring", "patient-engagement"],
+      "tags": ["mobile", "monitoring", "ios", "android"]
+    },
+    {
+      "id": "jobetes",
+      "name": "JoBetes",
+      "route": "/products/jobetes",
+      "aliases": ["diabetes follow up", "chronic care tracking"],
+      "primaryIntents": ["chronic-care", "follow-up", "alerts"],
+      "tags": ["diabetes", "follow-up", "patient-tracking"]
+    },
+    {
+      "id": "anamnese",
+      "name": "Anamnese",
+      "route": "/products/anamnese",
+      "aliases": ["anamnese basis", "intake mvp"],
+      "primaryIntents": ["fast-start", "mvp", "intake"],
+      "tags": ["anamnese", "mvp", "fragebogen"]
+    },
+    {
+      "id": "projekt-1",
+      "name": "Projekt-1",
+      "route": "/products/projekt-1",
+      "aliases": ["medtech prototype", "poc framework"],
+      "primaryIntents": ["prototyping", "innovation", "proof-of-concept"],
+      "tags": ["prototyping", "innovation", "poc"]
+    }
+  ]
+}
