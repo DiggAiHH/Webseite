@@ -22,6 +22,15 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
   const [form, setForm] = useState(initialState)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState({ type: 'idle', message: '' })
+  const requiredFieldsTotal = 3
+
+  const requiredFieldsFilled = useMemo(() => {
+    let count = 0
+    if (form.email.trim().length > 3) count += 1
+    if (form.organisation.trim().length > 1) count += 1
+    if (form.consent === true) count += 1
+    return count
+  }, [form.email, form.organisation, form.consent])
 
   const canSubmit = useMemo(() => {
     return (
@@ -95,6 +104,10 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4" aria-label={t('contact.form.ariaLabel', 'Anfrageformular')}>
+      <p className="text-xs text-gray-600" aria-live="polite">
+        Pflichtfelder erfuellt: {requiredFieldsFilled} von {requiredFieldsTotal}
+      </p>
+
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-email">
@@ -108,10 +121,14 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
             autoComplete="email"
             value={form.email}
             onChange={update('email')}
+            aria-describedby="lead-email-hint"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-medical-blue-500"
             maxLength={254}
             required
           />
+          <p id="lead-email-hint" className="mt-1 text-xs text-gray-500">
+            Wird nur fuer die Antwort auf Ihre Anfrage verwendet.
+          </p>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-900 mb-1" htmlFor="lead-org">
@@ -124,10 +141,14 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
             autoComplete="organization"
             value={form.organisation}
             onChange={update('organisation')}
+            aria-describedby="lead-org-hint"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-medical-blue-500"
             maxLength={200}
             required
           />
+          <p id="lead-org-hint" className="mt-1 text-xs text-gray-500">
+            Hilft uns, die passende Loesung schneller einzuordnen.
+          </p>
         </div>
       </div>
 
@@ -176,11 +197,21 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
           rows={4}
           value={form.message}
           onChange={update('message')}
+          aria-describedby="lead-message-hint"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-medical-blue-500"
           placeholder={t('contact.form.messagePlaceholder', 'Worum geht es konkret?')}
           maxLength={2000}
         />
+        <p id="lead-message-hint" className="mt-1 text-xs text-gray-500">
+          Keine Gesundheitsdaten eintragen. Fokus auf Ziel, Zeitplan und Integrationen.
+        </p>
       </div>
+
+      {isSubmitting && (
+        <div className="bg-medical-blue-50 border border-medical-blue-200 text-medical-blue-900 rounded-lg p-3 text-sm" role="status" aria-live="polite">
+          Anfrage wird verarbeitet und intern weitergeleitet.
+        </div>
+      )}
 
       <div className="flex items-start gap-3">
         <input
@@ -217,7 +248,14 @@ export default function LeadForm({ productId = '', endpoint = DEFAULT_ENDPOINT, 
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
             )}
-            <span>{status.message}</span>
+            <div>
+              <p>{status.message}</p>
+              {status.type === 'error' ? (
+                <p className="mt-1">
+                  Wenn das Problem bleibt: <a href="mailto:kontakt@diggaihh.de" className="underline">kontakt@diggaihh.de</a>
+                </p>
+              ) : null}
+            </div>
           </div>
         </div>
       )}

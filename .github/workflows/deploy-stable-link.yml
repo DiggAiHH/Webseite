@@ -1,0 +1,75 @@
+name: deploy-stable-link
+
+'on':
+  workflow_dispatch:
+    inputs:
+      preview:
+        description: Deploy as preview instead of production
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy stable link bundle
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          PREVIEW: ${{ github.event.inputs.preview }}
+        run: |
+          set -euo pipefail
+          if [[ "${PREVIEW}" == "true" ]]; then
+            npm run stable-link:deploy:preview
+          else
+            npm run stable-link:deploy
+          fi
+
+      - name: Publish link summary
+        run: |
+          set -euo pipefail
+          REPORT_PATH="$(ls -1t buildLogs/*stable-link-deploy.json | head -n1)"
+          if [[ -z "${REPORT_PATH}" ]]; then
+            echo "No stable-link deploy report found" >&2
+            exit 1
+          fi
+
+          node --input-type=module -e "
+            import fs from 'node:fs'
+            const reportPath = process.argv[1]
+            const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'))
+            const summary = [
+              '## Stable Link Deployment',
+              '',
+              '- Frontend: ' + report.links.frontend,
+              '- Backend health: ' + report.links.backendHealth,
+              '- Backend lead: ' + report.links.backendLead,
+              '- Smoke checks passed: ' + String(report.smoke?.ok),
+              '- Report: ' + reportPath,
+              ''
+            ].join('\n')
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary)
+          " "${REPORT_PATH}"
+
+      - name: Upload stable-link reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-link-deploy-reports
+          path: buildLogs/*stable-link-*.json
+          if-no-files-found: error

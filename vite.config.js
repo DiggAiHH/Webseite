@@ -36,7 +36,13 @@ export default defineConfig(() => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom']
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-routing': ['react-router-dom', 'react-helmet-async'],
+            'vendor-i18n': [
+              'i18next',
+              'react-i18next'
+            ],
+            'vendor-markdown': ['react-markdown', 'remark-gfm']
           }
         }
       }

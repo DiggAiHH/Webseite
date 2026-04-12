@@ -646,19 +646,19 @@ const PraxisITFeature = () => {
         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
           <div className="flex items-start gap-2">
             <span className="text-medical-accent-600">✓</span>
-            <span><strong>MDR & MPDG konform:</strong> Alle Medizinprodukte dokumentiert</span>
+            <span><strong>MDR & MPDG orientiert:</strong> Dokumentationsprozesse strukturiert</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-medical-accent-600">✓</span>
-            <span><strong>EU AI Act ready:</strong> KI-Systeme klassifiziert</span>
+            <span><strong>EU AI Act orientiert:</strong> KI-Systeme klassifiziert</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-medical-accent-600">✓</span>
-            <span><strong>DSGVO:</strong> Alle Daten datenschutzkonform</span>
+            <span><strong>DSGVO-orientiert:</strong> Datenschutzprinzipien in Prozessen verankert</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-medical-accent-600">✓</span>
-            <span><strong>BSI:</strong> IT-Grundschutz implementiert</span>
+            <span><strong>BSI-orientiert:</strong> IT-Grundschutz-Massnahmen abgebildet</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-medical-accent-600">✓</span>

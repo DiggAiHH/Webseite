@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-04-12T08:37:54.852Z",
+  "mode": "smoke",
+  "baseUrl": "http://localhost:8080",
+  "links": {
+    "frontend": "http://localhost:8080/",
+    "backendHealth": "http://localhost:8080/api/health",
+    "backendLead": "http://localhost:8080/api/lead"
+  },
+  "deploy": null,
+  "smoke": {
+    "ok": false,
+    "checks": [
+      {
+        "name": "frontend-home",
+        "url": "http://localhost:8080/",
+        "ok": false,
+        "statusCode": null,
+        "durationMs": 65,
+        "error": "fetch failed"
+      },
+      {
+        "name": "backend-health",
+        "url": "http://localhost:8080/api/health",
+        "ok": false,
+        "statusCode": null,
+        "durationMs": 2,
+        "error": "fetch failed"
+      },
+      {
+        "name": "backend-lead",
+        "url": "http://localhost:8080/api/lead",
+        "ok": false,
+        "statusCode": null,
+        "durationMs": 3,
+        "error": "fetch failed"
+      }
+    ]
+  }
+}

@@ -46,6 +46,53 @@ const USE_CASES_BY_PRODUCT_ID = {
   ]
 }
 
+const PRODUCT_FAQ_BY_PRODUCT_ID = {
+  'anamnese-a': [
+    {
+      question: 'Wie wird Anamnese-A in den Praxisalltag integriert?',
+      answer:
+        'Typischerweise ueber einen kurzen Pilot mit Vorlagen fuer Frageboegen. Danach erfolgt die Einbindung in bestehende Prozesse, zum Beispiel mit Export in vorhandene Systeme.'
+    },
+    {
+      question: 'Ist Anamnese-A auch fuer Tablet-Workflows geeignet?',
+      answer:
+        'Ja, die Loesung ist fuer den Einsatz im Wartezimmer und in barrierearmen Oberflaechen ausgelegt, sodass Informationen strukturiert vor dem Termin erfasst werden koennen.'
+    },
+    {
+      question: 'Was ist fuer ein erstes Angebot sinnvoll?',
+      answer: 'Einrichtungstyp, Teamgroesse, gewuenschter Zeitrahmen und Hinweise zu Integrationen wie PVS oder Exportformaten.'
+    }
+  ],
+  sylt: [
+    {
+      question: 'Wann ist Sylt die richtige Wahl?',
+      answer: 'Wenn komplexe Datenfluesse, mehrere Schnittstellen und stabile Verarbeitung in einem groesseren Setup abgebildet werden sollen.'
+    },
+    {
+      question: 'Kann Sylt in bestehende Systeme integriert werden?',
+      answer: 'Ja, die Einbindung erfolgt ueber definierte Schnittstellen und klare Datenfluesse, inklusive Validierung und nachvollziehbarer Verarbeitung.'
+    },
+    {
+      question: 'Wie startet ein Projekt mit Sylt?',
+      answer: 'Mit einem technischen Scope-Check fuer Datenquellen, Zielprozesse und Sicherheitsanforderungen, danach folgt die schrittweise Umsetzung.'
+    }
+  ],
+  anonymisator: [
+    {
+      question: 'Wofuer eignet sich der Anonymisator besonders?',
+      answer: 'Fuer die datenschutzorientierte Aufbereitung von Dokumenten und Datenexporten in Forschung, Analyse und Compliance-Kontexten.'
+    },
+    {
+      question: 'Wie wird die Nachvollziehbarkeit sichergestellt?',
+      answer: 'Ueber klare Regeln und Audit-Trail-orientierte Prozesse, damit ersichtlich bleibt, welche Schritte bei der Verarbeitung erfolgt sind.'
+    },
+    {
+      question: 'Welche Daten sollten uebermittelt werden?',
+      answer: 'Moeglichst minimierte Testdaten und keine unnoetigen sensiblen Inhalte in offenen Formularen.'
+    }
+  ]
+}
+
 function buildUseCases(product) {
   const curated = product?.id ? USE_CASES_BY_PRODUCT_ID[product.id] : null
   if (Array.isArray(curated) && curated.length > 0) return curated
@@ -120,6 +167,29 @@ function buildFitBullets(product) {
   ]
 }
 
+function buildProductFaq(product) {
+  const curated = product?.id ? PRODUCT_FAQ_BY_PRODUCT_ID[product.id] : null
+  if (Array.isArray(curated) && curated.length > 0) return curated
+
+  const title = typeof product?.title === 'string' ? product.title : 'Diese Loesung'
+  const category = typeof product?.category === 'string' ? product.category : 'MedTech-Anwendung'
+
+  return [
+    {
+      question: `Fuer wen ist ${title} geeignet?`,
+      answer: `${title} eignet sich fuer Praxen, MVZ und medizinische Einrichtungen, die ${category.toLowerCase()} strukturiert einfuehren und Prozesse vereinfachen wollen.`
+    },
+    {
+      question: 'Wie laeuft die Einfuehrung typischerweise ab?',
+      answer: 'Ueblich ist ein Pilot mit klaren Zielen, danach werden Integrationen, Rollen und der Rollout schrittweise umgesetzt.'
+    },
+    {
+      question: 'Wie starte ich am schnellsten?',
+      answer: 'Am schnellsten ueber eine kurze Anfrage mit Zielbild, Zeitplan und Integrationsbedarf.'
+    }
+  ]
+}
+
 export default function ProductDetailPage() {
   const { productId } = useParams()
   const [product, setProduct] = useState(null)
@@ -168,6 +238,7 @@ export default function ProductDetailPage() {
 
   const useCases = useMemo(() => buildUseCases(product), [product])
   const fitBullets = useMemo(() => buildFitBullets(product), [product])
+  const productFaq = useMemo(() => buildProductFaq(product), [product])
 
   if (loading) {
     return (
@@ -306,6 +377,31 @@ export default function ProductDetailPage() {
               </Link>
               <Link to="/security" className="btn-secondary bg-gray-50 text-gray-800 hover:bg-gray-100">
                 Security-Übersicht
+              </Link>
+            </div>
+          </section>
+
+          <section className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Haeufige Fragen zu diesem Produkt</h2>
+            <div className="space-y-3">
+              {productFaq.map((qa) => (
+                <details key={qa.question} className="border border-gray-200 rounded-lg p-4 group">
+                  <summary className="font-semibold text-gray-900 cursor-pointer list-none flex items-center justify-between">
+                    <span>{qa.question}</span>
+                    <span className="text-medical-blue-700 group-open:rotate-180 transition-transform">⌄</span>
+                  </summary>
+                  <p className="mt-2 text-gray-700 text-sm">{qa.answer}</p>
+                </details>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-3 text-sm">
+              <Link to="/kontakt" className="text-medical-blue-700 hover:text-medical-blue-800 font-medium">
+                Konkreten Bedarf besprechen
+              </Link>
+              <span className="text-gray-300">•</span>
+              <Link to="/products" className="text-medical-blue-700 hover:text-medical-blue-800 font-medium">
+                Weitere Produkte vergleichen
               </Link>
             </div>
           </section>

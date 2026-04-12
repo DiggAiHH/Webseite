@@ -131,6 +131,27 @@ npx playwright install --with-deps
 npm run test:e2e
 ```
 
+### Agent Knowledge Pack (AEO)
+
+Für lokale Agent-Integration kann ein vollständiges Knowledge Pack aus den öffentlichen AEO-Ressourcen erzeugt werden:
+
+```bash
+npm run aeo:pack
+```
+
+Zur Integritätsprüfung der AEO-Artefakte vor Build oder CI:
+
+```bash
+npm run validate:aeo
+```
+
+Ergebnis:
+- `dist/agent-pack/manifest.json` (inkl. SHA-256 Prüfsummen)
+- `dist/agent-pack/.well-known/*`
+- `dist/agent-pack/data/*`
+- `dist/agent-pack/agent-integration.md`
+- `dist/agent-pack/llms.txt`
+
 ### Infra Smoke (Docker + Nginx)
 
 Prüft automatisiert:
@@ -349,6 +370,43 @@ VITE_SITE_URL=https://diggaihh.de          # Canonical/OG Base URL
 ### Health Check
 
 Ein Health-Check-Endpoint ist unter `/health` verfügbar (Nginx/Container). Die Lead API bietet zusätzlich `/api/health`.
+
+### Stable Link Agent (Frontend + Backend)
+
+Für einen langfristig stabilen Test-Link (Frontend und Backend auf derselben Domain) steht jetzt ein wiederverwendbarer Agent-Flow zur Verfügung:
+
+```bash
+# Production-Deploy auf Netlify + Smoke-Checks + Report in buildLogs/
+npm run stable-link:deploy
+
+# Preview-Deploy (ohne Produktionsumschaltung)
+npm run stable-link:deploy:preview
+
+# Smoke-Checks gegen bestehenden stabilen Link
+npm run stable-link:smoke -- --url https://<deine-site>.netlify.app
+```
+
+Erforderliche Variablen für `stable-link:deploy`:
+
+```env
+NETLIFY_AUTH_TOKEN=...
+NETLIFY_SITE_ID=...
+```
+
+Erzeugte Langzeit-Testlinks:
+- Frontend: `https://<deine-site>.netlify.app/`
+- Backend Health: `https://<deine-site>.netlify.app/api/health`
+- Backend Lead: `https://<deine-site>.netlify.app/api/lead`
+
+Automatisierung in GitHub Actions:
+- Workflow `deploy-stable-link` (manuell) deployt und validiert den stabilen Link.
+- Workflow `stable-link-smoke-monitor` (manuell + geplant alle 6h) überwacht den Link.
+
+Zusätzliche Repository-Secrets für Monitoring:
+
+```env
+STABLE_BASE_URL=https://<deine-site>.netlify.app
+```
 
 ## 📦 Produktdaten-Verwaltung
 

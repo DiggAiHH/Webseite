@@ -1,8 +1,18 @@
 import { PRODUCT_SEO_INDEX, getProductSeoById } from './productSeoIndex.js'
 
-const BASE_URL = 'https://diggaihh.de'
+export const BASE_URL = 'https://diggaihh.de'
 
 const ORGANIZATION_NAME = 'DiggAiHH UG'
+const SERVICE_TYPES = ['MedTech SaaS', 'Praxisdigitalisierung', 'Datenschutzorientierte KI-Loesungen']
+const SERVICE_AREAS = ['DE', 'AT', 'CH']
+
+const POSTAL_ADDRESS = {
+  '@type': 'PostalAddress',
+  streetAddress: 'Jasminstrasse 24',
+  postalCode: '44289',
+  addressLocality: 'Dortmund',
+  addressCountry: 'DE'
+}
 
 const GLOBAL_JSON_LD = [
   {
@@ -17,13 +27,7 @@ const GLOBAL_JSON_LD = [
     name: ORGANIZATION_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/logo.svg`,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Jasminstraße 24',
-      postalCode: '44289',
-      addressLocality: 'Dortmund',
-      addressCountry: 'DE'
-    },
+    address: POSTAL_ADDRESS,
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
@@ -32,6 +36,18 @@ const GLOBAL_JSON_LD = [
       availableLanguage: ['German', 'English']
     },
     sameAs: ['https://github.com/DiggAiHH']
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: ORGANIZATION_NAME,
+    url: BASE_URL,
+    image: `${BASE_URL}/og-image.svg`,
+    address: POSTAL_ADDRESS,
+    telephone: '+4915213814065',
+    email: 'laith.alshdaifat@hotmail.com',
+    serviceType: SERVICE_TYPES,
+    areaServed: SERVICE_AREAS.map((code) => ({ '@type': 'Country', name: code }))
   }
 ]
 
@@ -108,6 +124,9 @@ const DEFAULT = {
   jsonLd: undefined
 }
 
+export const HOME_FAQ_ITEMS = HOME_FAQ
+export const PRODUCTS_FAQ_ITEMS = PRODUCTS_FAQ
+
 function buildWebPageJsonLd({ name, description, url }) {
   return {
     '@context': 'https://schema.org',
@@ -116,6 +135,14 @@ function buildWebPageJsonLd({ name, description, url }) {
     description,
     url
   }
+}
+
+function buildFeaturePageJsonLd(path, name, description) {
+  return buildWebPageJsonLd({
+    name,
+    description,
+    url: `${BASE_URL}${path}`
+  })
 }
 
 function buildProductJsonLd({ id, title, description, priceEUR }) {
@@ -187,6 +214,32 @@ function buildFaqPageJsonLd({ name, urlPath, questions }) {
       }
     }))
   }
+}
+
+function buildProductFaqItems(product) {
+  const category = typeof product?.category === 'string' ? product.category : 'MedTech-Anwendung'
+  const title = typeof product?.title === 'string' ? product.title : 'die Loesung'
+
+  return [
+    {
+      question: `Fuer wen ist ${title} geeignet?`,
+      answer: `${title} eignet sich fuer Praxen, MVZ und medizinische Einrichtungen, die ${category.toLowerCase()} strukturiert einfuehren und Prozesse messbar verbessern wollen.`
+    },
+    {
+      question: 'Wie laeuft die Einfuehrung ab?',
+      answer:
+        'Der Einstieg erfolgt in der Regel ueber einen Pilot mit klaren Zielen, danach werden Integrationen und Rollout schrittweise geplant.'
+    },
+    {
+      question: 'Wie werden Datenschutz und Sicherheit beruecksichtigt?',
+      answer:
+        'Der Fokus liegt auf Datenminimierung, sicheren Defaults und nachvollziehbaren Prozessen. Sensible Gesundheitsdaten sollen nicht ueber offene Formulare gesendet werden.'
+    },
+    {
+      question: 'Wie starte ich am schnellsten?',
+      answer: 'Am schnellsten ueber die Kontaktseite mit Einrichtungstyp, Zielbild, Zeitplan und Integrationsbedarf.'
+    }
+  ]
 }
 
 const ROUTES = new Map([
@@ -269,7 +322,12 @@ const ROUTES = new Map([
     {
       title: 'Lageroptimierung mit MHD | DiggAiHH',
       description: 'Intelligente Bestandsverwaltung mit MHD-Tracking, Chargenverfolgung und MDR-konformer Dokumentation.',
-      canonicalPath: '/lageropt'
+      canonicalPath: '/lageropt',
+      jsonLd: buildFeaturePageJsonLd(
+        '/lageropt',
+        'Lageroptimierung mit MHD',
+        'Intelligente Bestandsverwaltung mit MHD-Tracking, Chargenverfolgung und MDR-konformer Dokumentation.'
+      )
     }
   ],
   [
@@ -278,7 +336,12 @@ const ROUTES = new Map([
       title: 'Lageroptimierung (Basis) | DiggAiHH',
       description: 'Basis-Ansicht zur Lageroptimierung. Für Details und MHD-Tracking bitte die erweiterte Version nutzen.',
       canonicalPath: '/lageropt-basic',
-      robots: 'noindex,follow'
+      robots: 'noindex,follow',
+      jsonLd: buildFeaturePageJsonLd(
+        '/lageropt-basic',
+        'Lageroptimierung Basis',
+        'Basis-Ansicht zur Lageroptimierung fuer einen schnellen Einstieg.'
+      )
     }
   ],
   [
@@ -286,7 +349,12 @@ const ROUTES = new Map([
     {
       title: 'ROI-Rechner | DiggAiHH',
       description: 'Berechnen Sie den ROI Ihrer Digitalisierung mit Fokus auf Arbeitszeit-Einsparungen und Break-Even.',
-      canonicalPath: '/roi'
+      canonicalPath: '/roi',
+      jsonLd: buildFeaturePageJsonLd(
+        '/roi',
+        'ROI-Rechner',
+        'Berechnen Sie den ROI Ihrer Digitalisierung mit Fokus auf Arbeitszeit-Einsparungen und Break-Even.'
+      )
     }
   ],
   [
@@ -295,7 +363,8 @@ const ROUTES = new Map([
       title: 'ROI-Rechner (Basis) | DiggAiHH',
       description: 'Basis-Ansicht des ROI-Rechners. Für erweiterte Analysen bitte die Standard-Ansicht nutzen.',
       canonicalPath: '/roi-basic',
-      robots: 'noindex,follow'
+      robots: 'noindex,follow',
+      jsonLd: buildFeaturePageJsonLd('/roi-basic', 'ROI-Rechner Basis', 'Basis-Ansicht des ROI-Rechners.')
     }
   ],
   [
@@ -303,7 +372,12 @@ const ROUTES = new Map([
     {
       title: 'Avatar-System | DiggAiHH',
       description: 'Personalisierte Assistenten und virtuelle Berater für medizinische Prozesse und Patienteninteraktion.',
-      canonicalPath: '/avatar'
+      canonicalPath: '/avatar',
+      jsonLd: buildFeaturePageJsonLd(
+        '/avatar',
+        'Avatar-System',
+        'Personalisierte Assistenten und virtuelle Berater fuer medizinische Prozesse und Patienteninteraktion.'
+      )
     }
   ],
   [
@@ -311,7 +385,12 @@ const ROUTES = new Map([
     {
       title: 'Praxis-Twin | DiggAiHH',
       description: 'Gamification-System für den digitalen Praxisaufbau – Module per Drag & Drop, Fortschritt und Motivation.',
-      canonicalPath: '/praxis-twin'
+      canonicalPath: '/praxis-twin',
+      jsonLd: buildFeaturePageJsonLd(
+        '/praxis-twin',
+        'Praxis-Twin',
+        'Gamification-System fuer den digitalen Praxisaufbau mit Modulen und Fortschrittstracking.'
+      )
     }
   ],
   [
@@ -319,7 +398,12 @@ const ROUTES = new Map([
     {
       title: 'Assistenzmodus (AI God Mode) | DiggAiHH',
       description: 'Requirements Wizard zur strukturierten Erfassung von Anforderungen inklusive JSON-Export.',
-      canonicalPath: '/ai-god-mode'
+      canonicalPath: '/ai-god-mode',
+      jsonLd: buildFeaturePageJsonLd(
+        '/ai-god-mode',
+        'Assistenzmodus',
+        'Requirements Wizard zur strukturierten Erfassung von Anforderungen inklusive JSON-Export.'
+      )
     }
   ],
   [
@@ -327,7 +411,12 @@ const ROUTES = new Map([
     {
       title: 'Praxis Manager | DiggAiHH',
       description: 'Zentrale Steuerung Ihrer Praxis: Prozesse, Ressourcen und effiziente Abläufe in einem System.',
-      canonicalPath: '/praxis-manager'
+      canonicalPath: '/praxis-manager',
+      jsonLd: buildFeaturePageJsonLd(
+        '/praxis-manager',
+        'Praxis Manager',
+        'Zentrale Steuerung der Praxis mit Fokus auf Prozesse, Ressourcen und effiziente Ablaeufe.'
+      )
     }
   ],
   [
@@ -335,7 +424,12 @@ const ROUTES = new Map([
     {
       title: 'AI Daten-Check & Anonymisator | DiggAiHH',
       description: 'KI-gestützte Analyse und Anonymisierung personenbezogener Daten – Datenschutz und Datenminimierung im Fokus.',
-      canonicalPath: '/ai-daten-check'
+      canonicalPath: '/ai-daten-check',
+      jsonLd: buildFeaturePageJsonLd(
+        '/ai-daten-check',
+        'AI Daten-Check',
+        'KI-gestuetzte Analyse und Anonymisierung personenbezogener Daten mit Fokus auf Datenschutz.'
+      )
     }
   ],
   [
@@ -343,7 +437,12 @@ const ROUTES = new Map([
     {
       title: 'Kiosk-Systeme für Praxen | DiggAiHH',
       description: 'Self-Service-Terminals für Anmeldung, Warteschlangen-Management und digitale Formulare in der Praxis.',
-      canonicalPath: '/kiosk'
+      canonicalPath: '/kiosk',
+      jsonLd: buildFeaturePageJsonLd(
+        '/kiosk',
+        'Kiosk-Systeme',
+        'Self-Service-Terminals fuer Anmeldung, Warteschlangen-Management und digitale Formulare in der Praxis.'
+      )
     }
   ],
   [
@@ -351,7 +450,12 @@ const ROUTES = new Map([
     {
       title: 'Online-Anamnese | DiggAiHH',
       description: 'Digitale Vorab-Befragung für Praxen – strukturierte Erfassung und effiziente Vorbereitung von Terminen.',
-      canonicalPath: '/anamnese'
+      canonicalPath: '/anamnese',
+      jsonLd: buildFeaturePageJsonLd(
+        '/anamnese',
+        'Online-Anamnese',
+        'Digitale Vorab-Befragung fuer Praxen zur strukturierten Erfassung und effizienten Vorbereitung von Terminen.'
+      )
     }
   ],
   [
@@ -359,13 +463,29 @@ const ROUTES = new Map([
     {
       title: 'Praxis IT | DiggAiHH',
       description: 'IT-Management und Compliance-Unterstützung für Praxen: Geräte, Netzwerk, FAQ und Security-Überblick.',
-      canonicalPath: '/praxis-it'
+      canonicalPath: '/praxis-it',
+      jsonLd: buildFeaturePageJsonLd(
+        '/praxis-it',
+        'Praxis IT',
+        'IT-Management und Compliance-Unterstuetzung fuer Praxen mit Schwerpunkt auf Geraeten, Netzwerk und Sicherheit.'
+      )
     }
   ]
 ])
 
+function isNoindex(robotsValue) {
+  return typeof robotsValue === 'string' && robotsValue.toLowerCase().startsWith('noindex')
+}
+
+export function getIndexableRoutePaths() {
+  return Array.from(ROUTES.entries())
+    .filter(([, value]) => !isNoindex(value?.robots ?? DEFAULT.robots))
+    .map(([path]) => path)
+}
+
 export function getSeoForPath(pathname) {
-  const key = typeof pathname === 'string' ? pathname.replace(/\/$/, '') || '/' : '/'
+  const rawKey = typeof pathname === 'string' ? pathname.replace(/\/$/, '') || '/' : '/'
+  const key = rawKey === '/contact' ? '/kontakt' : rawKey === '/datenschutz' ? '/privacy' : rawKey
 
   if (key.startsWith('/products/') && key !== '/products') {
     const productId = key.split('/')[2] || ''
@@ -374,6 +494,7 @@ export function getSeoForPath(pathname) {
     if (product) {
       const title = `${product.title} | DiggAiHH`
       const description = product.description
+      const productFaq = buildProductFaqItems(product)
       return {
         ...DEFAULT,
         title,
@@ -391,7 +512,12 @@ export function getSeoForPath(pathname) {
             { name: 'Startseite', url: `${BASE_URL}/` },
             { name: 'Produkte', url: `${BASE_URL}/products` },
             { name: product.title, url: `${BASE_URL}${key}` }
-          ])
+          ]),
+          buildFaqPageJsonLd({
+            name: `${product.title} FAQ`,
+            urlPath: key,
+            questions: productFaq
+          })
         ])
       }
     }

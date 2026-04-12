@@ -1,8 +1,15 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { validateURL } from '../utils/security'
 import CheckoutButton from '../features/payment/CheckoutButton'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+
+const PRODUCT_FILTERS = [
+  { id: 'all', label: 'Alle' },
+  { id: 'compliance', label: 'Compliance & Datenschutz' },
+  { id: 'operations', label: 'Praxisalltag & Effizienz' },
+  { id: 'enterprise', label: 'Komplexe Setups' }
+]
 
 const ProductsPage = () => {
   const { t } = useTranslation()
@@ -10,6 +17,7 @@ const ProductsPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [activeFilter, setActiveFilter] = useState('all')
   const closeButtonRef = useRef(null)
 
   const loadProducts = async () => {
@@ -157,13 +165,51 @@ const ProductsPage = () => {
     return validation.isValid ? validation.url : null
   }, [])
 
+  const matchesFilter = useCallback((product, filterId) => {
+    if (filterId === 'all') return true
+
+    const tags = Array.isArray(product?.tags) ? product.tags.map((tag) => String(tag).toLowerCase()) : []
+    const category = String(product?.category || '').toLowerCase()
+    const complexity = String(product?.complexity || '').toLowerCase()
+
+    if (filterId === 'compliance') {
+      return tags.some((tag) => ['dsgvo', 'datenschutz', 'compliance', 'security', 'mdr'].some((key) => tag.includes(key)))
+    }
+
+    if (filterId === 'operations') {
+      return tags.some((tag) => ['praxis', 'anamnese', 'patient', 'follow', 'kiosk'].some((key) => tag.includes(key))) || complexity === 'low'
+    }
+
+    if (filterId === 'enterprise') {
+      return complexity === 'high' || category.includes('enterprise') || category.includes('backend')
+    }
+
+    return true
+  }, [])
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => matchesFilter(product, activeFilter))
+  }, [products, activeFilter, matchesFilter])
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-medical-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('common.loading')}</p>
+      <div className="space-y-6" aria-busy="true" aria-live="polite">
+        <div className="h-40 bg-gradient-to-r from-medical-blue-200 to-medical-blue-100 rounded-2xl animate-pulse" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <div key={idx} className="bg-white rounded-xl border border-gray-200 p-5 space-y-4 animate-pulse">
+              <div className="h-5 bg-gray-200 rounded w-2/3" />
+              <div className="h-4 bg-gray-100 rounded w-full" />
+              <div className="h-4 bg-gray-100 rounded w-5/6" />
+              <div className="flex gap-2">
+                <div className="h-6 bg-gray-100 rounded w-20" />
+                <div className="h-6 bg-gray-100 rounded w-16" />
+              </div>
+              <div className="h-8 bg-gray-100 rounded w-1/2" />
+            </div>
+          ))}
         </div>
+        <p className="text-sm text-gray-600">{t('common.loading')}</p>
       </div>
     )
   }
@@ -282,17 +328,48 @@ const ProductsPage = () => {
 
       {/* Products Grid */}
       <section>
+        <div className="mb-6 p-4 bg-white border border-gray-200 rounded-lg">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Schnellfilter</h3>
+          <div className="flex flex-wrap gap-2">
+            {PRODUCT_FILTERS.map((filter) => (
+              <button
+                key={filter.id}
+                type="button"
+                onClick={() => setActiveFilter(filter.id)}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                  activeFilter === filter.id
+                    ? 'bg-medical-blue-600 text-white border-medical-blue-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-medical-blue-300 hover:text-medical-blue-700'
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {products.length} {products.length === 1 ? 'Produkt' : 'Produkte'} verfügbar
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'Produkt' : 'Produkte'} verfuegbar
         </h2>
         
         {products.length === 0 ? (
           <div className="card text-center py-12">
             <p className="text-gray-600">Keine Produkte verfügbar</p>
           </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="card text-center py-12">
+            <p className="text-gray-700 font-medium">Kein Treffer fuer den aktuellen Filter.</p>
+            <button
+              type="button"
+              onClick={() => setActiveFilter('all')}
+              className="mt-3 text-medical-blue-700 hover:text-medical-blue-800 font-medium"
+            >
+              Alle Produkte anzeigen
+            </button>
+          </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <article 
                 key={product.id}
                 className="card hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1"

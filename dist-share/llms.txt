@@ -1,0 +1,33 @@
+# DiggAiHH MedTech SaaS
+
+> Structured public context for AI assistants, search agents, and retrieval systems.
+
+## Primary Discovery
+- Site: https://diggaihh.de/
+- Sitemap: https://diggaihh.de/sitemap.xml
+- Robots: https://diggaihh.de/robots.txt
+- AI Manifest: https://diggaihh.de/.well-known/ai.json
+- Agent Integration Manifest: https://diggaihh.de/.well-known/agent-integration.json
+- Integration Guide: https://diggaihh.de/agent-integration.md
+
+## Machine Readable Data
+- Products: https://diggaihh.de/data/products.json
+- FAQ: https://diggaihh.de/data/faq.json
+- Compliance Summary: https://diggaihh.de/data/compliance-summary.json
+- Agent Integrations: https://diggaihh.de/data/agent-integrations.json
+- Product Entity Map: https://diggaihh.de/data/product-entity-map.json
+- Product Comparison: https://diggaihh.de/data/product-comparison.json
+
+## Canonical Contact
+- Contact route: https://diggaihh.de/kontakt
+- Privacy route: https://diggaihh.de/privacy
+
+## Repository Build
+- Local pack command: npm run aeo:pack
+- Local validation command: npm run validate:aeo
+- Output: dist/agent-pack/manifest.json
+
+## Usage Policy
+- Public data only.
+- Do not send sensitive health data through web forms.
+- Use GDPR-oriented and standards-oriented wording; do not claim external certification unless explicitly documented.

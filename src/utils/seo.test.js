@@ -20,6 +20,16 @@ test('getSeoForPath normalizes trailing slashes', () => {
   assert.deepEqual(a, b)
 })
 
+test('getSeoForPath normalizes known alias routes', () => {
+  const contact = getSeoForPath('/contact')
+  const kontakt = getSeoForPath('/kontakt')
+  assert.equal(contact.canonicalPath, '/kontakt')
+  assert.deepEqual(contact, kontakt)
+
+  const dataPrivacyAlias = getSeoForPath('/datenschutz')
+  assert.equal(dataPrivacyAlias.canonicalPath, '/privacy')
+})
+
 test('getSeoForPath falls back for unknown routes', () => {
   const seo = getSeoForPath('/does-not-exist')
   assert.equal(seo.canonicalPath, '/does-not-exist')
@@ -57,8 +67,21 @@ test('getSeoForPath adds BreadcrumbList JSON-LD for product detail pages', () =>
   assert.ok(list.some((entry) => entry && entry['@type'] === 'BreadcrumbList'))
 })
 
+test('getSeoForPath adds FAQPage JSON-LD for product detail pages', () => {
+  const seo = getSeoForPath('/products/anamnese-a')
+  const list = normalizeJsonLd(seo.jsonLd)
+  assert.ok(list.some((entry) => entry && entry['@type'] === 'FAQPage'))
+})
+
+test('getSeoForPath adds WebPage JSON-LD for feature routes', () => {
+  const seo = getSeoForPath('/avatar')
+  const list = normalizeJsonLd(seo.jsonLd)
+  assert.ok(list.some((entry) => entry && entry['@type'] === 'WebPage'))
+})
+
 test('getSeoForPath includes Organization JSON-LD globally', () => {
   const seo = getSeoForPath('/products')
   const list = normalizeJsonLd(seo.jsonLd)
   assert.ok(list.some((entry) => entry && entry['@type'] === 'Organization'))
+  assert.ok(list.some((entry) => entry && entry['@type'] === 'LocalBusiness'))
 })

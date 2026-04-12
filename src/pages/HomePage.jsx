@@ -1,71 +1,117 @@
+import { Suspense, lazy } from 'react'
 import { Link } from 'react-router-dom'
-import AIReadinessWizard from '../components/AIReadinessWizard'
+import RevealOnScroll from '../components/RevealOnScroll'
+
+const AIReadinessWizard = lazy(() => import('../components/AIReadinessWizard'))
+
+const HERO_STATS = [
+  { label: 'Automatisierte Module', value: '12+' },
+  { label: 'Sicherheitsfokus', value: 'DSGVO/BSI' },
+  { label: 'Produkt-Setups', value: '< 2h' },
+]
+
+function WizardFallback() {
+  return (
+    <div className="animate-pulse" aria-hidden="true">
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <div className="h-4 w-28 bg-gray-200 rounded" />
+          <div className="h-4 w-12 bg-gray-200 rounded" />
+        </div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-full w-1/3 bg-medical-blue-100 rounded-full" />
+        </div>
+      </div>
+      <div className="h-7 w-3/4 bg-gray-200 rounded mb-6" />
+      <div className="space-y-3 mb-6">
+        <div className="h-16 bg-gray-100 border border-clinical-border rounded-lg" />
+        <div className="h-16 bg-gray-100 border border-clinical-border rounded-lg" />
+        <div className="h-16 bg-gray-100 border border-clinical-border rounded-lg" />
+      </div>
+      <div className="mt-6 pt-4 border-t border-clinical-border">
+        <div className="h-6 w-48 bg-gray-100 rounded-full" />
+      </div>
+    </div>
+  )
+}
 
 const HomePage = () => {
   return (
     <div className="space-y-10">
       {/* Hero Section - Futuristisch Klinisch-Minimal */}
-      <section className="section-hero relative overflow-hidden">
+      <RevealOnScroll as="section" className="section-hero relative overflow-hidden bg-grid-pattern" delayMs={30}>
         {/* Background Glow Effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-eu-trust-400/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-medical-blue-400/20 rounded-full blur-2xl" />
+          <div className="hero-glow-orb -top-40 -right-40 w-80 h-80 bg-eu-trust-400/20" />
+          <div className="hero-glow-orb -bottom-20 -left-20 w-60 h-60 bg-medical-blue-400/20" style={{ animationDelay: '0.8s' }} />
+          <div className="hero-grid-mask" />
         </div>
 
         <div className="relative z-10 grid lg:grid-cols-2 gap-8 items-center">
           {/* Left: Hero Content */}
           <div className="animate-in">
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="badge-eu">EU AI Act Ready</span>
+              <span className="badge-eu">EU AI Act orientiert</span>
               <span className="badge-dsgvo">DSGVO</span>
               <span className="badge-bsi">BSI</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-medical-blue-700 via-eu-trust-600 to-medical-blue-800">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neon-cyan-300 via-white to-medical-blue-200 text-glow">
               Die Zukunft der Praxis-IT
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-6 leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-100/95 mb-6 leading-relaxed">
               KI-gestützte MedTech-Lösungen, die den höchsten EU-Standards entsprechen – 
               für messbar bessere Abläufe in Praxen & Kliniken.
             </p>
             <div className="flex flex-wrap gap-4" role="group" aria-label="Schnellzugriff">
-              <Link to="/kontakt" className="btn-trust">
+              <Link to="/kontakt" className="btn-trust animate-glow-pulse">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 Beratung starten
               </Link>
-              <Link to="/products" className="btn-secondary">
+              <Link to="/products" className="btn-secondary border-white/40 bg-white/10 text-white hover:bg-white/20">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
                 Alle Lösungen
               </Link>
             </div>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label="Produktkennzahlen">
+              {HERO_STATS.map((stat) => (
+                <div key={stat.label} className="rounded-lg border border-white/25 bg-white/10 px-3 py-2 backdrop-blur-sm">
+                  <p className="mono-stat text-neon-cyan-200">{stat.label}</p>
+                  <p className="text-sm font-semibold text-white">{stat.value}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Right: AI-Readiness-Check Wizard */}
           <div className="animate-in" style={{ animationDelay: '0.2s' }}>
-            <div className="card-glass">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <svg className="w-5 h-5 text-eu-trust-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="card-glass border-glow bg-white/92 dark:bg-dark-surface/85">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-eu-trust-600 dark:text-neon-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
                 AI-Readiness-Check
               </h2>
-              <AIReadinessWizard compact />
+              <Suspense fallback={<WizardFallback />}>
+                <AIReadinessWizard compact />
+              </Suspense>
             </div>
           </div>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* EU Compliance-Hub Section */}
-      <section className="section-clinical">
+      <RevealOnScroll as="section" className="section-clinical" delayMs={80}>
         <div className="text-center mb-8">
           <span className="inline-block px-4 py-1 bg-eu-trust-100 text-eu-trust-700 rounded-full text-sm font-medium mb-3">
             EU Standards & Compliance
           </span>
           <h2 className="text-3xl font-bold text-gray-900 mb-3">
-            Vertrauen durch zertifizierte Sicherheit
+            Vertrauen durch dokumentierte Sicherheit
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Unsere Lösungen erfüllen die höchsten europäischen Standards für Datenschutz, IT-Sicherheit und KI-Regulierung.
@@ -82,9 +128,9 @@ const HomePage = () => {
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">DSGVO</h3>
             <p className="text-sm text-gray-600 mb-3">
-              Vollständige Konformität mit der EU-Datenschutz-Grundverordnung durch Privacy by Design.
+              Datenschutzorientierte Umsetzung nach DSGVO-Prinzipien mit Fokus auf Datenminimierung.
             </p>
-            <Link to="/datenschutz" className="text-eu-trust-600 hover:text-eu-trust-700 text-sm font-medium inline-flex items-center gap-1">
+            <Link to="/privacy" className="text-eu-trust-600 hover:text-eu-trust-700 text-sm font-medium inline-flex items-center gap-1">
               Details ansehen
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -101,7 +147,7 @@ const HomePage = () => {
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">BSI IT-Grundschutz</h3>
             <p className="text-sm text-gray-600 mb-3">
-              Zertifizierte IT-Sicherheit nach den Standards des Bundesamts für Sicherheit in der Informationstechnik.
+              Sicherheitsausrichtung an den Standards des Bundesamts fuer Sicherheit in der Informationstechnik.
             </p>
             <Link to="/security" className="text-eu-trust-600 hover:text-eu-trust-700 text-sm font-medium inline-flex items-center gap-1">
               Sicherheitskonzept
@@ -145,7 +191,7 @@ const HomePage = () => {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Ready for 2025
+              Standards im Fokus
             </span>
           </div>
         </div>
@@ -158,10 +204,10 @@ const HomePage = () => {
             Vollständige Compliance-Dokumentation
           </Link>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* Wow / Clarity Section */}
-      <section className="card-clinical">
+      <RevealOnScroll as="section" className="card-clinical" delayMs={140}>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="card border-l-4 border-l-medical-blue-600">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Schneller Einstieg</h2>
@@ -175,7 +221,7 @@ const HomePage = () => {
               Datenminimierung, klare Zuständigkeiten und sichere Defaults – so, wie es in der Praxis funktioniert.
             </p>
           </div>
-          <div className="card border-l-4 border-l-purple-600">
+          <div className="card border-l-4 border-l-neon-cyan-500">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Messbarer Nutzen</h2>
             <p className="text-gray-600">
               Fokus auf Prozesszeit, Qualität und Transparenz – ideal für Entscheidungen und Budgetfreigaben.
@@ -191,10 +237,10 @@ const HomePage = () => {
             Security & Compliance ansehen
           </Link>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* New Services - Leistungen */}
-      <section>
+      <RevealOnScroll as="section" delayMs={180}>
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Unsere Leistungen für Praxen & Kliniken</h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
@@ -295,10 +341,10 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* Features Grid */}
-      <section>
+      <RevealOnScroll as="section" delayMs={220}>
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Weitere Tools & Module</h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
@@ -411,10 +457,10 @@ const HomePage = () => {
           </Link>
         </div>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* Security & Compliance Badge */}
-      <section className="card-glass relative overflow-hidden">
+      <RevealOnScroll as="section" className="card-neon relative overflow-hidden" delayMs={280}>
         <div className="absolute inset-0 bg-gradient-to-r from-eu-trust-500/5 to-medical-blue-500/5 pointer-events-none" aria-hidden="true" />
         <div className="relative flex flex-col md:flex-row items-center gap-6">
           <div className="w-20 h-20 bg-gradient-trust rounded-2xl flex items-center justify-center flex-shrink-0 shadow-glow-accent">
@@ -423,12 +469,12 @@ const HomePage = () => {
             </svg>
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              100% EU-konform & DSGVO-sicher
+            <h3 className="text-xl font-semibold text-slate-100 mb-2">
+              An EU-Standards orientiert und datenschutzfokussiert
             </h3>
-            <p className="text-gray-600 mb-4">
-              Alle Daten werden nach höchsten deutschen und europäischen Datenschutzstandards verarbeitet.
-              Hosting ausschließlich in zertifizierten EU-Rechenzentren.
+            <p className="text-slate-300 mb-4">
+              Unsere Prozesse orientieren sich an DSGVO, BSI IT-Grundschutz und ISO-27001-Prinzipien.
+              Details zu Verantwortlichkeiten, Datenwegen und Sicherheitsmassnahmen finden Sie in Security und Privacy.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-2">
               <span className="badge-dsgvo">
@@ -439,14 +485,14 @@ const HomePage = () => {
               </span>
               <span className="badge-bsi">BSI-Grundschutz</span>
               <span className="badge-iso">ISO 27001</span>
-              <span className="badge-eu">EU AI Act Ready</span>
+              <span className="badge-eu">EU AI Act orientiert</span>
             </div>
           </div>
         </div>
-      </section>
+      </RevealOnScroll>
 
       {/* FAQ */}
-      <section className="card-clinical">
+      <RevealOnScroll as="section" className="card-clinical" delayMs={320}>
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Häufige Fragen</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -515,7 +561,7 @@ const HomePage = () => {
             Kontakt aufnehmen
           </Link>
         </div>
-      </section>
+      </RevealOnScroll>
     </div>
   );
 };

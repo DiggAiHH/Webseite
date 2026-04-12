@@ -28,11 +28,17 @@ jobs:
         id: playwright_version
         run: echo "version=$(node -p \"require('@playwright/test/package.json').version\")" >> "$GITHUB_OUTPUT"
 
+      - name: Validate AEO artifacts
+        run: npm run validate:aeo
+
       - name: Lint
         run: npm run lint
 
       - name: Unit tests
         run: npm run test:unit
+
+      - name: Netlify function tests
+        run: npm run test:functions
 
       - name: Frontend component tests
         run: npm run test:frontend:run

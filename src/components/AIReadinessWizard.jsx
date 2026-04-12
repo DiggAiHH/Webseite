@@ -159,7 +159,7 @@ export default function AIReadinessWizard({ onComplete, compact = false }) {
             </span>
             <span className="badge-bsi">BSI-Grundschutz</span>
             <span className="badge-iso">ISO 27001</span>
-            <span className="badge-eu">EU AI Act Ready</span>
+            <span className="badge-eu">EU AI Act orientiert</span>
           </div>
         </div>
       </div>

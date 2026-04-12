@@ -1,0 +1,83 @@
+{
+  "version": "2026-04-10",
+  "dimensions": [
+    "useCase",
+    "complexity",
+    "priceFromEur",
+    "privacyFocus",
+    "integrationDepth",
+    "bestFor"
+  ],
+  "products": [
+    {
+      "id": "anamnese-a",
+      "route": "/products/anamnese-a",
+      "useCase": "Digitale Vorab-Anamnese",
+      "complexity": "medium",
+      "priceFromEur": 2500,
+      "privacyFocus": "high",
+      "integrationDepth": "medium",
+      "bestFor": "Praxen mit strukturiertem Intake-Bedarf"
+    },
+    {
+      "id": "anonymisator",
+      "route": "/products/anonymisator",
+      "useCase": "Datenschutzorientierte Anonymisierung",
+      "complexity": "high",
+      "priceFromEur": 6500,
+      "privacyFocus": "very-high",
+      "integrationDepth": "medium",
+      "bestFor": "Compliance- und Analyse-Szenarien"
+    },
+    {
+      "id": "sylt",
+      "route": "/products/sylt",
+      "useCase": "Enterprise-Datenverarbeitung",
+      "complexity": "high",
+      "priceFromEur": 8500,
+      "privacyFocus": "high",
+      "integrationDepth": "high",
+      "bestFor": "Groessere Setups mit komplexen Datenflussen"
+    },
+    {
+      "id": "jordan-health-app",
+      "route": "/products/jordan-health-app",
+      "useCase": "Remote Monitoring und Patientenkommunikation",
+      "complexity": "high",
+      "priceFromEur": 12000,
+      "privacyFocus": "high",
+      "integrationDepth": "high",
+      "bestFor": "Mobile Monitoring-Programme"
+    },
+    {
+      "id": "jobetes",
+      "route": "/products/jobetes",
+      "useCase": "Diabetes Follow-up und Verlauf",
+      "complexity": "high",
+      "priceFromEur": 9500,
+      "privacyFocus": "high",
+      "integrationDepth": "medium",
+      "bestFor": "Chronische Versorgung mit Reminder-Workflows"
+    },
+    {
+      "id": "anamnese",
+      "route": "/products/anamnese",
+      "useCase": "Schneller Einstieg in digitale Anamnese",
+      "complexity": "low",
+      "priceFromEur": 1800,
+      "privacyFocus": "medium",
+      "integrationDepth": "low",
+      "bestFor": "Kleine Teams mit Fast-Start-Anforderungen"
+    },
+    {
+      "id": "projekt-1",
+      "route": "/products/projekt-1",
+      "useCase": "Prototyping und POC",
+      "complexity": "medium",
+      "priceFromEur": 4500,
+      "privacyFocus": "medium",
+      "integrationDepth": "medium",
+      "bestFor": "Innovations- und Pilotprojekte"
+    }
+  ]
+}

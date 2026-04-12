@@ -1,0 +1,84 @@
+name: stable-link-smoke-monitor
+
+'on':
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Optional override for the stable base URL
+        required: false
+        type: string
+  schedule:
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve stable base URL
+        env:
+          INPUT_URL: ${{ github.event.inputs.base_url }}
+          SECRET_URL: ${{ secrets.STABLE_BASE_URL }}
+        run: |
+          set -euo pipefail
+          BASE_URL="${INPUT_URL}"
+          if [[ -z "${BASE_URL}" ]]; then
+            BASE_URL="${SECRET_URL}"
+          fi
+
+          if [[ -z "${BASE_URL}" ]]; then
+            echo "Missing stable base URL. Set workflow input base_url or repository secret STABLE_BASE_URL." >&2
+            exit 1
+          fi
+
+          echo "STABLE_BASE_URL=${BASE_URL}" >> "$GITHUB_ENV"
+
+      - name: Run stable-link smoke checks
+        run: npm run stable-link:smoke -- --url "${STABLE_BASE_URL}"
+
+      - name: Publish smoke summary
+        run: |
+          set -euo pipefail
+          REPORT_PATH="$(ls -1t buildLogs/*stable-link-smoke.json | head -n1)"
+          if [[ -z "${REPORT_PATH}" ]]; then
+            echo "No stable-link smoke report found" >&2
+            exit 1
+          fi
+
+          node --input-type=module -e "
+            import fs from 'node:fs'
+            const reportPath = process.argv[1]
+            const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'))
+            const summary = [
+              '## Stable Link Smoke Monitor',
+              '',
+              '- Frontend: ' + report.links.frontend,
+              '- Backend health: ' + report.links.backendHealth,
+              '- Backend lead: ' + report.links.backendLead,
+              '- Smoke checks passed: ' + String(report.smoke?.ok),
+              '- Report: ' + reportPath,
+              ''
+            ].join('\n')
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary)
+          " "${REPORT_PATH}"
+
+      - name: Upload smoke reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-link-smoke-reports
+          path: buildLogs/*stable-link-smoke.json
+          if-no-files-found: error

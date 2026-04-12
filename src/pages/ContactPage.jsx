@@ -13,6 +13,13 @@ const ContactPage = () => {
           {t('contact.subtitle')}
         </p>
 
+        <div className="inline-flex items-center gap-2 bg-medical-accent-50 border border-medical-accent-200 text-medical-accent-800 rounded-full px-3 py-1 text-sm font-medium mb-6">
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-8.75a.75.75 0 00-1.5 0v3.5c0 .414.336.75.75.75h2a.75.75 0 000-1.5h-1.25v-2.75z" clipRule="evenodd" />
+          </svg>
+          Rueckmeldung in der Regel innerhalb eines Werktags
+        </div>
+
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8 text-sm text-gray-700">
           <p>
             Ihre Angaben nutzen wir ausschließlich zur Bearbeitung Ihrer Anfrage. Details finden Sie in der{' '}
@@ -32,7 +39,7 @@ const ContactPage = () => {
               <div className="space-y-3 text-sm text-gray-700">
                 <div>
                   <p className="font-medium text-gray-900">Wie schnell bekomme ich eine Antwort?</p>
-                  <p>Wir melden uns zeitnah mit Rückfragen oder einem konkreten Vorschlag. Wenn es besonders dringend ist, schreiben Sie das bitte in die Nachricht.</p>
+                  <p>In der Regel innerhalb eines Werktags. Wenn es besonders dringend ist, schreiben Sie es bitte direkt in die Nachricht.</p>
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Wie geht’s nach dem Absenden weiter?</p>
@@ -49,7 +56,7 @@ const ContactPage = () => {
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Direkter Kontakt</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2 text-sm text-gray-700">
-              <p><span className="font-medium">E-Mail:</span> kontakt@diggaihh.de</p>
+              <p><span className="font-medium">E-Mail (Hauptkontakt):</span> <a href="mailto:diggai@tutanota.de">diggai@tutanota.de</a></p>
               <p><span className="font-medium">Hinweis:</span> Bitte senden Sie keine Gesundheitsdaten über dieses Formular.</p>
             </div>
 

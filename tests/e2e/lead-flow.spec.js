@@ -13,19 +13,25 @@ test.beforeEach(async ({ page }) => {
     ({ key, value }) => localStorage.setItem(key, value),
     { key: 'diggai-privacy-consent', value: JSON.stringify(consent) }
   )
+
+  // Force German locale so tests match German UI labels.
+  await page.addInitScript(
+    ({ key, value }) => localStorage.setItem(key, value),
+    { key: 'i18nextLng', value: 'de' }
+  )
 })
 
 test('Kontakt: Submit ist erst nach Pflichtfeldern + Consent möglich', async ({ page }) => {
   await page.goto('/kontakt')
 
-  const submit = page.getByRole('button', { name: /anfrage senden/i })
+  const submit = page.getByRole('button', { name: /nachricht senden/i })
   await expect(submit).toBeDisabled()
 
   await page.getByLabel(/e-mail \*/i).fill('arzt@example.com')
-  await page.getByLabel(/praxis \/ einrichtung \*/i).fill('Praxis Dr. Beispiel')
+  await page.getByLabel(/organisation \/ praxis \*/i).fill('Praxis Dr. Beispiel')
 
   await expect(submit).toBeDisabled()
-  await page.getByLabel(/ich willige ein/i).check()
+  await page.getByLabel(/ich stimme/i).check()
   await expect(submit).toBeEnabled()
 })
 
@@ -42,10 +48,10 @@ test('Kontakt: erfolgreicher Submit zeigt Success (API gemockt)', async ({ page 
   await page.goto('/kontakt')
 
   await page.getByLabel(/e-mail \*/i).fill('arzt@example.com')
-  await page.getByLabel(/praxis \/ einrichtung \*/i).fill('Praxis Dr. Beispiel')
-  await page.getByLabel(/ich willige ein/i).check()
+  await page.getByLabel(/organisation \/ praxis \*/i).fill('Praxis Dr. Beispiel')
+  await page.getByLabel(/ich stimme/i).check()
 
-  await page.getByRole('button', { name: /anfrage senden/i }).click()
+  await page.getByRole('button', { name: /nachricht senden/i }).click()
 
   const form = page.getByRole('form', { name: 'Anfrageformular' })
   await expect(form.getByRole('status')).toContainText(/übermittelt/i)
@@ -74,14 +80,14 @@ test('Produkte: Modal -> Anfrage senden funktioniert (API gemockt)', async ({ pa
 
   // Fill LeadForm in modal
   await page.getByLabel(/e-mail \*/i).fill('arzt@example.com')
-  await page.getByLabel(/praxis \/ einrichtung \*/i).fill('Praxis Dr. Beispiel')
-  await page.getByLabel(/ich willige ein/i).check()
+  await page.getByLabel(/organisation \/ praxis \*/i).fill('Praxis Dr. Beispiel')
+  await page.getByLabel(/ich stimme/i).check()
 
   const responsePromise = page.waitForResponse((response) => {
     return response.url().includes('/api/lead') && response.request().method() === 'POST'
   })
 
-  await page.getByRole('button', { name: /anfrage senden/i }).click()
+  await page.getByRole('button', { name: /nachricht senden/i }).click()
   const response = await responsePromise
   expect(response.ok()).toBeTruthy()
 

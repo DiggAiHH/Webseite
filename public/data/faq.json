@@ -1,0 +1,70 @@
+{
+  "version": "2026-04-10",
+  "sections": [
+    {
+      "id": "home",
+      "title": "Allgemeine Fragen",
+      "route": "/",
+      "items": [
+        {
+          "question": "Fuer wen sind die Loesungen gedacht?",
+          "answer": "Fuer Praxen, MVZ und medizinische Einrichtungen, die Ablaeufe digitalisieren, Prozesse vereinheitlichen und Entscheidungen mit belastbaren Kennzahlen treffen moechten."
+        },
+        {
+          "question": "Muss ich mit grossen IT-Projekten rechnen?",
+          "answer": "Nein. Der Einstieg ist modular moeglich: Start mit einem Pilot, klare Anforderungen, dann Rollout ohne unnoetige Datenerfassung."
+        },
+        {
+          "question": "Wie geht ihr mit Datenschutz um?",
+          "answer": "Fokus auf Datenminimierung und sichere Defaults. Bitte keine Gesundheitsdaten ueber Website oder Formulare uebermitteln."
+        },
+        {
+          "question": "Wie starte ich am schnellsten?",
+          "answer": "Nutzen Sie den ROI-Rechner oder senden Sie eine kurze Anfrage ueber die Kontaktseite."
+        }
+      ]
+    },
+    {
+      "id": "products",
+      "title": "Produkte",
+      "route": "/products",
+      "items": [
+        {
+          "question": "Gibt es zu jedem Produkt eine eigene Seite?",
+          "answer": "Ja. Jedes Produkt hat eine indexierbare Detailseite mit Leistungsumfang, Tech-Stack und Richtpreis."
+        },
+        {
+          "question": "Sind die Preise verbindlich?",
+          "answer": "Nein. Preise sind Richtwerte; der finale Preis haengt von Anforderungen, Integration und Anpassungen ab."
+        },
+        {
+          "question": "Welche Informationen helfen fuer ein Angebot?",
+          "answer": "Einrichtungstyp, Fachrichtung oder Teamgroesse, gewuenschte Loesung, Zeitplan und Integrationsbedarf."
+        },
+        {
+          "question": "Kann ich nur ein Modul nutzen?",
+          "answer": "Ja. Die Module sind einzeln nutzbar oder kombinierbar, je nach Ziel wie Kosten, Qualitaet, Compliance oder Entlastung."
+        }
+      ]
+    },
+    {
+      "id": "product-detail",
+      "title": "Produktdetails",
+      "route": "/products/:productId",
+      "items": [
+        {
+          "question": "Fuer wen ist ein Produkt aus dem Portfolio geeignet?",
+          "answer": "Fuer Praxen, MVZ und medizinische Einrichtungen, die Prozesse strukturiert digitalisieren und klar messbaren Nutzen erzielen wollen."
+        },
+        {
+          "question": "Wie laeuft die Einfuehrung in der Regel ab?",
+          "answer": "Ueblich ist ein Pilot mit klaren Zielen, anschliessend erfolgt die schrittweise Einbindung in bestehende Workflows und Integrationen."
+        },
+        {
+          "question": "Wie wird mit Datenschutz und Sicherheit umgegangen?",
+          "answer": "Mit Fokus auf Datenminimierung, sicheren Defaults und nachvollziehbaren Prozessen. Sensible Gesundheitsdaten sollen nicht ueber offene Formulare gesendet werden."
+        }
+      ]
+    }
+  ]
+}

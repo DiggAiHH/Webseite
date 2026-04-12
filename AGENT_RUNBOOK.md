@@ -115,6 +115,40 @@ Beispiel:
 - `buildLogs/2026-01-21_frontend-tests.log`
 - `buildLogs/2026-01-21_devserver-start.log`
 
+### Stable-Link Agent Evidence
+
+Für langfristige Frontend/Backend-Testlinks erzeugt der Agent strukturierte Reports:
+
+- `buildLogs/<timestamp>_stable-link-deploy.json`
+- `buildLogs/<timestamp>_stable-link-smoke.json`
+
+Pflichtinhalt:
+- Frontend-Link
+- Backend-Health-Link
+- Backend-Lead-Link
+- Ergebnis der Smoke-Checks (OK/Fehler)
+
+### Stable-Link Agent Betrieb
+
+1. Deploy + Verifikation (Standard):
+
+USER ACTION REQUIRED
+npm run stable-link:deploy
+
+2. Preview-Deploy:
+
+USER ACTION REQUIRED
+npm run stable-link:deploy:preview
+
+3. Bestehenden Link prüfen:
+
+USER ACTION REQUIRED
+npm run stable-link:smoke -- --url https://<deine-site>.netlify.app
+
+4. CI-Automation:
+- `deploy-stable-link` für manuelles, reproduzierbares Stable-Deployment
+- `stable-link-smoke-monitor` für periodisches Monitoring
+
 ---
 
 ## Nutzeranweisungen (Falls nötig)

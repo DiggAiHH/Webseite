@@ -1,0 +1,65 @@
+{
+  "name": "DiggAiHH Agent Integration",
+  "version": "2026-04-10",
+  "description": "Integration contract for AI agents consuming DiggAiHH public data.",
+  "baseUrl": "https://diggaihh.de",
+  "auth": {
+    "type": "none"
+  },
+  "sources": [
+    {
+      "id": "products",
+      "url": "/data/products.json",
+      "format": "json",
+      "refresh": "daily"
+    },
+    {
+      "id": "faq",
+      "url": "/data/faq.json",
+      "format": "json",
+      "refresh": "daily"
+    },
+    {
+      "id": "compliance",
+      "url": "/data/compliance-summary.json",
+      "format": "json",
+      "refresh": "weekly"
+    },
+    {
+      "id": "integrations",
+      "url": "/data/agent-integrations.json",
+      "format": "json",
+      "refresh": "weekly"
+    },
+    {
+      "id": "entity-map",
+      "url": "/data/product-entity-map.json",
+      "format": "json",
+      "refresh": "weekly"
+    },
+    {
+      "id": "comparison",
+      "url": "/data/product-comparison.json",
+      "format": "json",
+      "refresh": "daily"
+    }
+  ],
+  "documentation": {
+    "guide": "/agent-integration.md",
+    "llms": "/llms.txt"
+  },
+  "localBuild": {
+    "command": "npm run aeo:pack",
+    "validateCommand": "npm run validate:aeo",
+    "output": "dist/agent-pack",
+    "manifest": "dist/agent-pack/manifest.json"
+  },
+  "routing": {
+    "canonicalContact": "/kontakt",
+    "canonicalPrivacy": "/privacy"
+  },
+  "contentPolicy": {
+    "sensitiveData": "Do not send health data via open web forms.",
+    "claims": "Use standards-oriented wording unless external certification is explicitly documented."
+  }
+}

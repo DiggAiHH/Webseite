@@ -19,7 +19,7 @@ const ImpressumPage = () => {
 
           <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-3">Kontakt</h2>
           <p className="text-gray-700">
-            E-Mail: laith.alshdaifat@hotmail.com<br />
+            E-Mail: <a href="mailto:diggai@tutanota.de">diggai@tutanota.de</a><br />
             Telefon: +49 1521 3814065
           </p>
 

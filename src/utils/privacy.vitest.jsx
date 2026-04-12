@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { usePrivacyConsent, useSessionTimeout } from './privacy'

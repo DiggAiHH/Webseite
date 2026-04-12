@@ -1,0 +1,63 @@
+{
+  "version": "2026-04-10",
+  "integrations": [
+    {
+      "id": "rag-retrieval",
+      "name": "RAG Retrieval",
+      "goal": "Answer product and compliance questions with grounded references.",
+      "requiredSources": [
+        "/data/products.json",
+        "/data/faq.json",
+        "/data/compliance-summary.json"
+      ],
+      "steps": [
+        "Fetch sources and index text fields.",
+        "Attach route links for citation in responses.",
+        "Refresh index daily or on deployment."
+      ],
+      "recommendedQueries": [
+        "Which product fits a medium-size practice?",
+        "What is the data minimization position?",
+        "How to start implementation quickly?"
+      ]
+    },
+    {
+      "id": "sales-assistant",
+      "name": "Pre-Sales Agent",
+      "goal": "Route users to suitable products and the contact flow.",
+      "requiredSources": [
+        "/data/products.json",
+        "/data/faq.json"
+      ],
+      "steps": [
+        "Map user goals to product tags and complexity.",
+        "Return top 3 products with short rationale.",
+        "End with canonical CTA: /kontakt"
+      ],
+      "recommendedQueries": [
+        "I need better intake before appointments.",
+        "I need privacy-focused anonymization.",
+        "I need enterprise data processing."
+      ]
+    },
+    {
+      "id": "compliance-advisor",
+      "name": "Compliance Assistant",
+      "goal": "Provide standards-oriented guidance without overclaiming certification.",
+      "requiredSources": [
+        "/data/compliance-summary.json",
+        "/data/faq.json"
+      ],
+      "steps": [
+        "Use status fields exactly as published.",
+        "Avoid stating external certification unless present in source.",
+        "Refer legal pages for policy detail."
+      ],
+      "recommendedQueries": [
+        "What is your GDPR position?",
+        "How is BSI orientation represented?",
+        "Where can I read privacy details?"
+      ]
+    }
+  ]
+}
